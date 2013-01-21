@@ -1,4 +1,6 @@
-package com.thebridgestudio.amwayconference;
+package com.thebridgestudio.amwayconference.activities;
+
+import com.thebridgestudio.amwayconference.R;
 
 import android.os.Bundle;
 import android.app.Activity;
