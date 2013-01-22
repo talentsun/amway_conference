@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">AmwayConference</string>
+    <string name="app_name"> AmwayConference</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    <string name="qr_scan">二维码扫描</string>
+    <string name="scan_hint">将二维码图案放在取景框内</string>
+    <string name="scan_error">扫描失败，请重试</string>
 
 </resources>
