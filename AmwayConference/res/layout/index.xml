@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".IndexActivity" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="120dp"
+        android:gravity="center"
+        android:text="占位" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="6" >
+
+        <Button
+            android:id="@+id/scan_entry"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="@string/entry_schedule" />
+
+        <Button
+            android:id="@+id/scan_entry"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="@string/entry_message" />
+
+        <Button
+            android:id="@+id/scan_entry"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="@string/entry_report" />
+
+        <Button
+            android:id="@+id/scan_entry"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="@string/entry_survey" />
+
+        <Button
+            android:id="@+id/scan_entry"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="@string/entry_map" />
+
+        <Button
+            android:id="@+id/scan_entry"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:text="@string/entry_scenery" />
+    </LinearLayout>
+
+</LinearLayout>
