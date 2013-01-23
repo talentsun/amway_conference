@@ -32,9 +32,8 @@ public class DataService extends IntentService {
                 
                 try {
                     Dao<Message, Integer> dao = getHelper().getDao(Message.class);
-                    Message message = new Message("test", System.currentTimeMillis(), true);
+                    Message message = new Message(1, "test", System.currentTimeMillis(), true);
                     dao.create(message);
-                    
                     QueryBuilder<Message, Integer> queryBuilder = dao.queryBuilder();
                     List<Message> messages = queryBuilder.where().eq("content", "test").query();
                     Log.d("MessageService", "message count:" + messages.size());

@@ -5,7 +5,7 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName = "messages")
 public class Message {
-    @DatabaseField(generatedId = true)
+    @DatabaseField(id = true, columnName="_id")
     private int id;
     
     @DatabaseField
@@ -20,41 +20,42 @@ public class Message {
     public Message(){
     }
     
-    public Message(String content, long timestamp, boolean read) {
+    public Message(int id, String content, long timestamp, boolean read) {
+        this.id = id;
         this.content = content;
         this.timestamp = timestamp;
         this.read = read;
     }
 
-    protected int getId() {
+    public int getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    protected String getContent() {
+    public String getContent() {
         return content;
     }
 
-    protected void setContent(String content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    protected long getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    protected void setTimestamp(long timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
-    protected boolean isRead() {
+    public boolean isRead() {
         return read;
     }
 
-    protected void setRead(boolean read) {
+    public void setRead(boolean read) {
         this.read = read;
     }
 
