@@ -6,13 +6,13 @@ import com.j256.ormlite.table.DatabaseTable;
 @DatabaseTable(tableName = "messages")
 public class Message {
     @DatabaseField(id = true, columnName="_id")
-    private int id;
+    private long id;
+    
+    @DatabaseField
+    private String title;
     
     @DatabaseField
     private String content;
-    
-    @DatabaseField
-    private long timestamp;
     
     @DatabaseField
     private boolean read;
@@ -20,18 +20,18 @@ public class Message {
     public Message(){
     }
     
-    public Message(int id, String content, long timestamp, boolean read) {
+    public Message(long id, String title, String content, boolean read) {
         this.id = id;
+        this.title = title;
         this.content = content;
-        this.timestamp = timestamp;
         this.read = read;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -43,20 +43,20 @@ public class Message {
         this.content = content;
     }
 
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public boolean isRead() {
         return read;
     }
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+
+    protected String getTitle() {
+        return title;
+    }
+
+    protected void setTitle(String title) {
+        this.title = title;
     }
 
 }

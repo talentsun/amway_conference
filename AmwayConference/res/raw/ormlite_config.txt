@@ -1,5 +1,5 @@
 #
-# generated on 2013/01/23 01:52:59
+# generated on 2013/01/23 06:26:36
 #
 # --table-start--
 dataClass=com.thebridgestudio.amwayconference.models.Message
@@ -11,10 +11,10 @@ columnName=_id
 id=true
 # --field-end--
 # --field-start--
-fieldName=content
+fieldName=title
 # --field-end--
 # --field-start--
-fieldName=timestamp
+fieldName=content
 # --field-end--
 # --field-start--
 fieldName=read
@@ -23,8 +23,8 @@ fieldName=read
 # --table-end--
 #################################
 # --table-start--
-dataClass=com.thebridgestudio.amwayconference.models.Meeting
-tableName=meetings
+dataClass=com.thebridgestudio.amwayconference.models.Schedule
+tableName=schedules
 # --table-fields-start--
 # --field-start--
 fieldName=id
@@ -32,22 +32,46 @@ columnName=_id
 id=true
 # --field-end--
 # --field-start--
-fieldName=name
+fieldName=content
 # --field-end--
 # --field-start--
-fieldName=engName
+fieldName=date
 # --field-end--
 # --field-start--
-fieldName=duration
+fieldName=time
 # --field-end--
 # --field-start--
-fieldName=address
+fieldName=scheduleDetails
+foreignCollection=true
+# --field-end--
+# --table-fields-end--
+# --table-end--
+#################################
+# --table-start--
+dataClass=com.thebridgestudio.amwayconference.models.ScheduleDetail
+tableName=schedule_details
+# --table-fields-start--
+# --field-start--
+fieldName=id
+columnName=_id
+id=true
 # --field-end--
 # --field-start--
-fieldName=startTime
+fieldName=schedule
+canBeNull=false
+foreign=true
 # --field-end--
 # --field-start--
-fieldName=endTime
+fieldName=content
+# --field-end--
+# --field-start--
+fieldName=date
+# --field-end--
+# --field-start--
+fieldName=time
+# --field-end--
+# --field-start--
+fieldName=type
 # --field-end--
 # --table-fields-end--
 # --table-end--

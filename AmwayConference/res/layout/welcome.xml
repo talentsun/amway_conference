@@ -27,5 +27,11 @@
             android:gravity="center"
             android:text="@string/qr_scan" />
     </RelativeLayout>
+    <Button
+            android:id="@+id/message_center"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="@string/message_center" />
 
 </LinearLayout>

@@ -12,7 +12,8 @@ import android.widget.Button;
 
 public class WelcomeActivity extends Activity {
     // Views
-    private Button scanEntry;
+    private Button mScanEntry;
+    private Button mMessageCenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,17 +24,28 @@ public class WelcomeActivity extends Activity {
     }
 
     private void initViews() {
-        scanEntry = (Button) findViewById(R.id.scan_entry);
+        mScanEntry = (Button) findViewById(R.id.scan_entry);
+        mMessageCenter = (Button) findViewById(R.id.message_center);
     }
 
     private void initListener() {
-        scanEntry.setOnClickListener(new View.OnClickListener() {
+        mScanEntry.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 Intent scanIntent = new Intent(getApplicationContext(),
                         CaptureActivity.class);
                 startActivity(scanIntent);
+            }
+        });
+        
+        mMessageCenter.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(WelcomeActivity.this, MessageActivity.class);
+                WelcomeActivity.this.startActivity(intent);
             }
         });
     }
