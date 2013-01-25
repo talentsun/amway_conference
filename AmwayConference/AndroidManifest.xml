@@ -60,6 +60,8 @@
         <service android:name="com.thebridgestudio.amwayconference.services.DataService" >
             <intent-filter>
                 <action android:name="com.thebridgestudio.amwayconference.intent.SYNC_MESSAGE" />
+                <action android:name="com.thebridgestudio.amwayconference.intent.SYNC_SCHEDULE" />
+                <action android:name="com.thebridgestudio.amwayconference.intent.SYNC_ALL" />
             </intent-filter>
         </service>
     </application>
