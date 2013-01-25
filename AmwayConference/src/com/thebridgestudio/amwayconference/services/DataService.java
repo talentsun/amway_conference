@@ -4,7 +4,9 @@ import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -30,12 +32,15 @@ public class DataService extends IntentService {
     private DatabaseHelper mDatabaseHelper = null;
     private Dao<Message, Long> mMessageDao = null;
     private Dao<Schedule, Long> mScheduleDao = null;
+    private Dao<ScheduleDetail, Long> mScheduleDetailDao = null;
     
     public DataService() {
         super("message-service");
         
         try {
             mMessageDao = getHelper().getDao(Message.class);
+            mScheduleDao = getHelper().getDao(Schedule.class);
+            mScheduleDetailDao = getHelper().getDao(ScheduleDetail.class);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -77,21 +82,22 @@ public class DataService extends IntentService {
                                     updateBuilder.updateColumnValue("content", msg.getContent());
                                     updateBuilder.where().idEq(msg.getId());
                                     updateBuilder.update();
+                                    
+                                    Log.i(TAG, "update message #" + msg.getId());
                                 } else {
-                                    Message message = new Message(msg.getId(), msg.getTitle(), msg.getContent(), false);
-                                    mMessageDao.create(message);
+                                    mMessageDao.create(new Message(msg.getId(), msg.getTitle(), msg.getContent(), false));
+                                    Log.i(TAG, "create message #" + msg.getId());
                                 }
                             } else {
                                 mMessageDao.deleteById(msg.getId());
+                                Log.i(TAG, "delete message #" + msg.getId());
                             }
-                            
-                            
                         } catch (SQLException e) {
                             e.printStackTrace();
-                            Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "sync message #" + msg.getId() + " failed");
                         }
                     }
-                    
+
                     Config.setLastSyncMessageTime(getContextProvider().getContext(), System.currentTimeMillis());
                 } else {
                     Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
@@ -117,33 +123,108 @@ public class DataService extends IntentService {
             @Override
             public void onResults(SyncScheduleResponse arg0) {
                 if (mScheduleDao != null && arg0.getResult() == 1) {
-                    try {
-                        if (arg0.getData().getNeedRefresh() == 1) {
+                    if (arg0.getData().getNeedRefresh() == 1) {
+                        try {
                             mScheduleDao.executeRawNoArgs("truncate table schedules");
-                            
-                            HashMap<Long, Schedule> schedules = new HashMap<Long, Schedule>();
-                            for (SyncScheduleResponse.Schedule schedule : arg0.getData().getSchedules()) {
-                                schedules.put(schedule.getId(), new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime()));
-                            }
-                            
-                            for (SyncScheduleResponse.ScheduleDetail detail : arg0.getData().getScheduleDetails()) {
-                                if (detail.getValid() == 0) {
-                                    Schedule schedule = schedules.get(detail.getSid());
-                                    if (schedule != null) {
-                                        schedule.getScheduleDetails().add(new ScheduleDetail(detail.getId(), schedule, detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
-                                    }
-                                }
-                            }
-                            
-                            for (Schedule schedule : schedules.values()) {
-                                mScheduleDao.create(schedule);
-                            }
-                        } else {
-                            //TODO sync schedules
+                            Log.i(TAG, "empty schedules and schedule details");
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "empty schedules failed!");
+                            return;
                         }
-                    } catch (SQLException e) {
+
+                        for (SyncScheduleResponse.Schedule schedule : arg0.getData().getSchedules()) {
+                            if (schedule.getValid() == 1) {
+                                try {
+                                    mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime()));
+                                    Log.i(TAG, "create schedule #" + schedule.getId());
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG, "create schedule #" + schedule.getId() + " failed");
+                                }
+                            } else {
+                                Log.i(TAG, "ignore schedule #" + schedule.getId() + " because invalid");
+                            }
+                        }
                         
+                        for (SyncScheduleResponse.ScheduleDetail detail : arg0.getData().getScheduleDetails()) {
+                            if (detail.getValid() == 1) {
+                                try {
+                                    if (mScheduleDao.idExists(detail.getSid())) {
+                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
+                                        Log.i(TAG, "create schedule detail #" + detail.getId());
+                                    } else {
+                                        Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because schedule #" + detail.getSid() + " not exist");
+                                    }
+                                } catch (SQLException e) {
+                                    e.printStackTrace();
+                                    Log.e(TAG, "sync schedule detail #" + detail.getId() + " failed");
+                                }
+                            } else {
+                                Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because invalid");
+                            }
+                        }
+                    } else {
+                        for (SyncScheduleResponse.Schedule schedule : arg0.getData().getSchedules()) {
+                            try {
+                                if (schedule.getValid() == 1) {
+                                    if (mScheduleDao.idExists(schedule.getId())) {
+                                        UpdateBuilder<Schedule, Long> updateBuilder = mScheduleDao.updateBuilder();
+                                        updateBuilder.updateColumnValue("date", schedule.getDate());
+                                        updateBuilder.updateColumnValue("time", schedule.getTime());
+                                        updateBuilder.updateColumnValue("content", schedule.getContent());
+                                        updateBuilder.where().idEq(schedule.getId());
+                                        updateBuilder.update();
+                                        
+                                        Log.i(TAG, "update schedule #" + schedule.getId());
+                                    } else {
+                                        mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime()));
+                                        Log.i(TAG, "create schedule #" + schedule.getId());
+                                    }
+                                } else if (schedule.getValid() == 0) {
+                                    mScheduleDao.deleteById(schedule.getId());
+                                    Log.i(TAG, "delete schedule #" + schedule.getId());
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                Log.e(TAG, "sync schedule #" + schedule.getId() + " failed");
+                            }
+                        }
+
+                        for (SyncScheduleResponse.ScheduleDetail detail : arg0.getData().getScheduleDetails()) {
+                            try {
+                                if (detail.getValid() == 1) {
+                                    if (mScheduleDao.idExists(detail.getSid())) {
+                                        if (mScheduleDetailDao.idExists(detail.getId())) {
+                                            UpdateBuilder<ScheduleDetail, Long> updateBuilder = mScheduleDetailDao.updateBuilder();
+                                            updateBuilder.updateColumnValue("sid", detail.getSid());
+                                            updateBuilder.updateColumnValue("time", detail.getTime());
+                                            updateBuilder.updateColumnValue("content", detail.getContent());
+                                            updateBuilder.updateColumnValue("feature", detail.getFeature());
+                                            updateBuilder.updateColumnValue("type", detail.getType());
+                                            updateBuilder.where().idEq(detail.getId());
+                                            updateBuilder.update();
+
+                                            Log.i(TAG, "update schedule detail #" + detail.getId());
+                                        } else {
+                                            mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
+                                            Log.i(TAG, "create schedule detail #" + detail.getId());
+                                        }
+                                    } else {
+                                        Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because no schedule #" + detail.getSid());
+                                    }
+                                } else {
+                                    mScheduleDetailDao.deleteById(detail.getId());
+                                    Log.i(TAG, "delete schedule detail #" + detail.getId());
+                                }
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                                Log.e(TAG, "sync schedule detail #" + detail.getId() + " failed");
+                            }
+                        }
                     }
+                    
+                    Config.setLastSyncScheduleTime(getContextProvider().getContext(), System.currentTimeMillis());
                 } else {
                     Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
                 }

@@ -8,9 +8,7 @@
     <string name="scan_hint">将二维码图案放在取景框内</string>
     <string name="scan_error">扫描失败，请重试</string>
     <string name="default_message">...</string>
-<<<<<<< HEAD
-    
-    
+
     <string name="entry_schedule">会议日程</string>
     <string name="entry_message">消息中心</string>
     <string name="entry_report">会议报告</string>
@@ -18,9 +16,7 @@
     <string name="entry_map">地图信息</string>
     <string name="entry_scenery">景点介绍</string>
 
-=======
     <string name="message_center">消息中心</string>
     <string name="mark_message_read_failed">标记消息已读失败</string>
     <string name="sync_data_failed">同步数据失败</string>
->>>>>>> MOD: add sync message and schedule logic; MOD: add MessageActivity;
 </resources>
