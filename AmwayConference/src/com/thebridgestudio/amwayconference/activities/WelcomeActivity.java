@@ -2,6 +2,7 @@ package com.thebridgestudio.amwayconference.activities;
 
 import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
+import com.thebridgestudio.amwayconference.services.DataService;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -43,19 +44,20 @@ public class WelcomeActivity extends Activity {
             
             @Override
             public void onClick(View v) {
+//                Intent intent = new Intent();
+//                intent.setClass(WelcomeActivity.this, MessageActivity.class);
+//                WelcomeActivity.this.startActivity(intent);
+                
                 Intent intent = new Intent();
-                intent.setClass(WelcomeActivity.this, MessageActivity.class);
-                WelcomeActivity.this.startActivity(intent);
+                intent.setClass(WelcomeActivity.this, DataService.class);
+                intent.setAction(Intents.ACTION_SYNC_MESSAGE);
+                WelcomeActivity.this.startService(intent);
             }
         });
     }
 
     @Override
     protected void onStart() {
-        Intent intent = new Intent();
-        intent.setAction(Intents.ACTION_SYNC_MESSAGE);
-        startService(intent);
-
         super.onStart();
     }
 
