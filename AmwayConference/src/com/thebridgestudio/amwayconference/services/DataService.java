@@ -4,9 +4,6 @@ import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -151,7 +148,7 @@ public class DataService extends IntentService {
                             if (detail.getValid() == 1) {
                                 try {
                                     if (mScheduleDao.idExists(detail.getSid())) {
-                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
+                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getParam1(), detail.getParam2()));
                                         Log.i(TAG, "create schedule detail #" + detail.getId());
                                     } else {
                                         Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because schedule #" + detail.getSid() + " not exist");
@@ -207,7 +204,7 @@ public class DataService extends IntentService {
 
                                             Log.i(TAG, "update schedule detail #" + detail.getId());
                                         } else {
-                                            mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
+                                            mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getParam1(), detail.getParam2()));
                                             Log.i(TAG, "create schedule detail #" + detail.getId());
                                         }
                                     } else {

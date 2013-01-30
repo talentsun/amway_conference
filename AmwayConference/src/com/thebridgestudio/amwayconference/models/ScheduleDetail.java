@@ -23,16 +23,24 @@ public class ScheduleDetail {
     @DatabaseField
     private int type;
     
+    @DatabaseField
+    private String param1;
+    
+    @DatabaseField
+    private String param2;
+    
     public ScheduleDetail() {
     }
 
-    public ScheduleDetail(long id, Schedule schedule, String content, String time, String feature, int type) {
+    public ScheduleDetail(long id, Schedule schedule, String content, String time, String feature, int type, String param1, String param2) {
         this.id = id;
         this.schedule = schedule;
         this.content = content;
         this.time = time;
         this.feature = feature;
         this.type = type;
+        this.param1 = param1;
+        this.param2 = param2;
     }
 
     public long getId() {
@@ -81,5 +89,21 @@ public class ScheduleDetail {
 
     public void setFeature(String feature) {
         this.feature = feature;
+    }
+
+    public String getParam1() {
+        return param1;
+    }
+
+    public void setParam1(String param1) {
+        this.param1 = param1;
+    }
+
+    public String getParam2() {
+        return param2;
+    }
+
+    public void setParam2(String param2) {
+        this.param2 = param2;
     }
 }
