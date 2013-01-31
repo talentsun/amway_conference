@@ -33,5 +33,11 @@
             android:layout_height="60dp"
             android:gravity="center"
             android:text="@string/message_center" />
+    <Button
+            android:id="@+id/login"
+            android:layout_width="120dp"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="@string/login" />
 
 </LinearLayout>

@@ -8,6 +8,7 @@ public class Config {
     private static final String KEY_LAST_SYNC_MESSAGE_TIME = "last_sync_message_time";
     private static final String KEY_LAST_SYNC_SCHEDULE_TIME = "last_sync_schedule_time";
     private static final String KEY_ACCOUNT = "account";
+    private static final String KEY_NAME = "name";
     
     public static long getLastSyncMessageTime(Context context) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
@@ -42,6 +43,18 @@ public class Config {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(KEY_ACCOUNT, account);
+        editor.commit();
+    }
+    
+    public static String getName(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        return settings.getString(KEY_NAME, null);
+    }
+    
+    public static void setName(Context context, String name) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(KEY_NAME, name);
         editor.commit();
     }
 }

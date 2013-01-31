@@ -134,9 +134,6 @@ public class DataService extends IntentService {
     }
     
     private void syncSchedule() throws APIException {
-        //for test
-        Config.setAccount(DataService.this, "test");
-        
         if (TextUtils.isEmpty(Config.getAccount(this))) {
             Log.i(TAG, "no account, stop sync schedule");
             return;
@@ -270,7 +267,7 @@ public class DataService extends IntentService {
             Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
         }
     }
-    
+
     private DatabaseHelper getHelper() {
         Log.i(TAG, "get helper");
         if (mDatabaseHelper == null) {
