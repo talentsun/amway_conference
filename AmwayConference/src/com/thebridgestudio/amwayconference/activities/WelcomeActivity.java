@@ -50,7 +50,7 @@ public class WelcomeActivity extends Activity {
                 
                 Intent intent = new Intent();
                 intent.setClass(WelcomeActivity.this, DataService.class);
-                intent.setAction(Intents.ACTION_SYNC_MESSAGE);
+                intent.setAction(Intents.ACTION_SYNC_SCHEDULE);
                 WelcomeActivity.this.startService(intent);
             }
         });

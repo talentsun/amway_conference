@@ -29,9 +29,12 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
     public void setData(Data data) {
         this.data = data;
     }
+    
+    public SyncScheduleResponse() {
+    }
 
     @SuppressWarnings("serial")
-    public class Data extends AbstractJSONResponse {
+    public static class Data extends AbstractJSONResponse {
         @JsonProperty(value="need_refresh")
         private int needRefresh;
         
@@ -64,10 +67,13 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
         public void setScheduleDetails(List<ScheduleDetail> scheduleDetails) {
             this.scheduleDetails = scheduleDetails;
         }
+        
+        public Data() {
+        }
     }
     
     @SuppressWarnings("serial")
-    public class Schedule extends AbstractJSONResponse {
+    public static class Schedule extends AbstractJSONResponse {
         @JsonProperty(value="id")
         private long id;
         
@@ -122,10 +128,13 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
         public void setValid(int valid) {
             this.valid = valid;
         }
+        
+        public Schedule() {
+        }
     }
     
     @SuppressWarnings("serial")
-    public class ScheduleDetail extends AbstractJSONResponse {
+    public static class ScheduleDetail extends AbstractJSONResponse {
         @JsonProperty(value="id")
         private long id;
         
@@ -223,6 +232,9 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
 
         public void setParam2(String param2) {
             this.param2 = param2;
+        }
+        
+        public ScheduleDetail() {
         }
     }
 }

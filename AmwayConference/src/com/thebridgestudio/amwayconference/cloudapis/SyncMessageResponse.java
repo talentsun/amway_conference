@@ -29,8 +29,11 @@ public class SyncMessageResponse extends AbstractJSONResponse {
     public void setMessages(List<Message> data) {
         this.messages = data;
     }
+    
+    public SyncMessageResponse() {
+    }
 
-    public class Message extends AbstractJSONResponse {
+    public static class Message extends AbstractJSONResponse {
         private static final long serialVersionUID = 1L;
         
         @JsonProperty(value="id")
@@ -68,6 +71,9 @@ public class SyncMessageResponse extends AbstractJSONResponse {
         }
         public void setValid(int valid) {
             this.valid = valid;
+        }
+        
+        public Message() {
         }
     }
 }
