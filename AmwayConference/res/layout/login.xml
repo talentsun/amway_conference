@@ -5,7 +5,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    tools:context=".WelcomeActivity" >
+    tools:context=".activities.LoginActivity" >
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -19,11 +19,14 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:src="@drawable/amy_logo" />
 
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:text="@string/amy_china"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -31,70 +34,59 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
             android:text="@string/conference_name"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:textSize="24sp" />
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/inputbar"
+            android:hint="@string/name"
+            android:paddingLeft="8dip"
+            android:textColor="@android:color/darker_gray" />
+
+        <EditText
+            android:id="@+id/input_id"
+            android:layout_width="fill_parent"
+            android:layout_height="48dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/inputbar"
+            android:hint="@string/input_id"
+            android:paddingLeft="8dip"
+            android:textColor="@android:color/darker_gray" />
     </LinearLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="4"
-        android:background="@drawable/background"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingTop="24dp" >
-
-        <Button
-            android:id="@+id/scan_entry"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/button_yellow"
-            android:text="@string/qr_scan"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
-
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="@drawable/button_yellow_shadow" />
+        android:background="@drawable/background" >
 
         <Button
             android:id="@+id/login"
             android:layout_width="fill_parent"
             android:layout_height="60dp"
+            android:layout_centerInParent="true"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:layout_marginTop="12dp"
             android:background="@drawable/button_yellow"
-            android:text="@string/login_by_id"
+            android:text="@string/login"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
 
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
+            android:layout_below="@id/login"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:background="@drawable/button_yellow_shadow" />
-
-    </LinearLayout>
-
-    <!--
-        <Button
-        android:id="@+id/message_center"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="@string/message_center"
-        android:visibility="gone" />
-    -->
+    </RelativeLayout>
 
 </LinearLayout>
