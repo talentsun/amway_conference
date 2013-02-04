@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <string name="app_name"> AmwayConference</string>
     <string name="hello_world">Hello world!</string>
@@ -29,4 +29,15 @@
     <!-- login -->
     <string name="name">姓名</string>
     <string name="input_id">请输入会议顺序号</string>
+    
+    <!-- date -->
+    <string-array name="day_of_week">
+        <item>星期一</item>
+        <item>星期二</item>
+        <item>星期三</item>
+        <item>星期四</item>
+        <item>星期五</item>
+        <item>星期六</item>
+        <item>星期七</item>
+    </string-array>
 </resources>

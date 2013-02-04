@@ -153,14 +153,11 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
         @JsonProperty(value="type")
         private int type;
         
+        @JsonProperty(value="string")
+        private String tips;
+        
         @JsonProperty(value="valid")
         private int valid;
-        
-        @JsonProperty(value="param1")
-        private String param1;
-        
-        @JsonProperty(value="param2")
-        private String param2;
 
         public long getId() {
             return id;
@@ -218,22 +215,14 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
             this.valid = valid;
         }
 
-        public String getParam1() {
-            return param1;
+        public String getTips() {
+            return tips;
         }
 
-        public void setParam1(String param1) {
-            this.param1 = param1;
+        public void setTips(String tips) {
+            this.tips = tips;
         }
 
-        public String getParam2() {
-            return param2;
-        }
-
-        public void setParam2(String param2) {
-            this.param2 = param2;
-        }
-        
         public ScheduleDetail() {
         }
     }

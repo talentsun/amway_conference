@@ -7,24 +7,24 @@ import com.j256.ormlite.table.DatabaseTable;
 public class Message {
     @DatabaseField(id = true, columnName="_id")
     private long id;
-    
-    @DatabaseField
-    private String title;
-    
+
     @DatabaseField
     private String content;
     
     @DatabaseField
     private boolean read;
     
+    @DatabaseField
+    private long date;
+
     public Message(){
     }
     
-    public Message(long id, String title, String content, boolean read) {
+    public Message(long id, String content, boolean read, long date) {
         this.id = id;
-        this.title = title;
         this.content = content;
         this.read = read;
+        this.date = date;
     }
 
     public long getId() {
@@ -51,12 +51,12 @@ public class Message {
         this.read = read;
     }
 
-    protected String getTitle() {
-        return title;
+    public long getDate() {
+        return date;
     }
 
-    protected void setTitle(String title) {
-        this.title = title;
+    public void setDate(long date) {
+        this.date = date;
     }
 
 }

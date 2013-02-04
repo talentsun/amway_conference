@@ -39,8 +39,8 @@ public class SyncMessageResponse extends AbstractJSONResponse {
         @JsonProperty(value="id")
         private long id;
         
-        @JsonProperty(value="title")
-        private String title;
+        @JsonProperty(value="date")
+        private long date;
         
         @JsonProperty(value="content")
         private String content;
@@ -54,11 +54,11 @@ public class SyncMessageResponse extends AbstractJSONResponse {
         public void setId(long id) {
             this.id = id;
         }
-        public String getTitle() {
-            return title;
+        public long getDate() {
+            return date;
         }
-        public void setTitle(String title) {
-            this.title = title;
+        public void setDate(long date) {
+            this.date = date;
         }
         public String getContent() {
             return content;

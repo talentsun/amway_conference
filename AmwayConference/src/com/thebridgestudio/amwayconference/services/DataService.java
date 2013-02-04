@@ -107,14 +107,14 @@ public class DataService extends IntentService {
                     if (msg.getValid() == 1) {
                         if (mMessageDao.idExists(msg.getId())) {
                             UpdateBuilder<Message, Long> updateBuilder = mMessageDao.updateBuilder();
-                            updateBuilder.updateColumnValue("title", msg.getTitle());
                             updateBuilder.updateColumnValue("content", msg.getContent());
                             updateBuilder.where().idEq(msg.getId());
                             updateBuilder.update();
                             
                             Log.i(TAG, "update message #" + msg.getId());
                         } else {
-                            mMessageDao.create(new Message(msg.getId(), msg.getTitle(), msg.getContent(), false));
+                            //for test
+                            mMessageDao.create(new Message(msg.getId(), msg.getContent(), false, System.currentTimeMillis()));
                             Log.i(TAG, "create message #" + msg.getId());
                         }
                     } else {
@@ -184,7 +184,7 @@ public class DataService extends IntentService {
                         if (detail.getValid() == 1) {
                             try {
                                 if (mScheduleDao.idExists(detail.getSid())) {
-                                    mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getParam1(), detail.getParam2()));
+                                    mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getTips()));
                                     Log.i(TAG, "create schedule detail #" + detail.getId());
                                 } else {
                                     Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because schedule #" + detail.getSid() + " not exist");
@@ -244,7 +244,7 @@ public class DataService extends IntentService {
 
                                         Log.i(TAG, "update schedule detail #" + detail.getId());
                                     } else {
-                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getParam1(), detail.getParam2()));
+                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getTips()));
                                         Log.i(TAG, "create schedule detail #" + detail.getId());
                                     }
                                 } else {

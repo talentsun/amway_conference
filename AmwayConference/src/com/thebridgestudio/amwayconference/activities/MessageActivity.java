@@ -1,48 +1,56 @@
 package com.thebridgestudio.amwayconference.activities;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
+import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView;
+import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView.OnHeaderClickListener;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.android.support.extras.AndroidBaseDaoImpl;
-import com.j256.ormlite.android.support.extras.OrmliteCursorAdapter;
-import com.j256.ormlite.android.support.extras.OrmliteCursorLoader;
 import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.PreparedQuery;
-import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.j256.ormlite.support.ConnectionSource;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 
-public class MessageActivity extends FragmentActivity implements LoaderCallbacks<Cursor> {
-    private MessageCursorAdapter mAdapter;
+public class MessageActivity extends FragmentActivity implements
+        LoaderCallbacks<List<Message>>, OnScrollListener,
+        AdapterView.OnItemClickListener, OnHeaderClickListener {
+    private static final String TAG = "MessageActivity";
+    private static final String KEY_MESSAGE_LIST_POSITION = "KEY_MESSAGE_LIST_POSITION";
+    private int mFirstVisible;
+    
+    private MessageAdapter mAdapter;
     private DatabaseHelper mDatabaseHelper = null;
     private Dao<Message, Long> mDao = null;
-    private PreparedQuery<Message> mPrepareQuery = null;
-    private ListView mListView = null;
+    private StickyListHeadersListView mListView = null;
     
     @Override
     protected void onDestroy() {
@@ -57,101 +65,38 @@ public class MessageActivity extends FragmentActivity implements LoaderCallbacks
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.message);
-        mListView = (ListView) findViewById(R.id.list);
-        
+        mListView = (StickyListHeadersListView) findViewById(R.id.list);
+        mListView.setOnScrollListener(this);
+        mListView.setOnItemClickListener(this);
+        mListView.setOnHeaderClickListener(this);
+
         ProgressBar progressBar = new ProgressBar(this);
         progressBar.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER));
         progressBar.setIndeterminate(true);
         mListView.setEmptyView(progressBar);
-        
+
+        if (savedInstanceState != null) {
+            mFirstVisible = savedInstanceState.getInt(KEY_MESSAGE_LIST_POSITION);
+        }
+
         ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
         root.addView(progressBar);
-        
-        mListView.setOnItemClickListener(new OnItemClickListener() {
+        mListView.setSelection(mFirstVisible);
 
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                    long arg3) {
-                try {
-                    UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
-                    updateBuilder.updateColumnValue("read", true).where().idEq(arg3);
-                    updateBuilder.update();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    Toast.makeText(MessageActivity.this, R.string.mark_message_read_failed, Toast.LENGTH_SHORT).show();
-                }
-            }
-            
-        });
-        
         try {
             mDao = getHelper().getDao(Message.class);
-            QueryBuilder<Message, Long> queryBuilder = mDao.queryBuilder();
-            
-            mPrepareQuery = queryBuilder.prepare();
-            
-            mAdapter = new MessageCursorAdapter(this, null, mPrepareQuery);
+            mAdapter = new MessageAdapter(this);
             mListView.setAdapter(mAdapter);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        
-        if (mAdapter != null) {
+            
             getSupportLoaderManager().initLoader(0, null, this);
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        // TODO Auto-generated method stub
-        super.onPause();
-    }
-
-    @Override
-    protected void onResume() {
-        // TODO Auto-generated method stub
-        super.onResume();
-    }
-
-    @Override
-    protected void onStart() {
-        // TODO Auto-generated method stub
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        // TODO Auto-generated method stub
-        super.onStop();
-    }
-    
-    @Override
-    public Loader<Cursor> onCreateLoader(int arg0,
-            Bundle arg1) {
-        OrmliteCursorLoader<Message> loader = null;
-        
-        try {
-            loader = new OrmliteCursorLoader<Message>(this, new MessageDao(getHelper().getConnectionSource(), Message.class), mPrepareQuery);
         } catch (SQLException e) {
             e.printStackTrace();
+            Log.e(TAG, "load dao failed");
         }
-        
-        return loader;
     }
 
-    @Override
-    public void onLoadFinished(Loader<Cursor> arg0,
-            Cursor arg1) {
-        mAdapter.swapCursor(arg1);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> arg0) {
-        mAdapter.swapCursor(null);
-    }
-    
     private DatabaseHelper getHelper() {
         if (mDatabaseHelper == null) {
             mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
@@ -160,46 +105,113 @@ public class MessageActivity extends FragmentActivity implements LoaderCallbacks
         return mDatabaseHelper;
     }
     
-    public class MessageCursorAdapter extends OrmliteCursorAdapter<Message> {
-
-        public MessageCursorAdapter(Context context, Cursor c,
-                PreparedQuery<Message> query) {
-            super(context, c, query);
+    public class MessageAdapter extends BaseAdapter implements StickyListHeadersAdapter {
+        private LayoutInflater mInflater;
+        private List<Message> mData;
+        private String[] mDayOfWeeks;
+        
+        public MessageAdapter(Context context) {
+            mInflater = LayoutInflater.from(context);
+            mDayOfWeeks = getResources().getStringArray(R.array.day_of_week);
+            mData = new ArrayList<Message>();
         }
 
-        @Override
-        public void bindView(View itemView, Context context, Message item) {
-            ViewHolder viewHolder = (ViewHolder) itemView.getTag();
+        public void setData(List<Message> data) {
+            mData.clear();
             
-            if (item.isRead()) {
-                //TODO set image to read
-            } else {
-                //TODO set image to unread
+            if (data != null) {
+                mData.addAll(data);
             }
-            
-            if (!TextUtils.isEmpty(item.getContent())) {
-                viewHolder.message.setText(item.getContent());
-            } else {
-                viewHolder.message.setText(R.string.default_message);
-            }
-        }
-
-        @Override
-        public View newView(Context context, Cursor cursor, ViewGroup parent) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            LinearLayout item = (LinearLayout) layoutInflater.inflate(R.layout.message_item, parent, false);
-            
-            ViewHolder viewHolder = new ViewHolder();
-            viewHolder.image = (ImageView) item.findViewById(R.id.image);
-            viewHolder.message = (TextView) item.findViewById(R.id.message);
-            
-            item.setTag(viewHolder);
-            return item;
+            notifyDataSetChanged();
         }
         
+        public void clear() {
+            mData.clear();
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mData.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            if (mData.size() == 0) {
+                return 0;
+            }
+            
+            return ((Message) mData.get(position)).getId();
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder = null;
+            if (convertView == null) {
+                viewHolder = new ViewHolder();
+                
+                convertView = mInflater.inflate(R.layout.message_item, parent, false);
+                viewHolder.imageView = (ImageView) convertView.findViewById(R.id.image);
+                viewHolder.messageTextView = (TextView) convertView.findViewById(R.id.message);
+                viewHolder.timeTextView = (TextView) convertView.findViewById(R.id.time);
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            
+            Message message = (Message) getItem(position);
+            if (!TextUtils.isEmpty(message.getContent())) {
+                viewHolder.messageTextView.setText(message.getContent());
+            } else {
+                viewHolder.messageTextView.setText(R.string.default_message);
+            }
+            
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(message.getDate());
+            viewHolder.timeTextView.setText(new SimpleDateFormat("HH:mm").format(calendar.getTime()));
+            
+            return convertView;
+        }
+
         class ViewHolder {
-            public ImageView image;
-            public TextView message;
+            public ImageView imageView;
+            public TextView messageTextView;
+            public TextView timeTextView;
+        }
+
+        @Override
+        public long getHeaderId(int position) {
+            Message message = (Message) getItem(position);
+            return message.getDate() / (24 * 60 * 60 * 1000);
+        }
+
+        @Override
+        public View getHeaderView(int position, View convertView, ViewGroup parent) {
+            HeaderViewHolder holder;
+            if (convertView == null) {
+                holder = new HeaderViewHolder();
+                convertView = mInflater.inflate(R.layout.message_items_header, parent, false);
+                holder.dateText = (TextView) convertView.findViewById(R.id.date);
+                convertView.setTag(holder);
+            } else {
+                holder = (HeaderViewHolder) convertView.getTag();
+            }
+
+            Message message = (Message) getItem(position);
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(message.getDate());
+            holder.dateText.setText(String.format("%s %s", new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()), mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
+
+            return convertView;
+        }
+        
+        class HeaderViewHolder {
+            TextView dateText;
         }
     }
     
@@ -210,5 +222,88 @@ public class MessageActivity extends FragmentActivity implements LoaderCallbacks
             super(connectionSource, dataClass);
         }
         
+    }
+
+    public static class MessageLoader extends AsyncTaskLoader<List<Message>> {
+        private Dao<Message, Long> mDao;
+        
+        public MessageLoader(Context context, Dao<Message, Long> dao) {
+            super(context);
+            Log.i(TAG, "create message loader");
+            mDao = dao;
+        }
+
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+            super.onStartLoading();
+        }
+
+        @Override
+        public List<Message> loadInBackground() {
+            List<Message> messages = new ArrayList<Message>();
+            
+            try {
+                messages = mDao.queryBuilder().orderBy("date", false).query();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return messages;
+        }
+        
+    }
+    
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(KEY_MESSAGE_LIST_POSITION, mFirstVisible);
+    }
+
+    @Override
+    public void onHeaderClick(StickyListHeadersListView arg0, View arg1,
+            int arg2, long arg3, boolean arg4) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        try {
+            UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
+            updateBuilder.updateColumnValue("read", true).where().idEq(arg3);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Toast.makeText(MessageActivity.this, R.string.mark_message_read_failed, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem,
+            int visibleItemCount, int totalItemCount) {
+        mFirstVisible = firstVisibleItem;
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    
+    @Override
+    public Loader<List<Message>> onCreateLoader(int arg0, Bundle arg1) {
+        return new MessageLoader(this, mDao);
+    }
+
+    
+    @Override
+    public void onLoadFinished(Loader<List<Message>> arg0, List<Message> arg1) {
+        mAdapter.setData(arg1);
+    }
+
+    
+    @Override
+    public void onLoaderReset(Loader<List<Message>> arg0) {
+        mAdapter.clear();
     }
 }
