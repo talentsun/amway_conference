@@ -108,13 +108,14 @@ public class DataService extends IntentService {
                         if (mMessageDao.idExists(msg.getId())) {
                             UpdateBuilder<Message, Long> updateBuilder = mMessageDao.updateBuilder();
                             updateBuilder.updateColumnValue("content", msg.getContent());
+                            updateBuilder.updateColumnValue("date", msg.getDate());
                             updateBuilder.where().idEq(msg.getId());
                             updateBuilder.update();
                             
                             Log.i(TAG, "update message #" + msg.getId());
                         } else {
                             //for test
-                            mMessageDao.create(new Message(msg.getId(), msg.getContent(), false, System.currentTimeMillis()));
+                            mMessageDao.create(new Message(msg.getId(), msg.getContent(), false, msg.getDate()));
                             Log.i(TAG, "create message #" + msg.getId());
                         }
                     } else {

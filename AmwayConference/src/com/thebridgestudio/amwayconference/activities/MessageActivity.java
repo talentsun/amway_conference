@@ -72,17 +72,10 @@ public class MessageActivity extends FragmentActivity implements
         mListView.setOnItemClickListener(this);
         mListView.setOnHeaderClickListener(this);
 
-        ProgressBar progressBar = new ProgressBar(this);
-        progressBar.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, Gravity.CENTER));
-        progressBar.setIndeterminate(true);
-        mListView.setEmptyView(progressBar);
-
         if (savedInstanceState != null) {
             mFirstVisible = savedInstanceState.getInt(KEY_MESSAGE_LIST_POSITION);
         }
 
-        ViewGroup root = (ViewGroup) findViewById(android.R.id.content);
-        root.addView(progressBar);
         mListView.setSelection(mFirstVisible);
 
         try {
@@ -110,11 +103,20 @@ public class MessageActivity extends FragmentActivity implements
         private List<Message> mData;
         private String[] mDayOfWeeks;
         
+        
+        
         public MessageAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
             mDayOfWeeks = getResources().getStringArray(R.array.day_of_week);
             mData = new ArrayList<Message>();
         }
+        
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
+        }
+
+
 
         public void setData(List<Message> data) {
             mData.clear();
@@ -289,19 +291,16 @@ public class MessageActivity extends FragmentActivity implements
         
     }
 
-    
     @Override
     public Loader<List<Message>> onCreateLoader(int arg0, Bundle arg1) {
         return new MessageLoader(this, mDao);
     }
 
-    
     @Override
     public void onLoadFinished(Loader<List<Message>> arg0, List<Message> arg1) {
         mAdapter.setData(arg1);
     }
 
-    
     @Override
     public void onLoaderReset(Loader<List<Message>> arg0) {
         mAdapter.clear();
