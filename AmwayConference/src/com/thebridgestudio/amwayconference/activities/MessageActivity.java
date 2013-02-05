@@ -24,6 +24,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,6 +72,9 @@ public class MessageActivity extends FragmentActivity implements
         mListView.setOnScrollListener(this);
         mListView.setOnItemClickListener(this);
         mListView.setOnHeaderClickListener(this);
+        
+        LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
+        mListView.setEmptyView(emptyView);
 
         if (savedInstanceState != null) {
             mFirstVisible = savedInstanceState.getInt(KEY_MESSAGE_LIST_POSITION);

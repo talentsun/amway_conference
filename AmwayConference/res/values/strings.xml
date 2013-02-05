@@ -40,4 +40,7 @@
         <item>星期六</item>
         <item>星期七</item>
     </string-array>
+    
+    <!-- message -->
+    <string name="no_message">暂无消息</string>
 </resources>
