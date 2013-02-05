@@ -1,0 +1,107 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/animation_layout_sidebar"
+    android:layout_width="200dp"
+    android:layout_height="fill_parent"
+    android:background="@drawable/sidebar_bg"
+    android:paddingTop="4dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="48dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:weightSum="6" >
+
+        <FrameLayout
+            style="@style/sidebar_item_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/sidebar_green" >
+
+            <Button
+                android:id="@+id/entry_schedule"
+                style="@style/sidebar_item"
+                android:drawableLeft="@drawable/sidebar_icon_schedule"
+                android:text="@string/entry_schedule" />
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/sidebar_item_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/sidebar_blue" >
+
+            <Button
+                android:id="@+id/entry_message"
+                style="@style/sidebar_item"
+                android:drawableLeft="@drawable/sidebar_icon_message"
+                android:text="@string/entry_message" />
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/sidebar_item_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/sidebar_yellow" >
+
+            <Button
+                android:id="@+id/entry_survey"
+                style="@style/sidebar_item"
+                android:drawableLeft="@drawable/sidebar_icon_survey"
+                android:text="@string/entry_survey" />
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/sidebar_item_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/sidebar_red" >
+
+            <Button
+                android:id="@+id/entry_map"
+                style="@style/sidebar_item"
+                android:drawableLeft="@drawable/sidebar_icon_map"
+                android:text="@string/entry_map" />
+        </FrameLayout>
+
+        <FrameLayout
+            style="@style/sidebar_item_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/sidebar_blueness" >
+
+            <Button
+                android:id="@+id/entry_scenery"
+                style="@style/sidebar_item"
+                android:drawableLeft="@drawable/sidebar_icon_scenery"
+                android:text="@string/entry_scenery" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/exit_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="18dp"
+        android:background="@null"
+        android:drawableLeft="@drawable/icon_exit"
+        android:text="@string/exit_login"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="18sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/sidebar_shadow_mask" />
+
+</RelativeLayout>

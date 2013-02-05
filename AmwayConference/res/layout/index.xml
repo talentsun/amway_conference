@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.thebridgestudio.amwayconference.views.AnimationLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context=".IndexActivity" >
+    android:id="@+id/animation_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.IndexActivity" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="120dp"
-        android:gravity="center"
-        android:text="占位" />
+    <include layout="@layout/sidebar" />
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@id/animation_layout_content"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:weightSum="6" >
+        android:orientation="vertical" >
 
-        <Button
-            android:id="@+id/scan_entry"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:text="@string/entry_schedule" />
+            android:layout_height="fill_parent"
+            android:background="@drawable/taipei_landscape"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingTop="12dp" >
 
-        <Button
-            android:id="@+id/scan_entry"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:text="@string/entry_message" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/amy_logo" />
 
-        <Button
-            android:id="@+id/scan_entry"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:text="@string/entry_report" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/amy_china"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
 
-        <Button
-            android:id="@+id/scan_entry"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:text="@string/entry_survey" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/conference_name"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
 
-        <Button
-            android:id="@+id/scan_entry"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:text="@string/entry_map" />
+            <EditText
+                android:id="@+id/input_name"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:layout_margin="12dp"
+                android:background="@drawable/inputbar"
+                android:hint="@string/name"
+                android:paddingLeft="8dip"
+                android:textColor="@android:color/darker_gray" />
 
-        <Button
-            android:id="@+id/scan_entry"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_margin="12dp"
-            android:layout_weight="1"
-            android:text="@string/entry_scenery" />
-    </LinearLayout>
+            <EditText
+                android:id="@+id/input_id"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/inputbar"
+                android:hint="@string/input_id"
+                android:paddingLeft="8dip"
+                android:textColor="@android:color/darker_gray" />
+        </LinearLayout>
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/tag_index"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/tag_green" />
+    </RelativeLayout>
+
+</com.thebridgestudio.amwayconference.views.AnimationLayout>
