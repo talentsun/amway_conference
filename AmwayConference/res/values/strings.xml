@@ -46,4 +46,8 @@
     
     <!-- sidebar -->
     <string name="exit_login">退出登录</string>
+
+    <!-- schedule -->
+    <string name="meeting_order">会议顺序号：</string>
+    <string name="today">今天</string>
 </resources>

@@ -3,22 +3,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:background="@drawable/background">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="208dip"
+        android:background="@drawable/banner_schedule_taipei_landscape"
+        android:orientation="vertical"
+        android:paddingRight="12dip"
+        android:paddingBottom="12dip" >
+        <ImageView
+            android:id="@+id/amy_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/amy_logo_2"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="18dip"/>
 
-    <ListView
-        android:id="@android:id/list"
+        <TextView
+            android:id="@+id/amy_china"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/amy_china"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" 
+            android:layout_marginTop="4dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/amy_logo"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/conference_name"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            android:layout_marginTop="6dip"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/amy_china"/>
+
+        <TextView
+            android:id="@+id/meeting_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="152781"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true" 
+            android:textSize="18sp"
+            android:textColor="@android:color/white"/>
+        
+        <TextView 
+            android:text="@string/meeting_order"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/meeting_order"
+            android:layout_alignParentBottom="true"
+            />
+        
+        <TextView 
+            android:text="蒋宇欣"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="36sp"
+            android:textColor="@android:color/white"
+            android:layout_alignParentRight="true"
+            android:layout_above="@id/meeting_order"/>
+        
+        <TextView 
+            android:id="@+id/year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2013"
+            android:textSize="28sp"
+            android:textColor="@android:color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="44dip"
+            android:layout_above="@id/date"/>
+        
+        <TextView 
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3.12-3.16"
+            android:textSize="14sp"
+            android:textColor="@android:color/white"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="44dip"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:background="#00FF00"
-        android:drawSelectorOnTop="false" />
-
-    <TextView
-        android:id="@android:id/empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FF0000"
-        android:text="No data" />
-
+        android:orientation="horizontal">
+        <com.thebridgestudio.amwayconference.views.ScheduleDateView
+            android:id="@+id/schedule_date_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dip"
+            android:layout_marginTop="-28dip">
+        </com.thebridgestudio.amwayconference.views.ScheduleDateView>
+        <com.emilsjolander.components.stickylistheaders.StickyListHeadersListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"/>
+    </LinearLayout>
 </LinearLayout>

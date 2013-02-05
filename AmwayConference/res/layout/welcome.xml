@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
-        android:background="@drawable/taipei_landscape"
+        android:background="@drawable/banner_taipei_landscape"
         android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingTop="12dp" >
@@ -86,15 +86,4 @@
             android:background="@drawable/button_yellow_shadow" />
 
     </LinearLayout>
-
-    <!--
-        <Button
-        android:id="@+id/message_center"
-        android:layout_width="120dp"
-        android:layout_height="60dp"
-        android:gravity="center"
-        android:text="@string/message_center"
-        android:visibility="gone" />
-    -->
-
 </LinearLayout>

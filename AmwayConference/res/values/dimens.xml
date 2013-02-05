@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="normal_margin">16dip</dimen>
+    <dimen name="schedule_date_view_width">48dip</dimen>
+    <dimen name="schedule_date_height">58dip</dimen>
 </resources>
