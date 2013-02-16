@@ -5,16 +5,24 @@
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/schedule_content"
+        android:layout_width="match_parent" 
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="24dip"
+        android:layout_marginRight="12dip"/>
+    
+    <include
+        android:id="@+id/schedule_tips" 
+        layout="@layout/schedule_item_tips"
+        android:visibility="gone"/>
+    
+    <LinearLayout 
+        android:id="@+id/schedule_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/text2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:orientation="vertical">
+    </LinearLayout>
 
 </LinearLayout>

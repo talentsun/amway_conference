@@ -1,5 +1,5 @@
 #
-# generated on 2013/02/04 09:10:29
+# generated on 2013/02/07 04:56:50
 #
 # --table-start--
 dataClass=com.thebridgestudio.amwayconference.models.Message
@@ -44,6 +44,9 @@ fieldName=time
 fieldName=scheduleDetails
 foreignCollection=true
 # --field-end--
+# --field-start--
+fieldName=tips
+# --field-end--
 # --table-fields-end--
 # --table-end--
 #################################
@@ -72,9 +75,6 @@ fieldName=feature
 # --field-end--
 # --field-start--
 fieldName=type
-# --field-end--
-# --field-start--
-fieldName=tips
 # --field-end--
 # --table-fields-end--
 # --table-end--

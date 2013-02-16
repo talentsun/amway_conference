@@ -14,18 +14,15 @@ import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,7 +76,6 @@ public class MessageActivity extends FragmentActivity implements
         if (savedInstanceState != null) {
             mFirstVisible = savedInstanceState.getInt(KEY_MESSAGE_LIST_POSITION);
         }
-
         mListView.setSelection(mFirstVisible);
 
         try {
@@ -107,8 +103,6 @@ public class MessageActivity extends FragmentActivity implements
         private List<Message> mData;
         private String[] mDayOfWeeks;
         
-        
-        
         public MessageAdapter(Context context) {
             mInflater = LayoutInflater.from(context);
             mDayOfWeeks = getResources().getStringArray(R.array.day_of_week);
@@ -119,8 +113,6 @@ public class MessageActivity extends FragmentActivity implements
         public boolean isEnabled(int position) {
             return false;
         }
-
-
 
         public void setData(List<Message> data) {
             mData.clear();
@@ -201,7 +193,7 @@ public class MessageActivity extends FragmentActivity implements
             HeaderViewHolder holder;
             if (convertView == null) {
                 holder = new HeaderViewHolder();
-                convertView = mInflater.inflate(R.layout.message_items_header, parent, false);
+                convertView = mInflater.inflate(R.layout.dateline, parent, false);
                 holder.dateText = (TextView) convertView.findViewById(R.id.date);
                 convertView.setTag(holder);
             } else {

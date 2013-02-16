@@ -50,4 +50,6 @@
     <!-- schedule -->
     <string name="meeting_order">会议顺序号：</string>
     <string name="today">今天</string>
+    <string name="warmtips">温馨提示</string>
+    <string name="warmtips_format">&#8226;    %1$s</string>
 </resources>

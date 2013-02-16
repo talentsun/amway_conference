@@ -3,4 +3,6 @@
     <dimen name="normal_margin">16dip</dimen>
     <dimen name="schedule_date_view_width">48dip</dimen>
     <dimen name="schedule_date_height">58dip</dimen>
+    <dimen name="small_margin">8dip</dimen>
+    <dimen name="tip_margin_left">24dip</dimen>
 </resources>

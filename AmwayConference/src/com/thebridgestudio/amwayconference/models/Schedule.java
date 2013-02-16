@@ -1,7 +1,5 @@
 package com.thebridgestudio.amwayconference.models;
 
-import java.util.Date;
-
 import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
@@ -23,15 +21,19 @@ public class Schedule {
     
     @ForeignCollectionField(eager=false)
     private ForeignCollection<ScheduleDetail> scheduleDetails;
+
+    @DatabaseField
+    private String tips;
     
     public Schedule() {
     }
     
-    public Schedule(long id, String content, long date, String time) {
+    public Schedule(long id, String content, long date, String time, String tips) {
         this.id = id;
         this.content = content;
         this.date = date;
         this.time = time;
+        this.tips = tips;
     }
 
     public long getId() {
@@ -72,5 +74,13 @@ public class Schedule {
 
     public void setDetails(ForeignCollection<ScheduleDetail> details) {
         this.scheduleDetails = details;
+    }
+
+    public String getTips() {
+        return tips;
+    }
+
+    public void setTips(String tips) {
+        this.tips = tips;
     }
 }

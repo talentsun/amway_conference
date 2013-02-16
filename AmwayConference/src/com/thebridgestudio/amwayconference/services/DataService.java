@@ -135,6 +135,9 @@ public class DataService extends IntentService {
     }
     
     private void syncSchedule() throws APIException {
+        //for test
+        Config.setAccount(DataService.this, "test");
+        
         if (TextUtils.isEmpty(Config.getAccount(this))) {
             Log.i(TAG, "no account, stop sync schedule");
             return;
@@ -168,7 +171,7 @@ public class DataService extends IntentService {
                     for (SyncScheduleResponse.Schedule schedule : response.getData().getSchedules()) {
                         if (schedule.getValid() == 1) {
                             try {
-                                mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime()));
+                                mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime(),schedule.getTips()));
                                 Log.i(TAG, "create schedule #" + schedule.getId());
                             } catch (SQLException e) {
                                 e.printStackTrace();
@@ -185,7 +188,7 @@ public class DataService extends IntentService {
                         if (detail.getValid() == 1) {
                             try {
                                 if (mScheduleDao.idExists(detail.getSid())) {
-                                    mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getTips()));
+                                    mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
                                     Log.i(TAG, "create schedule detail #" + detail.getId());
                                 } else {
                                     Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because schedule #" + detail.getSid() + " not exist");
@@ -209,12 +212,13 @@ public class DataService extends IntentService {
                                     updateBuilder.updateColumnValue("date", schedule.getDate());
                                     updateBuilder.updateColumnValue("time", schedule.getTime());
                                     updateBuilder.updateColumnValue("content", schedule.getContent());
+                                    updateBuilder.updateColumnValue("tips", schedule.getTips());
                                     updateBuilder.where().idEq(schedule.getId());
                                     updateBuilder.update();
                                     
                                     Log.i(TAG, "update schedule #" + schedule.getId());
                                 } else {
-                                    mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime()));
+                                    mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime(), schedule.getTips()));
                                     Log.i(TAG, "create schedule #" + schedule.getId());
                                 }
                             } else if (schedule.getValid() == 0) {
@@ -245,7 +249,7 @@ public class DataService extends IntentService {
 
                                         Log.i(TAG, "update schedule detail #" + detail.getId());
                                     } else {
-                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType(), detail.getTips()));
+                                        mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
                                         Log.i(TAG, "create schedule detail #" + detail.getId());
                                     }
                                 } else {

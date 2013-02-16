@@ -23,20 +23,16 @@ public class ScheduleDetail {
     @DatabaseField
     private int type;
     
-    @DatabaseField
-    private String tips;
-    
     public ScheduleDetail() {
     }
 
-    public ScheduleDetail(long id, Schedule schedule, String content, String time, String feature, int type, String tips) {
+    public ScheduleDetail(long id, Schedule schedule, String content, String time, String feature, int type) {
         this.id = id;
         this.schedule = schedule;
         this.content = content;
         this.time = time;
         this.feature = feature;
         this.type = type;
-        this.tips = tips;
     }
 
     public long getId() {
@@ -86,12 +82,8 @@ public class ScheduleDetail {
     public void setFeature(String feature) {
         this.feature = feature;
     }
-
-    public String getTips() {
-        return tips;
-    }
-
-    public void setTips(String tips) {
-        this.tips = tips;
+    
+    public enum Type {
+        Bike, Dinner, Flight, Hotel, Meal, OnTheRoad, Play, Shopping
     }
 }

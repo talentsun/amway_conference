@@ -85,6 +85,9 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
         
         @JsonProperty(value="content")
         private String content;
+
+        @JsonProperty(value="tips")
+        private String tips;
         
         @JsonProperty(value="valid")
         private int valid;
@@ -120,6 +123,14 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
         public void setContent(String content) {
             this.content = content;
         }
+        
+        public String getTips() {
+            return tips;
+        }
+
+        public void setTips(String tips) {
+            this.tips = tips;
+        }
 
         public int getValid() {
             return valid;
@@ -152,9 +163,6 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
         
         @JsonProperty(value="type")
         private int type;
-        
-        @JsonProperty(value="string")
-        private String tips;
         
         @JsonProperty(value="valid")
         private int valid;
@@ -213,14 +221,6 @@ public class SyncScheduleResponse extends AbstractJSONResponse {
 
         public void setValid(int valid) {
             this.valid = valid;
-        }
-
-        public String getTips() {
-            return tips;
-        }
-
-        public void setTips(String tips) {
-            this.tips = tips;
         }
 
         public ScheduleDetail() {

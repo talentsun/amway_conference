@@ -91,21 +91,26 @@
             android:layout_marginLeft="44dip"
             android:layout_alignParentBottom="true"/>
     </RelativeLayout>
-    <LinearLayout 
+    <RelativeLayout 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_marginLeft="12dip"
+        android:layout_marginTop="-30dip">
         <com.thebridgestudio.amwayconference.views.ScheduleDateView
-            android:id="@+id/schedule_date_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dip"
-            android:layout_marginTop="-28dip">
+          android:id="@+id/schedule_date_view"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentLeft="true">
         </com.thebridgestudio.amwayconference.views.ScheduleDateView>
         <com.emilsjolander.components.stickylistheaders.StickyListHeadersListView
             android:id="@+id/list"
-            android:layout_width="match_parent"
+            android:layout_width="240dip"
             android:layout_height="match_parent"
-            android:clipToPadding="false"/>
-    </LinearLayout>
+            android:clipToPadding="false"
+            android:layout_marginTop="30dip"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:divider="@null"/>
+    </RelativeLayout>
 </LinearLayout>
