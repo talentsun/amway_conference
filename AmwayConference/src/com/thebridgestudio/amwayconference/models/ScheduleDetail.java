@@ -5,6 +5,15 @@ import com.j256.ormlite.table.DatabaseTable;
 
 @DatabaseTable(tableName="schedule_details")
 public class ScheduleDetail {
+    public static final int FLIGHT = 1;
+    public static final int ONTHEROAD = 2;
+    public static final int BIKE = 3;
+    public static final int MEAL = 4;
+    public static final int DINNER = 5;
+    public static final int HOTEL = 6;
+    public static final int PLAY = 7;
+    public static final int SHOPPING = 8;
+    
     @DatabaseField(id=true, columnName="_id")
     private long id;
     
@@ -81,9 +90,5 @@ public class ScheduleDetail {
 
     public void setFeature(String feature) {
         this.feature = feature;
-    }
-    
-    public enum Type {
-        Bike, Dinner, Flight, Hotel, Meal, OnTheRoad, Play, Shopping
     }
 }

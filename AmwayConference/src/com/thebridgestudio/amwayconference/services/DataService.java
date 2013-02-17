@@ -4,7 +4,10 @@ import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
 import it.restrung.rest.exceptions.APIException;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -64,6 +67,7 @@ public class DataService extends IntentService {
             } else if (Intents.ACTION_SYNC_SCHEDULE.equalsIgnoreCase(action)) {
                 try {
                     syncSchedule();
+                    syncScheduleDate();
                 } catch (APIException e) {
                     Log.e(TAG, "sync schedule failed");
                     e.printStackTrace();
@@ -71,6 +75,7 @@ public class DataService extends IntentService {
             } else if (Intents.ACTION_SYNC_ALL.equalsIgnoreCase(action)) {
                 try {
                     syncSchedule();
+                    syncScheduleDate();
                 } catch (APIException e) {
                     Log.e(TAG, "sync schedule failed");
                     e.printStackTrace();
@@ -270,6 +275,29 @@ public class DataService extends IntentService {
             Config.setLastSyncScheduleTime(DataService.this, System.currentTimeMillis());
         } else {
             Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+        }
+    }
+    
+    private void syncScheduleDate() {
+        if (mScheduleDao != null) {
+            try {
+                Calendar calendar = Calendar.getInstance();
+                
+                Schedule startSchedule = mScheduleDao.queryBuilder().selectColumns("date").orderBy("date", true).queryForFirst();
+                if (startSchedule != null) {
+                    calendar.setTimeInMillis(startSchedule.getDate());
+                    Config.setStartDate(this, new SimpleDateFormat("MM.dd").format(calendar.getTime()));
+                }
+                
+                Schedule endSchedule = mScheduleDao.queryBuilder().selectColumns("date").orderBy("date", false).queryForFirst();
+                if (endSchedule != null) {
+                    calendar.setTimeInMillis(endSchedule.getDate());
+                    Config.setEndDate(this, new SimpleDateFormat("MM.dd").format(calendar.getTime()));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                Log.e(TAG, "sync schedule date failed");
+            }
         }
     }
 

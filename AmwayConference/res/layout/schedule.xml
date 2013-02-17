@@ -44,7 +44,6 @@
             android:id="@+id/meeting_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="152781"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true" 
             android:textSize="18sp"
@@ -61,7 +60,7 @@
             />
         
         <TextView 
-            android:text="蒋宇欣"
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="36sp"
@@ -84,7 +83,6 @@
             android:id="@+id/date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="3.12-3.16"
             android:textSize="14sp"
             android:textColor="@android:color/white"
             android:layout_alignParentLeft="true"

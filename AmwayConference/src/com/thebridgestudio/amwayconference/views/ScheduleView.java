@@ -1,31 +1,28 @@
 package com.thebridgestudio.amwayconference.views;
 
+import android.content.Context;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.models.ScheduleDetail;
 
-import android.content.Context;
-import android.text.Html;
-import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-
 public class ScheduleView extends LinearLayout {
     private static final String TAG = "ScheduleView";
     private static final int[] ICONS = new int[] {
-        R.drawable.icon_bike,
-        R.drawable.icon_dinner_party,
+        0,
         R.drawable.icon_flight,
-        R.drawable.icon_hotel,
-        R.drawable.icon_meal,
         R.drawable.icon_ontheroad,
+        R.drawable.icon_bike,
+        R.drawable.icon_meal,
+        R.drawable.icon_dinner_party,
+        R.drawable.icon_hotel,
         R.drawable.icon_play,
         R.drawable.icon_shopping
     };
@@ -68,7 +65,7 @@ public class ScheduleView extends LinearLayout {
         LinearLayout detailsView = (LinearLayout) findViewById(R.id.schedule_details);
         detailsView.removeAllViews();
         for (ScheduleDetail detail : schedule.getScheduleDetails()) {
-            if (detail.getType() != ScheduleDetail.Type.Flight.ordinal()) {
+            if (detail.getType() != ScheduleDetail.FLIGHT) {
                 LinearLayout featureView = (LinearLayout) mInflater.inflate(R.layout.schedule_item_feature, null);
                 
                 ImageView typeImageView = (ImageView) featureView.findViewById(R.id.schedule_detail_type);

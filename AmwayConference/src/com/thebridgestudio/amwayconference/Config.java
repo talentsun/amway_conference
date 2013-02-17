@@ -9,6 +9,8 @@ public class Config {
     private static final String KEY_LAST_SYNC_SCHEDULE_TIME = "last_sync_schedule_time";
     private static final String KEY_ACCOUNT = "account";
     private static final String KEY_NAME = "name";
+    private static final String KEY_START_DATE = "start_date";
+    private static final String KEY_END_DATE = "end_date";
     
     public static long getLastSyncMessageTime(Context context) {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
@@ -55,6 +57,30 @@ public class Config {
         SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putString(KEY_NAME, name);
+        editor.commit();
+    }
+    
+    public static String getStartDate(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        return settings.getString(KEY_START_DATE, null);
+    }
+    
+    public static void setStartDate(Context context, String date) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(KEY_START_DATE, date);
+        editor.commit();
+    }
+    
+    public static String getEndDate(Context context) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        return settings.getString(KEY_END_DATE, null);
+    }
+    
+    public static void setEndDate(Context context, String date) {
+        SharedPreferences settings = context.getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putString(KEY_END_DATE, date);
         editor.commit();
     }
 }
