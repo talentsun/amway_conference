@@ -104,11 +104,11 @@
         <com.emilsjolander.components.stickylistheaders.StickyListHeadersListView
             android:id="@+id/list"
             android:layout_width="240dip"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dip"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:clipToPadding="false"
             android:divider="@null"/>
     </RelativeLayout>
 </LinearLayout>

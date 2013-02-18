@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -31,7 +30,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
@@ -57,6 +56,7 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
             mDao = getHelper().getDao(Schedule.class);
             mAdapter = new ScheduleAdapter(this);
             mListView.setAdapter(mAdapter);
+            mListView.setHeaderDividersEnabled(false);
             
             getSupportLoaderManager().initLoader(0, null, this);
         } catch (SQLException e) {
@@ -72,7 +72,15 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
                 
                 @Override
                 public void onDateSelected(int date) {
-                    mListView.smoothScrollBy(computeOffset(mListView.getFirstVisiblePosition(), mAdapter.getPositionByDay(date)), 100);
+                    final int day = date;
+                    mListView.smoothScrollBy(computeOffset(mListView.getFirstVisiblePosition(), mAdapter.getPositionByDay(day)), 50);
+                    mListView.postDelayed(new Runnable() {
+                        
+                        @Override
+                        public void run() {
+                            mListView.smoothScrollBy(computeOffset(mListView.getFirstVisiblePosition(), mAdapter.getPositionByDay(day)), 50);
+                        }
+                    }, 50);
                 }
             });
         } else {
@@ -81,24 +89,38 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
     }
     
     private int computeOffset(int fromPosition, int toPosition) {
+        Log.i(TAG, "from position: " + fromPosition);
+        Log.i(TAG, "to position: " + toPosition);
+        
         int toOffset = 0;
         for (int i = 0; i < toPosition; i++) {
             View listItem = mAdapter.getView(i, null, mListView);
             listItem.measure(0, 0);
+            Log.i(TAG, "toOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
             toOffset += listItem.getMeasuredHeight();
         }
-        toOffset += getResources().getDimensionPixelSize(R.dimen.schedule_dateline_height) * mAdapter.getHeaderCount(toPosition);
+        Log.i(TAG, "toOffset-Height: " + toOffset);
         
         int fromOffset = 0;
         for (int i=0; i < fromPosition; i++) {
             View listItem = mAdapter.getView(i, null, mListView);
             listItem.measure(0, 0);
+            Log.i(TAG, "fromOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
             fromOffset += listItem.getMeasuredHeight();
         }
-        fromOffset += getResources().getDimensionPixelSize(R.dimen.schedule_dateline_height) * mAdapter.getHeaderCount(fromPosition);
+        Log.i(TAG, "fisrtChild-Top: " + mListView.getChildAt(0).getTop());
         fromOffset -= mListView.getChildAt(0).getTop();
+        Log.i(TAG, "fromOffset-Height: " + fromOffset);
         
-        return toOffset - fromOffset;
+        int headersHeight = getResources().getDimensionPixelSize(
+                R.dimen.schedule_dateline_height)
+                * (mAdapter.getHeaderCount(toPosition) - mAdapter.getHeaderCount(fromPosition));
+        Log.i(TAG, "headers height: " + headersHeight);
+//        if (toOffset >= fromOffset) {
+        return toOffset - fromOffset + headersHeight;
+//        } else {
+//            return toOffset - fromOffset;
+//        }
     }
     
     private List<Integer> getScheduleDates() {
@@ -246,6 +268,10 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
             return count;
         }
         
+        public int getHeaderCount() {
+            return mDay2Position.size();
+        }
+        
         @Override
         public int getCount() {
             return mData.size();
@@ -272,6 +298,18 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
                 scheduleView.setSchedule((Schedule) getItem(position));
             }
             
+            ViewTreeObserver observer = convertView.getViewTreeObserver();
+            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                
+                @Override
+                public void onGlobalLayout() {
+                    // TODO Auto-generated method stub
+                    
+                }
+            });
+            
+            convertView.measure(0, 0);
+            Log.i(TAG, position + " view height: " + convertView.getMeasuredHeight());
             return convertView;
         }
 
@@ -298,6 +336,8 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
             calendar.setTimeInMillis(schedule.getDate());
             holder.dateText.setText(String.format("%s %s", new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()), mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 
+            convertView.measure(0, 0);
+            Log.i(TAG, "header height: " + convertView.getMeasuredHeight());
             return convertView;
         }
         

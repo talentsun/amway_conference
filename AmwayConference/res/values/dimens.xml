@@ -9,5 +9,5 @@
     <dimen name="schedule_item_margin">24dip</dimen>
     <dimen name="schedule_detail_margin">16dip</dimen>
     <dimen name="schedule_title_height">18dip</dimen>
-    <dimen name="schedule_dateline_height">18dip</dimen>
+    <dimen name="schedule_dateline_height">20dip</dimen>
 </resources>
