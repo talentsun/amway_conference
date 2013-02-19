@@ -29,13 +29,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/line"></LinearLayout>
-        <TextView 
+        <LinearLayout 
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/no_message"
-            android:textColor="@color/black"
-            android:textSize="18sp"/>
+            android:gravity="center">
+            <com.thebridgestudio.amwayconference.views.LoadingView
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </com.thebridgestudio.amwayconference.views.LoadingView>
+            <TextView 
+                android:id="@+id/no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_message"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="gone"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

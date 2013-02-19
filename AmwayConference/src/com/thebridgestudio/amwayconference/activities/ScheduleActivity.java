@@ -16,6 +16,7 @@ import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Schedule;
+import com.thebridgestudio.amwayconference.views.LoadingView;
 import com.thebridgestudio.amwayconference.views.ScheduleDateView;
 import com.thebridgestudio.amwayconference.views.ScheduleView;
 
@@ -35,6 +36,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout.LayoutParams;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,21 +53,31 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
     private boolean isFold = false;
     private int mHeaderFoldOffset = 0;
     
+    private LoadingView mLoadingView;
+    private TextView mNoDataView;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule);
         
+        initHeaderView();
+        
+        mHeaderView = (RelativeLayout) findViewById(R.id.header);
+        mHeaderFoldOffset = getResources().getDimensionPixelSize(R.dimen.schedule_header_fold_offset);
+        
+        mLoadingView = (LoadingView) findViewById(R.id.loading);
+        mNoDataView = (TextView) findViewById(R.id.no_data);
+        
         mListView = (StickyListHeadersListView) findViewById(R.id.list);
         
-        initHeaderView();
+        LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
+        mListView.setEmptyView(emptyView);
         
         try {
             mDao = getHelper().getDao(Schedule.class);
             mAdapter = new ScheduleAdapter(this);
             mListView.setAdapter(mAdapter);
-            mListView.setHeaderDividersEnabled(false);
-            
             mListView.setOnScrollListener(new OnScrollListener() {
                 
                 @Override
@@ -90,6 +102,7 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
                 }
             });
             
+            showLoading();
             getSupportLoaderManager().initLoader(0, null, this);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -118,39 +131,27 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
         } else {
             mScheduleDateView.setVisibility(View.GONE);
         }
-        
-        mHeaderView = (RelativeLayout) findViewById(R.id.header);
-        mHeaderFoldOffset = getResources().getDimensionPixelSize(R.dimen.schedule_header_fold_offset);
     }
     
     private int computeOffset(int fromPosition, int toPosition) {
-//        Log.i(TAG, "from position: " + fromPosition);
-//        Log.i(TAG, "to position: " + toPosition);
-        
         int toOffset = 0;
         for (int i = 0; i < toPosition; i++) {
             View listItem = mAdapter.getView(i, null, mListView);
             listItem.measure(0, 0);
-//            Log.i(TAG, "toOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
             toOffset += listItem.getMeasuredHeight();
         }
-//        Log.i(TAG, "toOffset-Height: " + toOffset);
         
         int fromOffset = 0;
         for (int i=0; i < fromPosition; i++) {
             View listItem = mAdapter.getView(i, null, mListView);
             listItem.measure(0, 0);
-//            Log.i(TAG, "fromOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
             fromOffset += listItem.getMeasuredHeight();
         }
-//        Log.i(TAG, "fisrtChild-Top: " + mListView.getChildAt(0).getTop());
-        fromOffset -= mListView.getChildAt(0).getTop();
-//        Log.i(TAG, "fromOffset-Height: " + fromOffset);
+        fromOffset -= mListView.getChildAt(0) == null ? 0 : mListView.getChildAt(0).getTop();
         
         int headersHeight = getResources().getDimensionPixelSize(
                 R.dimen.schedule_dateline_height)
                 * (mAdapter.getHeaderCount(toPosition) - mAdapter.getHeaderCount(fromPosition));
-//        Log.i(TAG, "headers height: " + headersHeight);
         return toOffset - fromOffset + headersHeight;
     }
     
@@ -354,9 +355,7 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
                     
                 }
             });
-            
-            convertView.measure(0, 0);
-            Log.i(TAG, position + " view height: " + convertView.getMeasuredHeight());
+
             return convertView;
         }
 
@@ -383,8 +382,6 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
             calendar.setTimeInMillis(schedule.getDate());
             holder.dateText.setText(String.format("%s %s", new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()), mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 
-            convertView.measure(0, 0);
-            Log.i(TAG, "header height: " + convertView.getMeasuredHeight());
             return convertView;
         }
         
@@ -426,7 +423,6 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
         }
         
     }
-    
 
     @Override
     public Loader<List<Schedule>> onCreateLoader(int arg0, Bundle arg1) {
@@ -436,10 +432,26 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
     @Override
     public void onLoadFinished(Loader<List<Schedule>> arg0, List<Schedule> arg1) {
         mAdapter.setData(arg1);
+        if (!mAdapter.isEmpty()) {
+            mScheduleDateView.setVisibility(View.VISIBLE);
+        }
+        showNoData();
     }
 
     @Override
     public void onLoaderReset(Loader<List<Schedule>> arg0) {
         mAdapter.clear();
+        mScheduleDateView.setVisibility(View.GONE);
+        showNoData();
+    }
+    
+    private void showLoading() {
+        mLoadingView.setVisibility(View.VISIBLE);
+        mNoDataView.setVisibility(View.GONE);
+    }
+    
+    private void showNoData() {
+        mLoadingView.setVisibility(View.GONE);
+        mNoDataView.setVisibility(View.VISIBLE);
     }
 }

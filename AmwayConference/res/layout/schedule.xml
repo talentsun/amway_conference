@@ -100,7 +100,8 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:layout_alignParentTop="true"
-          android:layout_alignParentLeft="true">
+          android:layout_alignParentLeft="true"
+          android:visibility="gone">
         </com.thebridgestudio.amwayconference.views.ScheduleDateView>
         <com.emilsjolander.components.stickylistheaders.StickyListHeadersListView
             android:id="@+id/list"
@@ -111,5 +112,29 @@
             android:layout_alignParentRight="true"
             android:clipToPadding="false"
             android:divider="@null"/>
+        <LinearLayout 
+            android:id="@android:id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="30dip"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:gravity="center">
+            <com.thebridgestudio.amwayconference.views.LoadingView
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </com.thebridgestudio.amwayconference.views.LoadingView>
+            <TextView
+                android:id="@+id/no_data"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_schedule"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:visibility="gone">
+            </TextView>
+        </LinearLayout>
     </RelativeLayout>
 </LinearLayout>

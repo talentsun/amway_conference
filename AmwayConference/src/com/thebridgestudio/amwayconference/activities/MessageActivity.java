@@ -37,6 +37,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
+import com.thebridgestudio.amwayconference.views.LoadingView;
 
 public class MessageActivity extends FragmentActivity implements
         LoaderCallbacks<List<Message>>, OnScrollListener,
@@ -49,6 +50,9 @@ public class MessageActivity extends FragmentActivity implements
     private DatabaseHelper mDatabaseHelper = null;
     private Dao<Message, Long> mDao = null;
     private StickyListHeadersListView mListView = null;
+    
+    private LoadingView mLoadingView;
+    private TextView mNoDataView;
     
     @Override
     protected void onDestroy() {
@@ -70,6 +74,9 @@ public class MessageActivity extends FragmentActivity implements
         mListView.setOnItemClickListener(this);
         mListView.setOnHeaderClickListener(this);
         
+        mLoadingView = (LoadingView) findViewById(R.id.loading);
+        mNoDataView = (TextView) findViewById(R.id.no_data);
+        
         LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
         mListView.setEmptyView(emptyView);
 
@@ -83,6 +90,7 @@ public class MessageActivity extends FragmentActivity implements
             mAdapter = new MessageAdapter(this);
             mListView.setAdapter(mAdapter);
             
+            showLoading();
             getSupportLoaderManager().initLoader(0, null, this);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -295,10 +303,22 @@ public class MessageActivity extends FragmentActivity implements
     @Override
     public void onLoadFinished(Loader<List<Message>> arg0, List<Message> arg1) {
         mAdapter.setData(arg1);
+        showNoData();
     }
 
     @Override
     public void onLoaderReset(Loader<List<Message>> arg0) {
         mAdapter.clear();
+        showNoData();
+    }
+    
+    private void showLoading() {
+        mLoadingView.setVisibility(View.VISIBLE);
+        mNoDataView.setVisibility(View.GONE);
+    }
+    
+    private void showNoData() {
+        mLoadingView.setVisibility(View.GONE);
+        mNoDataView.setVisibility(View.VISIBLE);
     }
 }
