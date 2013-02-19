@@ -31,7 +31,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
+import android.widget.LinearLayout.LayoutParams;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class ScheduleActivity extends FragmentActivity implements LoaderCallbacks<List<Schedule>> {
@@ -42,6 +46,10 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
     private DatabaseHelper mDatabaseHelper;
     private Dao<Schedule, Long> mDao;
     private ScheduleAdapter mAdapter;
+    
+    private RelativeLayout mHeaderView;
+    private boolean isFold = false;
+    private int mHeaderFoldOffset = 0;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +65,30 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
             mAdapter = new ScheduleAdapter(this);
             mListView.setAdapter(mAdapter);
             mListView.setHeaderDividersEnabled(false);
+            
+            mListView.setOnScrollListener(new OnScrollListener() {
+                
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                    if (scrollState == SCROLL_STATE_IDLE) {
+                        if (mListView.getFirstVisiblePosition() == 0
+                                && mListView.getChildAt(0).getTop() == 0) {
+                            if (isFold) {
+                                unfoldHeader();
+                            }
+                        } else {
+                            if (!isFold) {
+                                foldHeader();
+                            }
+                        }
+                    }
+                }
+                
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem,
+                        int visibleItemCount, int totalItemCount) {
+                }
+            });
             
             getSupportLoaderManager().initLoader(0, null, this);
         } catch (SQLException e) {
@@ -86,6 +118,9 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
         } else {
             mScheduleDateView.setVisibility(View.GONE);
         }
+        
+        mHeaderView = (RelativeLayout) findViewById(R.id.header);
+        mHeaderFoldOffset = getResources().getDimensionPixelSize(R.dimen.schedule_header_fold_offset);
     }
     
     private int computeOffset(int fromPosition, int toPosition) {
@@ -146,7 +181,7 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
     
     private void initHeaderView() {
         String account = Config.getAccount(this);
-        String name = Config.getAccount(this);
+        String name = Config.getName(this);
         String startDate = Config.getStartDate(this);
         String endDate = Config.getEndDate(this);
         
@@ -165,6 +200,22 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
             TextView dateView = (TextView) findViewById(R.id.date);
             dateView.setText(scheduleDate);
         }
+    }
+    
+    private void unfoldHeader() {
+        LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
+        layoutParams.topMargin = 0;
+        mHeaderView.setLayoutParams(layoutParams);
+        
+        isFold = false;
+    }
+    
+    private void foldHeader() {
+        LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
+        layoutParams.topMargin = -(mHeaderFoldOffset);
+        mHeaderView.setLayoutParams(layoutParams);
+        
+        isFold = true;
     }
 
     @Override
