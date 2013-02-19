@@ -140,10 +140,6 @@ public class DataService extends IntentService {
     }
     
     private void syncSchedule() throws APIException {
-        //for test
-        Config.setAccount(DataService.this, "A0001A");
-        Config.setName(DataService.this, "郑再添");
-        
         if (TextUtils.isEmpty(Config.getAccount(this))) {
             Log.i(TAG, "no account, stop sync schedule");
             return;

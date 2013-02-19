@@ -40,7 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class ScheduleActivity extends FragmentActivity implements LoaderCallbacks<List<Schedule>> {
+public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<List<Schedule>> {
     private static final String TAG = "ScheduleActivity";
     
     private ScheduleDateView mScheduleDateView;
@@ -61,6 +61,7 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule);
         
+        initSidebar();
         initHeaderView();
         
         mHeaderView = (RelativeLayout) findViewById(R.id.header);
@@ -68,6 +69,7 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
         
         mLoadingView = (LoadingView) findViewById(R.id.loading);
         mNoDataView = (TextView) findViewById(R.id.no_data);
+        
         
         mListView = (StickyListHeadersListView) findViewById(R.id.list);
         

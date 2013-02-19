@@ -39,7 +39,7 @@ import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.views.LoadingView;
 
-public class MessageActivity extends FragmentActivity implements
+public class MessageActivity extends BaseActivity implements
         LoaderCallbacks<List<Message>>, OnScrollListener,
         AdapterView.OnItemClickListener, OnHeaderClickListener {
     private static final String TAG = "MessageActivity";

@@ -10,8 +10,12 @@
     <item name="return_scan_result" type="id"/>
     <item name="search_book_contents_failed" type="id"/>
     <item name="search_book_contents_succeeded" type="id"/>
-    
     <item name="animation_layout_sidebar" type="id"/>
     <item name="animation_layout_content" type="id"/>
+    <item name="schedule_item" type="id"/>
+    <item name="message_item" type="id"/>
+    <item name="survey_item" type="id"/>
+    <item name="map_item" type="id"/>
+    <item name="scenery_item" type="id"/>
 
 </resources>
