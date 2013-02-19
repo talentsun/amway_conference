@@ -103,13 +103,13 @@ public class DataService extends IntentService {
             public void onResults(SyncMessageResponse arg0) {
             }
             
-        }, String.format("http://www.thebridgestudio.net/conference/message.sync?format=json&date=%s", Config.getLastSyncMessageTime(this)), 2 * 1000);
+        }, String.format("http://a.brixd.com/conference/remote?method=message.sync&account=%s&date=%s", Config.getAccount(this), Config.getLastSyncMessageTime(this)), 2 * 1000);
         
         if (mMessageDao != null && response != null
                 && response.getMessages() != null && response.getResult() == 1) {
             for(SyncMessageResponse.Message msg : response.getMessages()) {
                 try {
-                    if (msg.getValid() == 1) {
+                    if (msg.getValid()) {
                         if (mMessageDao.idExists(msg.getId())) {
                             UpdateBuilder<Message, Long> updateBuilder = mMessageDao.updateBuilder();
                             updateBuilder.updateColumnValue("content", msg.getContent());
@@ -141,7 +141,8 @@ public class DataService extends IntentService {
     
     private void syncSchedule() throws APIException {
         //for test
-        Config.setAccount(DataService.this, "test");
+        Config.setAccount(DataService.this, "A0001A");
+        Config.setName(DataService.this, "郑再添");
         
         if (TextUtils.isEmpty(Config.getAccount(this))) {
             Log.i(TAG, "no account, stop sync schedule");
@@ -158,7 +159,7 @@ public class DataService extends IntentService {
             @Override
             public void onResults(SyncScheduleResponse arg0) {
             }
-        }, String.format("http://www.thebridgestudio.net/conference/schedule.sync?format=json&account=%s&date=%s", Config.getAccount(this), Config.getLastSyncScheduleTime(this)), 2 * 1000);
+        }, String.format("http://a.brixd.com/conference/remote?method=schedule.sync&account=%s&date=%s", Config.getAccount(this), Config.getLastSyncScheduleTime(this)), 2 * 1000);
         
         if (mScheduleDao != null && response != null
                 && response.getData() != null && response.getResult() == 1) {
@@ -174,7 +175,7 @@ public class DataService extends IntentService {
 
                 if (response.getData().getSchedules() != null) {
                     for (SyncScheduleResponse.Schedule schedule : response.getData().getSchedules()) {
-                        if (schedule.getValid() == 1) {
+                        if (schedule.getValid()) {
                             try {
                                 mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime(),schedule.getTips()));
                                 Log.i(TAG, "create schedule #" + schedule.getId());
@@ -190,7 +191,7 @@ public class DataService extends IntentService {
                 
                 if (response.getData().getScheduleDetails() != null) {
                     for (SyncScheduleResponse.ScheduleDetail detail : response.getData().getScheduleDetails()) {
-                        if (detail.getValid() == 1) {
+                        if (detail.getValid()) {
                             try {
                                 if (mScheduleDao.idExists(detail.getSid())) {
                                     mScheduleDetailDao.create(new ScheduleDetail(detail.getId(), mScheduleDao.queryForId(detail.getSid()), detail.getContent(), detail.getTime(), detail.getFeature(), detail.getType()));
@@ -211,7 +212,7 @@ public class DataService extends IntentService {
                 if (response.getData().getSchedules() != null) {
                     for (SyncScheduleResponse.Schedule schedule : response.getData().getSchedules()) {
                         try {
-                            if (schedule.getValid() == 1) {
+                            if (schedule.getValid()) {
                                 if (mScheduleDao.idExists(schedule.getId())) {
                                     UpdateBuilder<Schedule, Long> updateBuilder = mScheduleDao.updateBuilder();
                                     updateBuilder.updateColumnValue("date", schedule.getDate());
@@ -226,7 +227,7 @@ public class DataService extends IntentService {
                                     mScheduleDao.create(new Schedule(schedule.getId(), schedule.getContent(), schedule.getDate(), schedule.getTime(), schedule.getTips()));
                                     Log.i(TAG, "create schedule #" + schedule.getId());
                                 }
-                            } else if (schedule.getValid() == 0) {
+                            } else if (!schedule.getValid()) {
                                 mScheduleDao.deleteById(schedule.getId());
                                 Log.i(TAG, "delete schedule #" + schedule.getId());
                             }
@@ -240,7 +241,7 @@ public class DataService extends IntentService {
                 if (response.getData().getScheduleDetails() != null) {
                     for (SyncScheduleResponse.ScheduleDetail detail : response.getData().getScheduleDetails()) {
                         try {
-                            if (detail.getValid() == 1) {
+                            if (detail.getValid()) {
                                 if (mScheduleDao.idExists(detail.getSid())) {
                                     if (mScheduleDetailDao.idExists(detail.getId())) {
                                         UpdateBuilder<ScheduleDetail, Long> updateBuilder = mScheduleDetailDao.updateBuilder();
@@ -274,6 +275,7 @@ public class DataService extends IntentService {
             
             Config.setLastSyncScheduleTime(DataService.this, System.currentTimeMillis());
         } else {
+            //FIXME when send hide message to this thread, it is already a dead thread
             Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
         }
     }

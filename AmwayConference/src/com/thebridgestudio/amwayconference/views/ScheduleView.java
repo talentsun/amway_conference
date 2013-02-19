@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,10 +77,12 @@ public class ScheduleView extends LinearLayout {
                 
                 TextView contentTextView = (TextView) featureView.findViewById(R.id.schedule_detail_content);
                 contentTextView.setText(detail.getContent());
-                
+
+                TextView featureTextView = (TextView) featureView.findViewById(R.id.schedule_detail_feature);
                 if (!TextUtils.isEmpty(detail.getFeature())) {
-                    TextView featureTextView = (TextView) featureView.findViewById(R.id.schedule_detail_feature);
                     featureTextView.setText(detail.getFeature());
+                } else {
+                    featureTextView.setVisibility(View.GONE);
                 }
                 
                 detailsView.addView(featureView);
@@ -91,10 +94,12 @@ public class ScheduleView extends LinearLayout {
                 
                 TextView contentTextView = (TextView) flightView.findViewById(R.id.schedule_flight_content);
                 contentTextView.setText(detail.getContent());
-                
+
+                TextView featureTextView = (TextView) flightView.findViewById(R.id.schedule_flight_feature);
                 if (!TextUtils.isEmpty(detail.getFeature())) {
-                    TextView featureTextView = (TextView) flightView.findViewById(R.id.schedule_flight_feature);
                     featureTextView.setText(detail.getFeature());
+                } else {
+                    featureTextView.setVisibility(View.GONE);
                 }
                 
                 detailsView.addView(flightView);

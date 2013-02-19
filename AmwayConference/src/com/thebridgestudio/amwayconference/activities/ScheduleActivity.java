@@ -89,38 +89,34 @@ public class ScheduleActivity extends FragmentActivity implements LoaderCallback
     }
     
     private int computeOffset(int fromPosition, int toPosition) {
-        Log.i(TAG, "from position: " + fromPosition);
-        Log.i(TAG, "to position: " + toPosition);
+//        Log.i(TAG, "from position: " + fromPosition);
+//        Log.i(TAG, "to position: " + toPosition);
         
         int toOffset = 0;
         for (int i = 0; i < toPosition; i++) {
             View listItem = mAdapter.getView(i, null, mListView);
             listItem.measure(0, 0);
-            Log.i(TAG, "toOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
+//            Log.i(TAG, "toOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
             toOffset += listItem.getMeasuredHeight();
         }
-        Log.i(TAG, "toOffset-Height: " + toOffset);
+//        Log.i(TAG, "toOffset-Height: " + toOffset);
         
         int fromOffset = 0;
         for (int i=0; i < fromPosition; i++) {
             View listItem = mAdapter.getView(i, null, mListView);
             listItem.measure(0, 0);
-            Log.i(TAG, "fromOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
+//            Log.i(TAG, "fromOffset-Position-" + i + "-Height: " + listItem.getMeasuredHeight());
             fromOffset += listItem.getMeasuredHeight();
         }
-        Log.i(TAG, "fisrtChild-Top: " + mListView.getChildAt(0).getTop());
+//        Log.i(TAG, "fisrtChild-Top: " + mListView.getChildAt(0).getTop());
         fromOffset -= mListView.getChildAt(0).getTop();
-        Log.i(TAG, "fromOffset-Height: " + fromOffset);
+//        Log.i(TAG, "fromOffset-Height: " + fromOffset);
         
         int headersHeight = getResources().getDimensionPixelSize(
                 R.dimen.schedule_dateline_height)
                 * (mAdapter.getHeaderCount(toPosition) - mAdapter.getHeaderCount(fromPosition));
-        Log.i(TAG, "headers height: " + headersHeight);
-//        if (toOffset >= fromOffset) {
+//        Log.i(TAG, "headers height: " + headersHeight);
         return toOffset - fromOffset + headersHeight;
-//        } else {
-//            return toOffset - fromOffset;
-//        }
     }
     
     private List<Integer> getScheduleDates() {

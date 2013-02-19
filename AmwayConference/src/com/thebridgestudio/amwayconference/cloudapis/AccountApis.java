@@ -27,7 +27,7 @@ public class AccountApis {
             return;
         }
         
-        String requestUrl = String.format("http://www.thebridgestudio.net/conference/user.login?format=json&account=%s", account);
+        String requestUrl = String.format("http://a.brixd.com/conference/remote?method=user.login&account=%s", account);
         if (!TextUtils.isEmpty(name)) {
             requestUrl = requestUrl + "&name=" + name;
         }

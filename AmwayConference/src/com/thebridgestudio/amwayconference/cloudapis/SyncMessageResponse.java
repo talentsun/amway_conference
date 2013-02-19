@@ -46,7 +46,7 @@ public class SyncMessageResponse extends AbstractJSONResponse {
         private String content;
         
         @JsonProperty(value="valid")
-        private int valid;
+        private boolean valid;
         
         public long getId() {
             return id;
@@ -66,10 +66,10 @@ public class SyncMessageResponse extends AbstractJSONResponse {
         public void setContent(String content) {
             this.content = content;
         }
-        public int getValid() {
+        public boolean getValid() {
             return valid;
         }
-        public void setValid(int valid) {
+        public void setValid(boolean valid) {
             this.valid = valid;
         }
         
