@@ -15,10 +15,17 @@
         android:background="@drawable/background"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="48dip" >
-
+            <ImageView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:layout_gravity="top"
+                android:src="@drawable/tag_blue" />
+            
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -26,7 +33,7 @@
                 android:text="@string/entry_message"
                 android:textColor="#333"
                 android:textSize="18sp" />
-        </LinearLayout>
+        </FrameLayout>
 
         <com.emilsjolander.components.stickylistheaders.StickyListHeadersListView
             android:id="@+id/list"
@@ -44,6 +51,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dip"
                 android:background="@drawable/line" >
             </LinearLayout>
 

@@ -8,7 +8,6 @@ import java.util.List;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -69,13 +68,19 @@ public class MessageActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.message);
+        
+        mLoadingView = (LoadingView) findViewById(R.id.loading);
+        mNoDataView = (TextView) findViewById(R.id.no_data);
+        
+        initListView(savedInstanceState);
+        initSidebar();
+    }
+
+    private void initListView(Bundle savedInstanceState) {
         mListView = (StickyListHeadersListView) findViewById(R.id.list);
         mListView.setOnScrollListener(this);
         mListView.setOnItemClickListener(this);
         mListView.setOnHeaderClickListener(this);
-        
-        mLoadingView = (LoadingView) findViewById(R.id.loading);
-        mNoDataView = (TextView) findViewById(R.id.no_data);
         
         LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
         mListView.setEmptyView(emptyView);
