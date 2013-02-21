@@ -1,0 +1,258 @@
+@charset "UTF-8";
+/* CSS Document */
+body {
+	 padding:0px; margin:0px;
+	 background-image:url(images/background.png);
+	 font-family:'微软雅黑', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;
+	 -webkit-user-select:none;-webkit-text-size-adjust:none;
+	 overflow:hidden;
+}
+a {
+	text-decoration:none;
+}
+#index{
+	position:absolute; top:0px; left:0px;
+	width:100%; height:100%;
+	z-index:1; display:none;
+}
+#pictures{
+	position:absolute; top:0px; left:0;
+	width:100%; height:0;
+	background-color:#333;
+	z-index:100; display:none;
+}
+.indexwrapper {
+	position:absolute; z-index:2;
+	top:0px; bottom:0px; left:0px; right:0px; width:100%;
+	overflow:auto;
+}
+#top {
+	width:100%; 
+	background-image: url(images/tab_bg.png); background-repeat:repeat-x; background-position:bottom;opacity:0.9;
+	position:absolute; display:block;
+	z-index:999; display:none;
+}
+title {
+	width:100%;  display:block;
+}
+header {
+	position:absolute; left:50%;width:100%; margin-left:-50%; z-index:1000;
+}
+@media (min-width: 320px){
+#top, title{
+	height:50px;
+}
+header {
+	position:absolute; left:50%; height:50px; width:100%; margin-left:-50%; z-index:1000;
+	text-align:center;font-size:24px; color:#333333; line-height:50px; display:block;
+}
+.back{
+	height:30px;width:30px; display: block; float:left; position:absolute; top:10px; left:10px;
+	background-image:url(images/back.png);background-repeat:no-repeat;background-size:contain;
+	z-index:1001;
+}
+.indexscroller {
+	position:absolute; left:50%;
+	width:300px; margin-left:-150px;
+	padding:0; 
+	z-index:3;
+}
+.pictures{
+	width:290px; height:170px; display:block; padding:5px;
+	margin-left:auto; margin-right:auto; margin-top:50px; position:relative;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+	z-index:10;
+}
+.picturesbtm1{
+	width:286px; height:10px; display:block; margin-top:-8px;
+	margin-left:auto; margin-right:auto;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:3px;-moz-border-radius:3px;-o-border-radius:3px;border-radius:3px;
+	z-index:4;
+}
+.pictures a{
+	width:290px; height:170px; display:block;
+	background-repeat:no-repeat; background-size:100% 100%; z-index:5;
+	-webkit-border-radius:3px;-moz-border-radius:3px;-o-border-radius:3px;border-radius:3px;
+}
+.smltitle {font-size:18px; line-height:40px; color:#333333; text-align:left;}
+p{font-size:14px; line-height:24px; color:#333333; text-align:left;text-indent:2em;}
+ol{ margin:0px 0px 30px 0px; font-size:14px; line-height:24px; color:#333333; text-align:left;}
+
+/*图片浏览*/
+.pictitle{
+	height:50px;width:100%;display:block; position:absolute; top:0px; left:0px;
+	font-size:24px; color:#FFF; text-align:center; line-height:50px; border-bottom:1px solid #444; z-index:900;
+	background-color:#333;
+}
+.goindex{
+	height:50px;width:50px;display:block; float:right;border-left:1px solid #444; position:absolute; top:0px; right:0px;
+	background-image:url(images/close.png); background-repeat:no-repeat; background-size:contain; background-position:center center; z-index:901;
+}
+}
+@media (min-width: 480px){
+#top, title, header{
+	height:60px;
+}
+header {
+	text-align:center;font-size:24px; color:#333333; line-height:60px;
+}
+.back{
+	height:40px;width:40px; display: block; float:left; position:absolute; top:10px; left:15px;
+	background-image:url(images/back.png);background-repeat:no-repeat;background-size:contain;
+	z-index:1001;
+}
+.indexscroller {
+	position:absolute; left:50%;
+	width:450px; margin-left:-225px; padding-top:60px; 
+	padding:0; 
+	z-index:3;
+}
+.pictures{
+	width:440px; height:260px; display:block; padding:5px;
+	margin-left:auto; margin-right:auto; margin-top:65px; position:relative;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+	z-index:10;
+}
+.picturesbtm1{
+	width:436px; height:10px; display:block; margin-top:-8px;
+	margin-left:auto; margin-right:auto;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:px;-moz-border-radius:3px;-o-border-radius:3px;border-radius:3px;
+	z-index:4;
+}
+.pictures a{
+	width:440px; height:260px; display:block;
+	background-repeat:no-repeat; background-size:100% 100%; z-index:5;
+	-webkit-border-radius:3px;-moz-border-radius:3px;-o-border-radius:3px;border-radius:3px;
+}
+.smltitle {font-size:24px; line-height:30px; color:#333333; text-align:left;}
+p{font-size:16px; line-height:28px; color:#333333; text-align:left;text-indent:2em;}
+ol{ margin:0px 0px 30px 0px; font-size:16px; line-height:28px; color:#333333; text-align:left;}
+
+/*图片浏览*/
+.pictitle{
+	height:60px;width:100%;display:block; position:absolute; top:0px; left:0px;
+	font-size:24px; color:#FFF; text-align:center; line-height:60px; border-bottom:1px solid #444; z-index:900;
+	background-color:#333;
+}
+.goindex{
+	height:60px;width:60px;display:block; float:right;border-left:1px solid #444; position:absolute; top:0px; right:0px;
+	background-image:url(images/close.png); background-repeat:no-repeat; background-size:contain; background-position:center center; z-index:901;
+}
+}
+@media (min-width: 640px){
+#top, title, header{
+	height:100px;
+}
+header {
+	text-align:center;font-size:40px; color:#333333; line-height:100px;
+}
+.back{
+	height:60px;width:60px; display: block; float:left; position:absolute; top:20px; left:20px;
+	background-image:url(images/back.png);background-repeat:no-repeat;background-size:contain;
+	z-index:1001;
+}
+.indexscroller {
+	position:absolute; left:50%;
+	width:600px; margin-left:-300px; padding-top:100px; 
+	padding:0; 
+	z-index:3;
+}
+.pictures{
+	width:580px; height:340px; display:block; padding:10px;
+	margin-left:auto; margin-right:auto; margin-top:120px; position:relative;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:10px;-moz-border-radius:10px;-o-border-radius:10px;border-radius:10px;
+	z-index:10;
+}
+.picturesbtm1{
+	width:580px; height:10px; display:block; margin-top:-5px;
+	margin-left:auto; margin-right:auto;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+	z-index:4;
+}
+.pictures a{
+	width:580px; height:340px; display:block;
+	background-repeat:no-repeat; background-size:100% 100%; z-index:5;
+	-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+}
+.smltitle {font-size:32px; line-height:60px; color:#333333; text-align:left;}
+p{font-size:24px; line-height:40px; color:#333333; text-align:left;text-indent:2em;}
+ol{ margin:0px 0px 40px 0px; font-size:24px; line-height:40px; color:#333333; text-align:left;}
+
+/*图片浏览*/
+.pictitle{
+	height:100px;width:100%;display:block; position:absolute; top:0px; left:0px;
+	font-size:40px; color:#FFF; text-align:center; line-height:100px; border-bottom:1px solid #444; z-index:900;
+	background-color:#333;
+}
+.goindex{
+	height:100px;width:100px;display:block; float:right;border-left:1px solid #444; position:absolute; top:0px; right:0px;
+	background-image:url(images/close.png); background-repeat:no-repeat; background-size:contain; background-position:center center; z-index:901;
+}
+}
+#wrapper {
+	width:100%;height:100%;
+	position:absolute; top:0px; left:0px;/* On older OS versions "position" and "z-index" must be defined, */
+	z-index:1;			/* it seems that recent webkit is less picky and works anyway. */
+	overflow:hidden;
+}
+
+#scroller {
+	height:100%;
+	float:left;
+	padding:0;
+}
+
+#scroller ul {
+	list-style:none;
+	display:block;
+	float:left;
+	width:100%;
+	height:100%;
+	padding:0;
+	margin:0;
+	text-align:left;
+}
+#scroller li {
+	-webkit-box-sizing:border-box;
+	-moz-box-sizing:border-box;
+	-o-box-sizing:border-box;
+	box-sizing:border-box;
+	display:block; float:left;
+	height:100%;
+	background-size:100% auto; background-repeat:no-repeat; background-position:center center;
+}
+#nav {
+	height:30px; width:100%; bottom:0px; position:absolute; display:block; padding-bottom:20px;
+	z-index:1000; background-color:#333;
+}
+#indicator {
+	position:absolute;
+	padding:10px; left:50%; margin-left:-50px;
+}
+#indicator > li {
+	display:block; float:left;
+	list-style:none;
+	text-indent:-9999em;
+	width:8px; height:8px;
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
+	border-radius:4px;
+	background:#ddd;
+	overflow:hidden;
+	margin-right:4px; margin-left:4px;
+}
+
+#indicator > li.active {
+	background:#00DC9B;
+}
+
+#indicator > li:last-child {
+	margin-right:4px; margin-left:4px;
+}
