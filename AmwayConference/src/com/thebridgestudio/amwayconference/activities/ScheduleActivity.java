@@ -260,9 +260,15 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         }
     }
 
-    private void initListViewData() {
+    private void initListViewData(boolean restart) {
+        Log.i(TAG, "show list view data");
         showLoading();
-        getSupportLoaderManager().initLoader(0, null, this);
+        
+        if (restart) {
+            getSupportLoaderManager().restartLoader(0, null, this);
+        } else {
+            getSupportLoaderManager().initLoader(0, null, this);
+        }
     }
 
     private void initScheduleDateView() {
@@ -293,6 +299,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
     private void initScheduleDateViewData() {
         List<Integer> dates = getScheduleDates();
+        Log.i(TAG, "schedule date view: " + dates.size());
         if (dates.size() > 0) {
             mScheduleDateView.setDates(dates);
         } else {
@@ -315,7 +322,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             
             if (key == Config.KEY_LAST_SYNC_SCHEDULE_TIME) {
                 initScheduleDateViewData();
-                initListViewData();
+                initListViewData(true);
             }
         }
     };
@@ -380,7 +387,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             }
         });
         
-        initListViewData();
+        initListViewData(false);
     }
 
     @Override

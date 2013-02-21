@@ -81,6 +81,7 @@ public class MessageActivity extends BaseActivity implements
         mListView.setOnScrollListener(this);
         mListView.setOnItemClickListener(this);
         mListView.setOnHeaderClickListener(this);
+        mListView.setAreHeadersSticky(false);
         
         LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
         mListView.setEmptyView(emptyView);
