@@ -8,18 +8,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
-import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
-import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
-import com.thebridgestudio.amwayconference.Config;
-import com.thebridgestudio.amwayconference.R;
-import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
-import com.thebridgestudio.amwayconference.models.Schedule;
-import com.thebridgestudio.amwayconference.views.LoadingView;
-import com.thebridgestudio.amwayconference.views.ScheduleDateView;
-import com.thebridgestudio.amwayconference.views.ScheduleView;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
@@ -32,15 +20,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout.LayoutParams;
 import android.widget.LinearLayout;
+import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.thebridgestudio.amwayconference.Config;
+import com.thebridgestudio.amwayconference.R;
+import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
+import com.thebridgestudio.amwayconference.models.Schedule;
+import com.thebridgestudio.amwayconference.views.LoadingView;
+import com.thebridgestudio.amwayconference.views.ObservableScrollView;
+import com.thebridgestudio.amwayconference.views.ObservableScrollView.ScrollViewListener;
+import com.thebridgestudio.amwayconference.views.ScheduleDateView;
+import com.thebridgestudio.amwayconference.views.ScheduleView;
 
 public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<List<Schedule>> {
     public class ScheduleAdapter extends BaseAdapter implements StickyListHeadersAdapter {
@@ -49,7 +48,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         }
         private Context mContext;
         private List<Schedule> mData;
-        private HashMap<Integer, Integer> mDay2Position;
+        private HashMap<Integer, View> mDay2HeaderView;
         private String[] mDayOfWeeks;
         
         private LayoutInflater mInflater;
@@ -58,33 +57,14 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             super();
             mContext = context;
             mData = new ArrayList<Schedule>();
-            mDay2Position = new HashMap<Integer, Integer>();
+            mDay2HeaderView = new HashMap<Integer, View>();
             mInflater = LayoutInflater.from(context);
             mDayOfWeeks = getResources().getStringArray(R.array.day_of_week);
         }
-        
-        private void buildDay2Position() {
-            Calendar calendar = Calendar.getInstance();
-            
-            long lastDate = 0;
-            int position = 0;
-            for (Schedule schedule : mData) {
-                calendar.setTimeInMillis(schedule.getDate());
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                
-                long curDate = schedule.getDate() / (24 * 60 * 60 * 1000);
-                if (curDate != lastDate) {
-                    mDay2Position.put(day, position);
-                    lastDate = curDate;
-                }
-                
-                position++;
-            }
-        }
-        
+
         public void clear() {
             mData.clear();
-            mDay2Position.clear();
+            mDay2HeaderView.clear();
             notifyDataSetChanged();
         }
         
@@ -92,21 +72,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         public int getCount() {
             return mData.size();
         }
-        
-        public int getHeaderCount() {
-            return mDay2Position.size();
-        }
-        
-        public int getHeaderCount(int position) {
-            int count = 0;
-            for (int dayPosition : mDay2Position.values()) {
-                if (dayPosition <= position) {
-                    count++;
-                }
-            }
-            return count;
-        }
-        
+
         @Override
         public long getHeaderId(int position) {
             Schedule schedule = (Schedule) getItem(position);
@@ -130,6 +96,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             calendar.setTimeInMillis(schedule.getDate());
             holder.dateText.setText(String.format("%s %s", new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()), mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 
+            mDay2HeaderView.put(calendar.get(Calendar.DAY_OF_MONTH), convertView);
             return convertView;
         }
 
@@ -143,14 +110,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             return ((Schedule) getItem(position)).getId();
         }
 
-        public int getPositionByDay(int day) {
-            if (mDay2Position.containsKey(day)) {
-                return mDay2Position.get(day);
-            }
-            
-            return -1;
-        }
-
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
@@ -161,16 +120,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
                 ScheduleView scheduleView = (ScheduleView) convertView;
                 scheduleView.setSchedule((Schedule) getItem(position));
             }
-            
-            ViewTreeObserver observer = convertView.getViewTreeObserver();
-            observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                
-                @Override
-                public void onGlobalLayout() {
-                    // TODO Auto-generated method stub
-                    
-                }
-            });
 
             return convertView;
         }
@@ -182,12 +131,15 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
         public void setData(List<Schedule> data) {
             mData.clear();
-            mDay2Position.clear();
+            mDay2HeaderView.clear();
             if (data != null) {
                 mData.addAll(data);
-                buildDay2Position();
             }
             notifyDataSetChanged();
+        }
+    
+        public View getHeaderViewByDay(int day) {
+            return mDay2HeaderView.get(day);
         }
     }
     
@@ -228,33 +180,14 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     private int mHeaderFoldOffset = 0;
     private RelativeLayout mHeaderView;
     
-    private StickyListHeadersListView mListView;
+    private LinearLayout mListView;
+    private ObservableScrollView mScrollView;
     private LoadingView mLoadingView;
     private ImageView mTagView;
     private TextView mNoDataView;
-
+    private LinearLayout mEmptyView;
     private ScheduleDateView mScheduleDateView;
-    private int computeOffset(int fromPosition, int toPosition) {
-        int toOffset = 0;
-        for (int i = 0; i < toPosition; i++) {
-            View listItem = mAdapter.getView(i, null, mListView);
-            listItem.measure(0, 0);
-            toOffset += listItem.getMeasuredHeight();
-        }
-        
-        int fromOffset = 0;
-        for (int i=0; i < fromPosition; i++) {
-            View listItem = mAdapter.getView(i, null, mListView);
-            listItem.measure(0, 0);
-            fromOffset += listItem.getMeasuredHeight();
-        }
-        fromOffset -= mListView.getChildAt(0) == null ? 0 : mListView.getChildAt(0).getTop();
-        
-        int headersHeight = getResources().getDimensionPixelSize(
-                R.dimen.schedule_dateline_height)
-                * (mAdapter.getHeaderCount(toPosition) - mAdapter.getHeaderCount(fromPosition));
-        return toOffset - fromOffset + headersHeight;
-    }
+    
     
     private void foldHeader() {
         LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
@@ -326,46 +259,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             dateView.setText(scheduleDate);
         }
     }
-    
-    private void initListView() {
-        mListView = (StickyListHeadersListView) findViewById(R.id.list);
-        LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
-        mListView.setEmptyView(emptyView);
-        
-        try {
-            mDao = getHelper().getDao(Schedule.class);
-            mAdapter = new ScheduleAdapter(this);
-            mListView.setAdapter(mAdapter);
-            mListView.setOnScrollListener(new OnScrollListener() {
-                
-                @Override
-                public void onScroll(AbsListView view, int firstVisibleItem,
-                        int visibleItemCount, int totalItemCount) {
-                }
-                
-                @Override
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    if (scrollState == SCROLL_STATE_IDLE) {
-                        if (mListView.getFirstVisiblePosition() == 0
-                                && mListView.getChildAt(0).getTop() == 0) {
-                            if (isFold) {
-                                unfoldHeader();
-                            }
-                        } else {
-                            if (!isFold) {
-                                foldHeader();
-                            }
-                        }
-                    }
-                }
-            });
-            
-            initListViewData();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Log.e(TAG, "load dao failed");
-        }
-    }
 
     private void initListViewData() {
         showLoading();
@@ -374,24 +267,34 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
     private void initScheduleDateView() {
         mScheduleDateView = (ScheduleDateView) findViewById(R.id.schedule_date_view);
+        mScheduleDateView.setOnDateSelectedListener(new ScheduleDateView.OnDateSelectedListener() {
+            
+            @Override
+            public void onDateSelected(int day) {
+                View headerView = mAdapter.getHeaderViewByDay(day);
+                int headerViewTop = headerView.getTop();
+                
+                mScrollView.smoothScrollTo(0, headerViewTop);
+                
+                if (headerViewTop == 0) {
+                    if (isFold) {
+                        unfoldHeader();
+                    }
+                } else {
+                    if (!isFold) {
+                        foldHeader();
+                    }
+                }
+            }
+        });
+        
+        initScheduleDateViewData();
+    }
+
+    private void initScheduleDateViewData() {
         List<Integer> dates = getScheduleDates();
         if (dates.size() > 0) {
             mScheduleDateView.setDates(dates);
-            mScheduleDateView.setOnDateSelectedListener(new ScheduleDateView.OnDateSelectedListener() {
-                
-                @Override
-                public void onDateSelected(int date) {
-                    final int day = date;
-                    mListView.smoothScrollBy(computeOffset(mListView.getFirstVisiblePosition(), mAdapter.getPositionByDay(day)), 50);
-                    mListView.postDelayed(new Runnable() {
-                        
-                        @Override
-                        public void run() {
-                            mListView.smoothScrollBy(computeOffset(mListView.getFirstVisiblePosition(), mAdapter.getPositionByDay(day)), 50);
-                        }
-                    }, 50);
-                }
-            });
         } else {
             mScheduleDateView.setVisibility(View.GONE);
         }
@@ -411,6 +314,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             }
             
             if (key == Config.KEY_LAST_SYNC_SCHEDULE_TIME) {
+                initScheduleDateViewData();
                 initListViewData();
             }
         }
@@ -438,12 +342,45 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         mNoDataView = (TextView) findViewById(R.id.no_data);
         mTagView = (ImageView) findViewById(R.id.tag);
         
+        try {
+            mDao = getHelper().getDao(Schedule.class);
+            mAdapter = new ScheduleAdapter(this);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.e(TAG, "load dao failed");
+        }
+          
         initAccount();
         initScheduleDate();
-        initListView();
-        initScheduleDateView();
-        initDataObserver();
         initSidebar();
+        initScheduleDateView();
+        initListView();
+        initDataObserver();
+    }
+
+    private void initListView() {
+        mScrollView = (ObservableScrollView) findViewById(R.id.list_wrapper);
+        mListView = (LinearLayout) findViewById(R.id.list);
+        mEmptyView = (LinearLayout) findViewById(android.R.id.empty);
+        
+        mScrollView.setScrollViewListener(new ScrollViewListener() {
+            
+            @Override
+            public void onScrollStateIdle(ObservableScrollView scrollView) {
+                if (scrollView.getOffsetY() <= 0) {
+                    if (isFold) {
+                        unfoldHeader();
+                    }
+                } else {
+                    if (!isFold) {
+                        foldHeader();
+                    }
+                }
+                
+            }
+        });
+        
+        initListViewData();
     }
 
     @Override
@@ -466,17 +403,34 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     @Override
     public void onLoaderReset(Loader<List<Schedule>> arg0) {
         mAdapter.clear();
-        mScheduleDateView.setVisibility(View.GONE);
+        mListView.removeAllViews();
         showNoData();
     }
 
     @Override
     public void onLoadFinished(Loader<List<Schedule>> arg0, List<Schedule> arg1) {
+        mListView.removeAllViews();
         mAdapter.setData(arg1);
+        
         if (!mAdapter.isEmpty()) {
-            mScheduleDateView.setVisibility(View.VISIBLE);
+            long lastHeaderId = 0;
+            for (int position=0; position<mAdapter.getCount(); position++) {
+                long currentHeaderId = mAdapter.getHeaderId(position);
+                
+                if (lastHeaderId != currentHeaderId) {
+                    View headerView = mAdapter.getHeaderView(position, null, null);
+                    mListView.addView(headerView);
+                    lastHeaderId = currentHeaderId;
+                }
+                
+                View view = mAdapter.getView(position, null, null);
+                mListView.addView(view);
+            }
+            
+            showData();
+        } else {
+            showNoData();
         }
-        showNoData();
     }
 
     @Override
@@ -490,13 +444,25 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     }
 
     private void showLoading() {
+        mScrollView.setVisibility(View.GONE);
+        mScheduleDateView.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
         mLoadingView.setVisibility(View.VISIBLE);
         mNoDataView.setVisibility(View.GONE);
     }
     
     private void showNoData() {
+        mScrollView.setVisibility(View.GONE);
+        mScheduleDateView.setVisibility(View.GONE);
+        mEmptyView.setVisibility(View.VISIBLE);
         mLoadingView.setVisibility(View.GONE);
         mNoDataView.setVisibility(View.VISIBLE);
+    }
+    
+    private void showData() {
+        mEmptyView.setVisibility(View.GONE);
+        mScheduleDateView.setVisibility(View.VISIBLE);
+        mScrollView.setVisibility(View.VISIBLE);
     }
     
     private void unfoldHeader() {
