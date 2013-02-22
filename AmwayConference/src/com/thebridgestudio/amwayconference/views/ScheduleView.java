@@ -28,7 +28,8 @@ public class ScheduleView extends LinearLayout {
         R.drawable.icon_dinner_party,
         R.drawable.icon_hotel,
         R.drawable.icon_play,
-        R.drawable.icon_shopping
+        R.drawable.icon_shopping,
+        R.drawable.icon_walk
     };
     
     private LayoutInflater mInflater;
@@ -73,7 +74,9 @@ public class ScheduleView extends LinearLayout {
                 LinearLayout featureView = (LinearLayout) mInflater.inflate(R.layout.schedule_item_feature, null);
                 
                 ImageView typeImageView = (ImageView) featureView.findViewById(R.id.schedule_detail_type);
-                typeImageView.setImageResource(ICONS[detail.getType()]);
+                if (detail.getType() < ICONS.length && detail.getType() > 0) {
+                    typeImageView.setImageResource(ICONS[detail.getType()]);
+                }
                 
                 TextView timeTextView = (TextView) featureView.findViewById(R.id.schedule_detail_time);
                 timeTextView.setText(detail.getTime());

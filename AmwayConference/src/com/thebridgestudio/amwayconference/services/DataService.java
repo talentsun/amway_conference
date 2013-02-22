@@ -22,8 +22,14 @@ import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.models.ScheduleDetail;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
@@ -34,6 +40,7 @@ public class DataService extends IntentService {
     private Dao<Message, Long> mMessageDao = null;
     private Dao<Schedule, Long> mScheduleDao = null;
     private Dao<ScheduleDetail, Long> mScheduleDetailDao = null;
+    private PendingIntent mPendingIntent;
     
     public DataService() {
         super("message-service");
@@ -87,8 +94,28 @@ public class DataService extends IntentService {
                     Log.e(TAG, "sync message failed");
                     e.printStackTrace();
                 }
+            } else if (Intents.ACTION_REGISTER_ALARMMANAGER.equalsIgnoreCase(action)) {
+                registerAlarmManager();
+            } else if (Intents.ACTION_UNREGISTER_ALARMMANAGER.equalsIgnoreCase(action)) {
+                unregisterAlarmManager();
+            } else if (Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION.equalsIgnoreCase(action)) {
+                try {
+                    syncMessage();
+                } catch (APIException e) {
+                    e.printStackTrace();
+                }
             }
         }
+    }
+    
+    private void sendMessageNotification() {
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        
+//        mMessageDao.queryBuilder()D
+        
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setSmallIcon(R.drawable.ic_launcher);
+        
     }
 
     private void syncMessage() throws APIException {
@@ -297,6 +324,31 @@ public class DataService extends IntentService {
                 Log.e(TAG, "sync schedule date failed");
             }
         }
+    }
+    
+    private void registerAlarmManager() {
+        Intent intent = new Intent();
+        intent.setAction(Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION);
+        intent.setClass(this, DataService.class);
+        
+        mPendingIntent = PendingIntent.getService(this, 0, intent, 0);
+        
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        if (calendar.get(Calendar.MINUTE) > 30) {
+            calendar.add(Calendar.HOUR, 1);
+            calendar.set(Calendar.MINUTE, 0);
+        } else {
+            calendar.set(Calendar.MINUTE, 30);
+        }
+        
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, mPendingIntent);
+    }
+    
+    private void unregisterAlarmManager() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(mPendingIntent);
     }
 
     private DatabaseHelper getHelper() {
