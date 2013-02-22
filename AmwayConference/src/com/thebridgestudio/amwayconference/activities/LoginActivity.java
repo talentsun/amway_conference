@@ -9,6 +9,7 @@ import com.thebridgestudio.amwayconference.services.DataService;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import android.util.Log;
@@ -66,6 +67,11 @@ public class LoginActivity extends Activity {
                                         LoginActivity.this, DataService.class);
                                 syncIntent.setAction(Intents.ACTION_SYNC_ALL);
                                 startService(syncIntent);
+                                
+                                Intent intent = new Intent();
+                                intent.setAction(Intents.ACTION_REGISTER_ALARMMANAGER);
+                                intent.setClass(LoginActivity.this, DataService.class);
+                                startService(intent);
                             }
 
                             @Override

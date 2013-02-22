@@ -261,7 +261,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     }
 
     private void initListViewData(boolean restart) {
-        Log.i(TAG, "show list view data");
         showLoading();
         
         if (restart) {
@@ -299,7 +298,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
     private void initScheduleDateViewData() {
         List<Integer> dates = getScheduleDates();
-        Log.i(TAG, "schedule date view: " + dates.size());
         if (dates.size() > 0) {
             mScheduleDateView.setDates(dates);
         } else {

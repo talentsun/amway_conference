@@ -4,7 +4,6 @@ import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;
 import it.restrung.rest.exceptions.APIException;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -26,7 +25,6 @@ import com.thebridgestudio.amwayconference.models.ScheduleDetail;
 
 import android.app.AlarmManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -45,7 +43,6 @@ public class DataService extends IntentService {
     private Dao<Message, Long> mMessageDao = null;
     private Dao<Schedule, Long> mScheduleDao = null;
     private Dao<ScheduleDetail, Long> mScheduleDetailDao = null;
-    private PendingIntent mPendingIntent;
     
     public DataService() {
         super("message-service");
@@ -129,6 +126,8 @@ public class DataService extends IntentService {
                         messages.size()));
                 builder.setContentText(getResources().getText(
                         R.string.read_message));
+                builder.setTicker(getResources().getText(R.string.amway_new_message));
+                builder.setAutoCancel(true);
                 
                 Intent messageIntent = new Intent(this, MessageActivity.class);
                 TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
@@ -359,11 +358,13 @@ public class DataService extends IntentService {
     }
     
     private void registerAlarmManager() {
+        unregisterAlarmManager();
+        
         Intent intent = new Intent();
         intent.setAction(Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION);
         intent.setClass(this, DataService.class);
         
-        mPendingIntent = PendingIntent.getService(this, 0, intent, 0);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
         
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -375,14 +376,18 @@ public class DataService extends IntentService {
         }
         
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, mPendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), AlarmManager.INTERVAL_HALF_HOUR, pendingIntent);
     }
     
     private void unregisterAlarmManager() {
-        if (mPendingIntent != null) {
-            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            alarmManager.cancel(mPendingIntent);
-        }
+        Intent intent = new Intent();
+        intent.setAction(Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION);
+        intent.setClass(this, DataService.class);
+        
+        PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
+        
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 
     private DatabaseHelper getHelper() {

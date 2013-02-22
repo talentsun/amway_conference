@@ -44,7 +44,8 @@
     
     <!-- message -->
     <string name="no_message">暂无消息</string>
-    <string name="new_message">您有%1$条未读消息</string>
+    <string name="amway_new_message">安利会议：您有新消息</string>
+    <string name="new_message">您有%1$d条未读消息</string>
     <string name="read_message">点击查看未读消息</string>
     
     <!-- sidebar -->

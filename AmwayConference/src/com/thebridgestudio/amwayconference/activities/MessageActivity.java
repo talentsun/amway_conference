@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,12 +26,9 @@ import android.widget.Toast;
 
 import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
 import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView;
-import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView.OnHeaderClickListener;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.android.support.extras.AndroidBaseDaoImpl;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
-import com.j256.ormlite.support.ConnectionSource;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
@@ -232,15 +228,6 @@ public class MessageActivity extends BaseActivity implements
         class HeaderViewHolder {
             TextView dateText;
         }
-    }
-    
-    public class MessageDao extends AndroidBaseDaoImpl<Message, Integer> {
-
-        public MessageDao(ConnectionSource connectionSource,
-                Class<Message> dataClass) throws SQLException {
-            super(connectionSource, dataClass);
-        }
-        
     }
 
     public static class MessageLoader extends AsyncTaskLoader<List<Message>> {
