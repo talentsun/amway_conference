@@ -14,6 +14,7 @@
     <string name="entry_survey">问卷调查</string>
     <string name="entry_map">地图信息</string>
     <string name="entry_scenery">景点介绍</string>
+    <string name="entry_party">晚宴互动</string>
     <string name="message_center">消息中心</string>
     <string name="mark_message_read_failed">标记消息已读失败</string>
     <string name="sync_data_failed">同步数据失败</string>

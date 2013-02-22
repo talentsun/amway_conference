@@ -17,5 +17,6 @@
     <item name="survey_item" type="id"/>
     <item name="map_item" type="id"/>
     <item name="scenery_item" type="id"/>
+    <item name="party_item" type="id"/>
 
 </resources>

@@ -87,6 +87,20 @@
                 android:drawableLeft="@drawable/sidebar_icon_scenery"
                 android:text="@string/entry_scenery" />
         </FrameLayout>
+        <FrameLayout
+            android:id="@id/party_item"
+            style="@style/sidebar_item_frame"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/sidebar_redness" >
+
+            <Button
+                android:id="@+id/entry_party"
+                style="@style/sidebar_item"
+                android:drawableLeft="@drawable/sidebar_icon_party"
+                android:text="@string/entry_party" />
+        </FrameLayout>
     </LinearLayout>
 
     <Button

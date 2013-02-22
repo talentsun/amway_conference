@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.media.AudioManager;
@@ -12,6 +13,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -20,11 +22,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
+import com.thebridgestudio.amwayconference.Config;
+import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
+import com.thebridgestudio.amwayconference.cloudapis.AccountApis;
+import com.thebridgestudio.amwayconference.cloudapis.AccountApis.LoginCallback;
 import com.thebridgestudio.amwayconference.qr.CaptureActivityHandler;
 import com.thebridgestudio.amwayconference.qr.InactivityTimer;
 import com.thebridgestudio.amwayconference.qr.ViewfinderView;
 import com.thebridgestudio.amwayconference.qr.camera.CameraManager;
+import com.thebridgestudio.amwayconference.services.DataService;
 
 public class CaptureActivity extends Activity implements SurfaceHolder.Callback {
 
@@ -167,14 +174,39 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
 
         if (obj != null) {
             String scanResult = obj.getText();
-            if (scanResult == null) {
+            if (TextUtils.isEmpty(scanResult)) {
                 Toast.makeText(this, R.string.scan_error, Toast.LENGTH_SHORT)
                         .show();
                 finish();
                 return;
             } else {
-                scanText.setVisibility(View.VISIBLE);
-                scanText.setText(scanResult);
+              AccountApis.loginAsync(CaptureActivity.this, scanResult
+                .toString(), "",
+                new LoginCallback() {
+
+                    @Override
+                    public void onLoginOK(String account, String name) {
+                        Config.setAccount(CaptureActivity.this, account);
+                        Config.setName(CaptureActivity.this, name);
+
+                        Intent scheduleIntent = new Intent(
+                                CaptureActivity.this,
+                                ScheduleActivity.class);
+                        startActivity(scheduleIntent);
+
+                        Intent syncIntent = new Intent(
+                                CaptureActivity.this, DataService.class);
+                        syncIntent.setAction(Intents.ACTION_SYNC_ALL);
+                        startService(syncIntent);
+                    }
+
+                    @Override
+                    public void onLoginFailed(String errorMsg) {
+                        Toast.makeText(CaptureActivity.this,
+                                R.string.login_failed,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
         }
