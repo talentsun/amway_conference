@@ -39,8 +39,7 @@ import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.views.LoadingView;
 
 public class MessageActivity extends BaseActivity implements
-        LoaderCallbacks<List<Message>>, OnScrollListener,
-        AdapterView.OnItemClickListener, OnHeaderClickListener {
+        LoaderCallbacks<List<Message>>, OnScrollListener {
     private static final String TAG = "MessageActivity";
     private static final String KEY_MESSAGE_LIST_POSITION = "KEY_MESSAGE_LIST_POSITION";
     private int mFirstVisible;
@@ -79,8 +78,6 @@ public class MessageActivity extends BaseActivity implements
     private void initListView(Bundle savedInstanceState) {
         mListView = (StickyListHeadersListView) findViewById(R.id.list);
         mListView.setOnScrollListener(this);
-        mListView.setOnItemClickListener(this);
-        mListView.setOnHeaderClickListener(this);
         mListView.setAreHeadersSticky(false);
         
         LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
@@ -215,6 +212,16 @@ public class MessageActivity extends BaseActivity implements
             }
 
             Message message = (Message) getItem(position);
+            if (!message.isRead()) {
+                try {
+                    UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
+                    updateBuilder.updateColumnValue("read", true).where().idEq(message.getId());
+                    updateBuilder.update();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    Toast.makeText(MessageActivity.this, R.string.mark_message_read_failed, Toast.LENGTH_SHORT).show();
+                }
+            }
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(message.getDate());
             holder.dateText.setText(String.format("%s %s", new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()), mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
@@ -269,24 +276,6 @@ public class MessageActivity extends BaseActivity implements
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(KEY_MESSAGE_LIST_POSITION, mFirstVisible);
-    }
-
-    @Override
-    public void onHeaderClick(StickyListHeadersListView arg0, View arg1,
-            int arg2, long arg3, boolean arg4) {
-        // TODO Auto-generated method stub
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        try {
-            UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
-            updateBuilder.updateColumnValue("read", true).where().idEq(arg3);
-            updateBuilder.update();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Toast.makeText(MessageActivity.this, R.string.mark_message_read_failed, Toast.LENGTH_SHORT).show();
-        }
     }
 
     @Override

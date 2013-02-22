@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -15,6 +16,7 @@ import com.j256.ormlite.stmt.UpdateBuilder;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
+import com.thebridgestudio.amwayconference.activities.MessageActivity;
 import com.thebridgestudio.amwayconference.cloudapis.SyncMessageResponse;
 import com.thebridgestudio.amwayconference.cloudapis.SyncScheduleResponse;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
@@ -30,12 +32,15 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 public class DataService extends IntentService {
     private static final String TAG = "MessageService";
+    private static final int NOTIFICATION_ID = 10010;
+    
     private DatabaseHelper mDatabaseHelper = null;
     private Dao<Message, Long> mMessageDao = null;
     private Dao<Schedule, Long> mScheduleDao = null;
@@ -101,6 +106,7 @@ public class DataService extends IntentService {
             } else if (Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION.equalsIgnoreCase(action)) {
                 try {
                     syncMessage();
+                    sendMessageNotification();
                 } catch (APIException e) {
                     e.printStackTrace();
                 }
@@ -111,14 +117,40 @@ public class DataService extends IntentService {
     private void sendMessageNotification() {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         
-//        mMessageDao.queryBuilder()D
-        
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_launcher);
-        
+        try {
+            List<Message> messages = mMessageDao.queryBuilder().where().eq("read", false).query();
+            
+            if (messages.size() > 0) {
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(
+                        this);
+                builder.setSmallIcon(R.drawable.ic_launcher);
+                builder.setContentTitle(String.format(
+                        getResources().getString(R.string.new_message),
+                        messages.size()));
+                builder.setContentText(getResources().getText(
+                        R.string.read_message));
+                
+                Intent messageIntent = new Intent(this, MessageActivity.class);
+                TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this);
+                taskStackBuilder.addParentStack(MessageActivity.class);
+                taskStackBuilder.addNextIntent(messageIntent);
+                PendingIntent messagePendingIntent = taskStackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(messagePendingIntent);
+                
+                notificationManager.notify(NOTIFICATION_ID, builder.build());
+            }
+        } catch (SQLException e) {
+            Log.e(TAG, "send message notification failed");
+            e.printStackTrace();
+        }
     }
 
     private void syncMessage() throws APIException {
+        if (TextUtils.isEmpty(Config.getAccount(this))) {
+            Log.i(TAG, "no account, stop sync message");
+            return;
+        }
+        
         SyncMessageResponse response = RestClientFactory.getClient().get(new ContextAwareAPIDelegate<SyncMessageResponse>(this, SyncMessageResponse.class) {
 
             @Override
@@ -347,8 +379,10 @@ public class DataService extends IntentService {
     }
     
     private void unregisterAlarmManager() {
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        alarmManager.cancel(mPendingIntent);
+        if (mPendingIntent != null) {
+            AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmManager.cancel(mPendingIntent);
+        }
     }
 
     private DatabaseHelper getHelper() {

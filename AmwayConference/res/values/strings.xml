@@ -44,6 +44,8 @@
     
     <!-- message -->
     <string name="no_message">暂无消息</string>
+    <string name="new_message">您有%1$条未读消息</string>
+    <string name="read_message">点击查看未读消息</string>
     
     <!-- sidebar -->
     <string name="exit_login">退出登录</string>
