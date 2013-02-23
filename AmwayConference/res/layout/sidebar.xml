@@ -44,21 +44,6 @@
         </FrameLayout>
 
         <FrameLayout
-            android:id="@id/survey_item"
-            style="@style/sidebar_item_frame"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:background="@drawable/sidebar_yellow" >
-
-            <Button
-                android:id="@+id/entry_survey"
-                style="@style/sidebar_item"
-                android:drawableLeft="@drawable/sidebar_icon_survey"
-                android:text="@string/entry_survey" />
-        </FrameLayout>
-
-        <FrameLayout
             android:id="@id/map_item"
             style="@style/sidebar_item_frame"
             android:layout_width="fill_parent"
@@ -87,19 +72,20 @@
                 android:drawableLeft="@drawable/sidebar_icon_scenery"
                 android:text="@string/entry_scenery" />
         </FrameLayout>
-        <FrameLayout
-            android:id="@id/party_item"
+
+         <FrameLayout
+            android:id="@id/survey_item"
             style="@style/sidebar_item_frame"
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@drawable/sidebar_redness" >
+            android:background="@drawable/sidebar_yellow" >
 
             <Button
-                android:id="@+id/entry_party"
+                android:id="@+id/entry_survey"
                 style="@style/sidebar_item"
-                android:drawableLeft="@drawable/sidebar_icon_party"
-                android:text="@string/entry_party" />
+                android:drawableLeft="@drawable/sidebar_icon_survey"
+                android:text="@string/entry_survey" />
         </FrameLayout>
     </LinearLayout>
 

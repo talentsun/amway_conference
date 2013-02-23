@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
-        android:background="@drawable/banner_taipei_landscape"
+        android:background="@drawable/banner_taipei_landscape_2"
         android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingTop="12dp" >
@@ -75,7 +75,7 @@
             android:layout_centerInParent="true"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:background="@drawable/button_yellow"
+            android:background="@drawable/button_red"
             android:text="@string/login"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -86,7 +86,7 @@
             android:layout_below="@id/login"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:background="@drawable/button_yellow_shadow" />
+            android:background="@drawable/button_red_shadow" />
     </RelativeLayout>
 
 </LinearLayout>

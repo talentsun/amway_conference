@@ -38,15 +38,12 @@ public class BaseActivity extends FragmentActivity implements
     findViewById(R.id.survey_item).setOnClickListener(this);
     findViewById(R.id.map_item).setOnClickListener(this);
     findViewById(R.id.scenery_item).setOnClickListener(this);
-    findViewById(R.id.party_item).setOnClickListener(this);
 
     findViewById(R.id.entry_schedule).setOnClickListener(this);
     findViewById(R.id.entry_message).setOnClickListener(this);
     findViewById(R.id.entry_survey).setOnClickListener(this);
     findViewById(R.id.entry_map).setOnClickListener(this);
     findViewById(R.id.entry_scenery).setOnClickListener(this);
-    findViewById(R.id.entry_party).setOnClickListener(this);
-
 
     mTag = (ImageView) findViewById(R.id.tag);
     mTag.setOnClickListener(new OnClickListener() {
@@ -116,16 +113,6 @@ public class BaseActivity extends FragmentActivity implements
         break;
       case R.id.scenery_item:
       case R.id.entry_scenery:
-        if (this instanceof SceneryActivity) {
-          mSidebar.closeSidebar();
-        } else {
-          Intent messageIntent = new Intent();
-          messageIntent.setClass(getBaseContext(), SceneryActivity.class);
-          startActivity(messageIntent);
-        }
-        break;
-      case R.id.party_item:
-      case R.id.entry_party:
         if (this instanceof SceneryActivity) {
           mSidebar.closeSidebar();
         } else {

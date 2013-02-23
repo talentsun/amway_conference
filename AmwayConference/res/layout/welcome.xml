@@ -52,7 +52,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/button_yellow"
+            android:background="@drawable/button_red"
             android:text="@string/qr_scan"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -63,7 +63,7 @@
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:background="@drawable/button_yellow_shadow" />
+            android:background="@drawable/button_red_shadow" />
 
         <Button
             android:id="@+id/login"
@@ -72,7 +72,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="12dp"
-            android:background="@drawable/button_yellow"
+            android:background="@drawable/button_red"
             android:text="@string/login_by_id"
             android:textColor="@android:color/white"
             android:textSize="18sp" />
@@ -83,7 +83,7 @@
             android:layout_marginBottom="12dp"
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
-            android:background="@drawable/button_yellow_shadow" />
+            android:background="@drawable/button_red_shadow" />
 
     </LinearLayout>
 </LinearLayout>
