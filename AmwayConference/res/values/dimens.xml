@@ -11,4 +11,5 @@
     <dimen name="schedule_title_height">18dip</dimen>
     <dimen name="schedule_dateline_height">20dip</dimen>
     <dimen name="schedule_header_fold_offset">120dip</dimen>
+    <dimen name="schedule_new_message_tag_top">2dip</dimen>
 </resources>

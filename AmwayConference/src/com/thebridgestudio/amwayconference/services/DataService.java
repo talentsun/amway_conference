@@ -163,6 +163,7 @@ public class DataService extends IntentService {
             
         }, String.format("http://a.brixd.com/conference/remote?method=message.sync&account=%s&date=%s", Config.getAccount(this), Config.getLastSyncMessageTime(this)), 2 * 1000);
         
+        boolean hasNewMessage = false;
         if (mMessageDao != null && response != null
                 && response.getMessages() != null && response.getResult() == 1) {
             for(SyncMessageResponse.Message msg : response.getMessages()) {
@@ -177,8 +178,8 @@ public class DataService extends IntentService {
                             
                             Log.i(TAG, "update message #" + msg.getId());
                         } else {
-                            //for test
                             mMessageDao.create(new Message(msg.getId(), msg.getContent(), false, msg.getDate()));
+                            hasNewMessage = true;
                             Log.i(TAG, "create message #" + msg.getId());
                         }
                     } else {
@@ -189,6 +190,12 @@ public class DataService extends IntentService {
                     e.printStackTrace();
                     Log.e(TAG, "sync message #" + msg.getId() + " failed");
                 }
+            }
+            
+            if (hasNewMessage) {
+                Intent intent = new Intent();
+                intent.setAction(Intents.ACTION_NEW_MESSAGE);
+                sendBroadcast(intent);
             }
 
             Config.setLastSyncMessageTime(DataService.this, System.currentTimeMillis());

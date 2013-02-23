@@ -97,6 +97,22 @@ public class MessageActivity extends BaseActivity implements
         }
     }
 
+    @Override
+    protected void onStart() {
+        try {
+            UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
+            updateBuilder.updateColumnValue("read", true);
+            updateBuilder.update();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Toast.makeText(MessageActivity.this,
+                    R.string.mark_message_read_failed, Toast.LENGTH_SHORT)
+                    .show();
+        }
+
+        super.onStart();
+    }
+
     private DatabaseHelper getHelper() {
         if (mDatabaseHelper == null) {
             mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
@@ -208,16 +224,6 @@ public class MessageActivity extends BaseActivity implements
             }
 
             Message message = (Message) getItem(position);
-            if (!message.isRead()) {
-                try {
-                    UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
-                    updateBuilder.updateColumnValue("read", true).where().idEq(message.getId());
-                    updateBuilder.update();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    Toast.makeText(MessageActivity.this, R.string.mark_message_read_failed, Toast.LENGTH_SHORT).show();
-                }
-            }
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(message.getDate());
             holder.dateText.setText(String.format("%s %s", new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()), mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));

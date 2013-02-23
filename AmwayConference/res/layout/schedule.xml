@@ -63,13 +63,15 @@
                 android:textSize="18sp" />
 
             <TextView
+                android:id="@+id/meeting_order_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toLeftOf="@id/meeting_order"
                 android:text="@string/meeting_order"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/name"
@@ -89,7 +91,8 @@
                 android:layout_marginLeft="44dip"
                 android:text="2013"
                 android:textColor="@android:color/white"
-                android:textSize="28sp" />
+                android:textSize="28sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/date"
@@ -109,6 +112,17 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/tag_green" />
+            
+            <ImageView
+                android:id="@+id/new_message_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="20dip"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="2dip"
+                android:src="@drawable/new_message"
+                android:visibility="gone"/>
         </RelativeLayout>
 
         <RelativeLayout

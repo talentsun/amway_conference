@@ -8,7 +8,10 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -32,8 +35,10 @@ import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.thebridgestudio.amwayconference.Config;
+import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
+import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.views.LoadingView;
 import com.thebridgestudio.amwayconference.views.ObservableScrollView;
@@ -171,10 +176,12 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         }
         
     }
+    
     private static final String TAG = "ScheduleActivity";
     private boolean isFold = false;
     private ScheduleAdapter mAdapter;
     private Dao<Schedule, Long> mDao;
+    private Dao<Message, Long> mMessageDao;
     
     private DatabaseHelper mDatabaseHelper;
     private int mHeaderFoldOffset = 0;
@@ -184,10 +191,11 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     private ObservableScrollView mScrollView;
     private LoadingView mLoadingView;
     private ImageView mTagView;
+    private ImageView mNewMessageTag;
     private TextView mNoDataView;
     private LinearLayout mEmptyView;
     private ScheduleDateView mScheduleDateView;
-    
+    private NewMessageReceiver mNewMessageReceiver;
     
     private void foldHeader() {
         LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
@@ -197,6 +205,10 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         RelativeLayout.LayoutParams tagLayoutParams = (RelativeLayout.LayoutParams) mTagView.getLayoutParams();
         tagLayoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.small_margin) + mHeaderFoldOffset;
         mTagView.setLayoutParams(tagLayoutParams);
+        
+        RelativeLayout.LayoutParams newMessageLayoutParams = (RelativeLayout.LayoutParams) mNewMessageTag.getLayoutParams();
+        newMessageLayoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.schedule_new_message_tag_top) + mHeaderFoldOffset;
+        mNewMessageTag.setLayoutParams(newMessageLayoutParams);
         
         isFold = true;
     }
@@ -238,9 +250,13 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         String account = Config.getAccount(this);
         String name = Config.getName(this);
         
+        TextView meetingOrderText = (TextView) findViewById(R.id.meeting_order_text);
+        
         if (!TextUtils.isEmpty(account)) {
             TextView accountView = (TextView) findViewById(R.id.meeting_order);
             accountView.setText(account);
+            
+            meetingOrderText.setVisibility(View.VISIBLE);
         }
         
         if (!TextUtils.isEmpty(name)) {
@@ -253,10 +269,14 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         String startDate = Config.getStartDate(this);
         String endDate = Config.getEndDate(this);
         
+        TextView yearText = (TextView) findViewById(R.id.year);
+        
         if (!TextUtils.isEmpty(startDate) && !TextUtils.isEmpty(endDate)) {
             String scheduleDate = String.format(getResources().getString(R.string.schedule_date_format), startDate, endDate);
             TextView dateView = (TextView) findViewById(R.id.date);
             dateView.setText(scheduleDate);
+            
+            yearText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -325,6 +345,25 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         }
     };
     
+    private void initNewMessageTag() {
+        try {
+            if (mMessageDao == null) {
+                mMessageDao = getHelper().getDao(Message.class);
+            }
+
+            List<Message> messages = mMessageDao.queryBuilder().where().eq("read", false).query();
+            Log.i(TAG, "new message size: " + messages.size());
+            if (messages.size() > 0) {
+                mNewMessageTag.setVisibility(View.VISIBLE);
+            } else {
+                mNewMessageTag.setVisibility(View.GONE);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Log.e(TAG, "load message info failed");
+        }
+    }
+    
     private void initDataObserver() {
         SharedPreferences config = Config.getConfigs(this);
         config.registerOnSharedPreferenceChangeListener(mConfigChangeListener);
@@ -346,6 +385,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         mLoadingView = (LoadingView) findViewById(R.id.loading);
         mNoDataView = (TextView) findViewById(R.id.no_data);
         mTagView = (ImageView) findViewById(R.id.tag);
+        mNewMessageTag = (ImageView) findViewById(R.id.new_message_tag);
         
         try {
             mDao = getHelper().getDao(Schedule.class);
@@ -361,6 +401,11 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         initScheduleDateView();
         initListView();
         initDataObserver();
+        
+        mNewMessageReceiver = new NewMessageReceiver();
+        IntentFilter newMessageIntentFilter = new IntentFilter();
+        newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
+        registerReceiver(mNewMessageReceiver, newMessageIntentFilter);
     }
 
     private void initListView() {
@@ -402,6 +447,10 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         
         releaseDataObserver();
         
+        if (mNewMessageReceiver != null) {
+            unregisterReceiver(mNewMessageReceiver);
+        }
+        
         super.onDestroy();
     }
 
@@ -440,6 +489,8 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
     @Override
     protected void onStart() {
+        initNewMessageTag();
+
         super.onStart();
     }
 
@@ -479,6 +530,19 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         tagLayoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.small_margin);
         mTagView.setLayoutParams(tagLayoutParams);
         
+        RelativeLayout.LayoutParams newMessageLayoutParams = (RelativeLayout.LayoutParams) mNewMessageTag.getLayoutParams();
+        newMessageLayoutParams.topMargin = getResources().getDimensionPixelSize(R.dimen.schedule_new_message_tag_top);
+        mNewMessageTag.setLayoutParams(newMessageLayoutParams);
+        
         isFold = false;
+    }
+    
+    public class NewMessageReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            initNewMessageTag();
+        }
+        
     }
 }
