@@ -277,11 +277,10 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
   }
 
   private void initListViewData(boolean restart) {
-    showLoading();
-
     if (restart) {
       getSupportLoaderManager().restartLoader(0, null, this);
     } else {
+      showLoading();
       getSupportLoaderManager().initLoader(0, null, this);
     }
   }
