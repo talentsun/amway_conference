@@ -203,17 +203,13 @@ public class CaptureActivity extends Activity implements SurfaceHolder.Callback 
                 Intent scheduleIntent = new Intent(
                     CaptureActivity.this,
                     ScheduleActivity.class);
+                scheduleIntent.putExtra(Intents.EXTRA_LOGIN, true);
                 startActivity(scheduleIntent);
 
                 Intent finishIntent = new Intent();
                 finishIntent.setAction(Intents.ACTION_FINISH);
                 sendBroadcast(finishIntent);
                 CaptureActivity.this.finish();
-
-                Intent syncIntent = new Intent(
-                    CaptureActivity.this, DataService.class);
-                syncIntent.setAction(Intents.ACTION_SYNC_ALL);
-                startService(syncIntent);
               }
 
               @Override
