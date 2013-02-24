@@ -9,6 +9,7 @@ public class Intents {
     public final static String ACTION_UNREGISTER_ALARMMANAGER = "com.thebridgestudio.amwayconference.intent.UNREGISTER_ALARMMANAGER";
     
     public final static String ACTION_NEW_MESSAGE = "com.thebridgestudio.amwayconference.intent.NEW_MESSAGE";
+    public final static String ACTION_FINISH = "com.thebridgestudio.amwayconference.intent.FINISH";
     
     public final static String EXTRA_LOGIN = "com.thebridgestudio.amwayconference.extra.LOGIN";
 }

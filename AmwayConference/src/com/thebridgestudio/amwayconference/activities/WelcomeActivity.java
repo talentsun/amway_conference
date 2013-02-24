@@ -7,7 +7,10 @@ import com.thebridgestudio.amwayconference.services.DataService;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
@@ -19,6 +22,16 @@ public class WelcomeActivity extends Activity {
   // Views
   private Button mScanEntry;
   private Button mLogin;
+  
+  private FinishReceiver mFinishReceiver;
+  public class FinishReceiver extends BroadcastReceiver {
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        WelcomeActivity.this.finish();
+    }
+
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +46,22 @@ public class WelcomeActivity extends Activity {
 
     initViews();
     initListener();
+    
+    mFinishReceiver = new FinishReceiver();
+    IntentFilter intentFilter = new IntentFilter();
+    intentFilter.addAction(Intents.ACTION_FINISH);
+    registerReceiver(mFinishReceiver, intentFilter);
   }
 
-  private void initViews() {
+  @Override
+  protected void onDestroy() {
+    if (mFinishReceiver != null) {
+        unregisterReceiver(mFinishReceiver);
+    }
+    super.onDestroy();
+  }
+
+private void initViews() {
     mScanEntry = (Button) findViewById(R.id.scan_entry);
     mLogin = (Button) findViewById(R.id.login);
   }
@@ -47,7 +73,7 @@ public class WelcomeActivity extends Activity {
       public void onClick(View v) {
         Intent scanIntent = new Intent(getApplicationContext(),
             CaptureActivity.class);
-        startActivity(scanIntent);
+        startActivityForResult(scanIntent, 0);
       }
     });
 
@@ -57,7 +83,7 @@ public class WelcomeActivity extends Activity {
       public void onClick(View v) {
         Intent loginIntent = new Intent(getApplicationContext(),
             LoginActivity.class);
-        startActivity(loginIntent);
+        startActivityForResult(loginIntent, 0);
       }
     });
   }
@@ -82,5 +108,4 @@ public class WelcomeActivity extends Activity {
     getMenuInflater().inflate(R.menu.login, menu);
     return true;
   }
-
 }

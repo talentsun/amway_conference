@@ -66,6 +66,12 @@ public class LoginActivity extends Activity {
                                         ScheduleActivity.class);
                                 scheduleIntent.putExtra(Intents.EXTRA_LOGIN, true);
                                 startActivity(scheduleIntent);
+                                
+                                Intent finishIntent = new Intent();
+                                finishIntent.setAction(Intents.ACTION_FINISH);
+                                sendBroadcast(finishIntent);
+                                
+                                LoginActivity.this.finish();
 
                                 Intent intent = new Intent();
                                 intent.setAction(Intents.ACTION_REGISTER_ALARMMANAGER);
