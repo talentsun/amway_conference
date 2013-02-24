@@ -13,7 +13,18 @@
         android:id="@id/animation_layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@android:color/white"
         android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/no_network"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/no_network"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <WebView
             android:id="@+id/webview"

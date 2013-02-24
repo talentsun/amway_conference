@@ -48,6 +48,8 @@ public class BaseActivity extends FragmentActivity implements
     IntentFilter newMessageIntentFilter = new IntentFilter();
     newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
     registerReceiver(mNewMessageReceiver, newMessageIntentFilter);
+
+    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
   }
 
   @Override
@@ -111,6 +113,7 @@ public class BaseActivity extends FragmentActivity implements
       mSidebar.clearAnimation();
       mSidebar.closeSidebar();
     }
+    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
   }
 
   @Override

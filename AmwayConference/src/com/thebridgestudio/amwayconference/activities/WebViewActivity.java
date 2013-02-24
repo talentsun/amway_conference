@@ -6,13 +6,25 @@ import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.thebridgestudio.amwayconference.R;
+import com.thebridgestudio.amwayconference.utils.NetworkUtils;
 
 public class WebViewActivity extends BaseActivity {
   protected WebView webview;
   protected ImageView tag;
   protected ImageView loading;
+  protected TextView noNetwork;
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    if (!NetworkUtils.isNetworkConnected(this)) {
+      noNetwork.setVisibility(View.VISIBLE);
+      webview.setVisibility(View.GONE);
+    }
+  }
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -24,8 +36,10 @@ public class WebViewActivity extends BaseActivity {
     webview = (WebView) findViewById(R.id.webview);
     tag = (ImageView) findViewById(R.id.tag);
     loading = (ImageView) findViewById(R.id.loading);
+    noNetwork = (TextView) findViewById(R.id.no_network);
 
     webview.getSettings().setJavaScriptEnabled(true);
+    webview.setDrawingCacheEnabled(true);
     webview.setWebViewClient(new WebViewClient() {
 
       @Override
@@ -59,7 +73,8 @@ public class WebViewActivity extends BaseActivity {
   }
 
   private void updateTag(String url) {
-    if (url.contains("scenery.html") || url.contains("hotel.html")) {
+    if (url.contains("scenery.html")
+        || url.contains("hotel.html") || url.contains("http://a.brixd.com/amwaysurvey/index.html")) {
       tag.setVisibility(View.VISIBLE);
     } else {
       tag.setVisibility(View.GONE);

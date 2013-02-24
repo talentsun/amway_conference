@@ -9,7 +9,7 @@ public class SurveyActivity extends WebViewActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    tag.setImageResource(R.drawable.tag_green);
+    tag.setImageResource(R.drawable.tag_yellow);
     webview.loadUrl("http://a.brixd.com/amwaysurvey/index.html");
   }
 }
