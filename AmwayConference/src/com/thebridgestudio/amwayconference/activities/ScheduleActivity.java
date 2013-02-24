@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -189,6 +190,8 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
   private TextView mNoDataView;
   private LinearLayout mEmptyView;
   private ScheduleDateView mScheduleDateView;
+  
+  private Handler mMainThreadHandler;
 
   private void foldHeader() {
     LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
@@ -324,18 +327,25 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
             String key) {
-          if (key == Config.KEY_ACCOUNT || key == Config.KEY_NAME) {
-            initAccount();
-          }
+          final String changedKey = key;
+          mMainThreadHandler.post(new Runnable() {
+            
+            @Override
+            public void run() {
+              if (changedKey == Config.KEY_ACCOUNT || changedKey == Config.KEY_NAME) {
+                initAccount();
+              }
 
-          if (key == Config.KEY_START_DATE || key == Config.KEY_END_DATE) {
-            initScheduleDate();
-          }
+              if (changedKey == Config.KEY_START_DATE || changedKey == Config.KEY_END_DATE) {
+                initScheduleDate();
+              }
 
-          if (key == Config.KEY_LAST_SYNC_SCHEDULE_TIME) {
-            initScheduleDateViewData();
-            initListViewData(true);
-          }
+              if (changedKey == Config.KEY_LAST_SYNC_SCHEDULE_TIME) {
+                initScheduleDateViewData();
+                initListViewData(true);
+              }
+            }
+          });
         }
       };
 
@@ -353,6 +363,8 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.schedule);
+    
+    mMainThreadHandler = new Handler();
 
     mHeaderView = (RelativeLayout) findViewById(R.id.header);
     mHeaderFoldOffset = getResources().getDimensionPixelSize(R.dimen.schedule_header_fold_offset);
