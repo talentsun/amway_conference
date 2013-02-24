@@ -103,7 +103,7 @@ public class AccountApis {
     Config.setEndDate(context, null);
 
     OpenHelperManager.releaseHelper();
-    
+
     callback.onLogoutOK();
   }
 

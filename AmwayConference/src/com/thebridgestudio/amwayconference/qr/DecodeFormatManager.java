@@ -1,12 +1,9 @@
 /*
  * Copyright (C) 2010 ZXing authors
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -33,18 +30,19 @@ final class DecodeFormatManager {
   static final Collection<BarcodeFormat> PRODUCT_FORMATS;
   static final Collection<BarcodeFormat> ONE_D_FORMATS;
   static final Collection<BarcodeFormat> QR_CODE_FORMATS = EnumSet.of(BarcodeFormat.QR_CODE);
-  static final Collection<BarcodeFormat> DATA_MATRIX_FORMATS = EnumSet.of(BarcodeFormat.DATA_MATRIX);
+  static final Collection<BarcodeFormat> DATA_MATRIX_FORMATS = EnumSet
+      .of(BarcodeFormat.DATA_MATRIX);
   static {
     PRODUCT_FORMATS = EnumSet.of(BarcodeFormat.UPC_A,
-                                 BarcodeFormat.UPC_E,
-                                 BarcodeFormat.EAN_13,
-                                 BarcodeFormat.EAN_8,
-                                 BarcodeFormat.RSS_14);
+        BarcodeFormat.UPC_E,
+        BarcodeFormat.EAN_13,
+        BarcodeFormat.EAN_8,
+        BarcodeFormat.RSS_14);
     ONE_D_FORMATS = EnumSet.of(BarcodeFormat.CODE_39,
-                               BarcodeFormat.CODE_93,
-                               BarcodeFormat.CODE_128,
-                               BarcodeFormat.ITF,
-                               BarcodeFormat.CODABAR);
+        BarcodeFormat.CODE_93,
+        BarcodeFormat.CODE_128,
+        BarcodeFormat.ITF,
+        BarcodeFormat.CODABAR);
     ONE_D_FORMATS.addAll(PRODUCT_FORMATS);
   }
 
@@ -61,14 +59,14 @@ final class DecodeFormatManager {
 
   static Collection<BarcodeFormat> parseDecodeFormats(Uri inputUri) {
     List<String> formats = inputUri.getQueryParameters(Intents.Scan.FORMATS);
-    if (formats != null && formats.size() == 1 && formats.get(0) != null){
+    if (formats != null && formats.size() == 1 && formats.get(0) != null) {
       formats = Arrays.asList(COMMA_PATTERN.split(formats.get(0)));
     }
     return parseDecodeFormats(formats, inputUri.getQueryParameter(Intents.Scan.MODE));
   }
 
   private static Collection<BarcodeFormat> parseDecodeFormats(Iterable<String> scanFormats,
-                                                              String decodeMode) {
+      String decodeMode) {
     if (scanFormats != null) {
       Collection<BarcodeFormat> formats = EnumSet.noneOf(BarcodeFormat.class);
       try {

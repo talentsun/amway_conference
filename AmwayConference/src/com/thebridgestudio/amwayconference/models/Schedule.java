@@ -5,82 +5,81 @@ import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
-@DatabaseTable(tableName="schedules")
+@DatabaseTable(tableName = "schedules")
 public class Schedule {
-    @DatabaseField(id = true, columnName="_id")
-    private long id;
+  @DatabaseField(id = true, columnName = "_id")
+  private long id;
 
-    @DatabaseField
-    private String content;
-    
-    @DatabaseField
-    private long date;
-    
-    @DatabaseField
-    private String time;
-    
-    @ForeignCollectionField(eager=false)
-    private ForeignCollection<ScheduleDetail> scheduleDetails;
+  @DatabaseField
+  private String content;
 
-    @DatabaseField
-    private String tips;
-    
-    public Schedule() {
-    }
-    
-    public Schedule(long id, String content, long date, String time, String tips) {
-        this.id = id;
-        this.content = content;
-        this.date = date;
-        this.time = time;
-        this.tips = tips;
-    }
+  @DatabaseField
+  private long date;
 
-    public long getId() {
-        return id;
-    }
+  @DatabaseField
+  private String time;
 
-    public void setId(long id) {
-        this.id = id;
-    }
+  @ForeignCollectionField(eager = false)
+  private ForeignCollection<ScheduleDetail> scheduleDetails;
 
-    public String getContent() {
-        return content;
-    }
+  @DatabaseField
+  private String tips;
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+  public Schedule() {}
 
-    public long getDate() {
-        return date;
-    }
+  public Schedule(long id, String content, long date, String time, String tips) {
+    this.id = id;
+    this.content = content;
+    this.date = date;
+    this.time = time;
+    this.tips = tips;
+  }
 
-    public void setDate(long date) {
-        this.date = date;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public String getTime() {
-        return time;
-    }
+  public void setId(long id) {
+    this.id = id;
+  }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
+  public String getContent() {
+    return content;
+  }
 
-    public ForeignCollection<ScheduleDetail> getScheduleDetails() {
-        return scheduleDetails;
-    }
+  public void setContent(String content) {
+    this.content = content;
+  }
 
-    public void setDetails(ForeignCollection<ScheduleDetail> details) {
-        this.scheduleDetails = details;
-    }
+  public long getDate() {
+    return date;
+  }
 
-    public String getTips() {
-        return tips;
-    }
+  public void setDate(long date) {
+    this.date = date;
+  }
 
-    public void setTips(String tips) {
-        this.tips = tips;
-    }
+  public String getTime() {
+    return time;
+  }
+
+  public void setTime(String time) {
+    this.time = time;
+  }
+
+  public ForeignCollection<ScheduleDetail> getScheduleDetails() {
+    return scheduleDetails;
+  }
+
+  public void setDetails(ForeignCollection<ScheduleDetail> details) {
+    this.scheduleDetails = details;
+  }
+
+  public String getTips() {
+    return tips;
+  }
+
+  public void setTips(String tips) {
+    this.tips = tips;
+  }
 }

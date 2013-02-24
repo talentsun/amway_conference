@@ -22,13 +22,14 @@ public class WelcomeActivity extends Activity {
   // Views
   private Button mScanEntry;
   private Button mLogin;
-  
+
   private FinishReceiver mFinishReceiver;
+
   public class FinishReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        WelcomeActivity.this.finish();
+      WelcomeActivity.this.finish();
     }
 
   }
@@ -40,13 +41,13 @@ public class WelcomeActivity extends Activity {
       startActivity(scheduleIntent);
       finish();
     }
-    
+
     super.onCreate(savedInstanceState);
     setContentView(R.layout.welcome);
 
     initViews();
     initListener();
-    
+
     mFinishReceiver = new FinishReceiver();
     IntentFilter intentFilter = new IntentFilter();
     intentFilter.addAction(Intents.ACTION_FINISH);
@@ -56,12 +57,12 @@ public class WelcomeActivity extends Activity {
   @Override
   protected void onDestroy() {
     if (mFinishReceiver != null) {
-        unregisterReceiver(mFinishReceiver);
+      unregisterReceiver(mFinishReceiver);
     }
     super.onDestroy();
   }
 
-private void initViews() {
+  private void initViews() {
     mScanEntry = (Button) findViewById(R.id.scan_entry);
     mLogin = (Button) findViewById(R.id.login);
   }

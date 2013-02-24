@@ -6,13 +6,13 @@ import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.ScheduleDetail;
 
 public class DatabaseConfigUtil extends OrmLiteConfigUtil {
-    private static final Class<?>[] classes = new Class[] {
-        Message.class,
-        Schedule.class,
-        ScheduleDetail.class,
-    };
+  private static final Class<?>[] classes = new Class[] {
+      Message.class,
+      Schedule.class,
+      ScheduleDetail.class,
+  };
 
-    public static void main(String[] args) throws Exception {
-        writeConfigFile("ormlite_config.txt", classes);
-    }
+  public static void main(String[] args) throws Exception {
+    writeConfigFile("ormlite_config.txt", classes);
+  }
 }

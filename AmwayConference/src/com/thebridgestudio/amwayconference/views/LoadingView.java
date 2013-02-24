@@ -9,29 +9,29 @@ import android.widget.ImageView;
 
 public class LoadingView extends ImageView {
 
-    public LoadingView(Context context) {
-        super(context);
-        initView();
-    }
+  public LoadingView(Context context) {
+    super(context);
+    initView();
+  }
 
-    public LoadingView(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        initView();
-    }
-
-
-
-    public LoadingView(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView();
-    }
+  public LoadingView(Context context, AttributeSet attrs, int defStyle) {
+    super(context, attrs, defStyle);
+    initView();
+  }
 
 
 
-    private void initView() {
-        setBackgroundResource(R.drawable.loading);
-        AnimationDrawable background = (AnimationDrawable) getBackground();
-        background.start();
-    }
+  public LoadingView(Context context, AttributeSet attrs) {
+    super(context, attrs);
+    initView();
+  }
+
+
+
+  private void initView() {
+    setBackgroundResource(R.drawable.loading);
+    AnimationDrawable background = (AnimationDrawable) getBackground();
+    background.start();
+  }
 
 }

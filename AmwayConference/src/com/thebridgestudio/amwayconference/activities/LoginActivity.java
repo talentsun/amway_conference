@@ -18,98 +18,98 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-    private static final String TAG = "LoginActivity";
+  private static final String TAG = "LoginActivity";
 
-    private Button mLogin;
-    private EditText mName;
-    private EditText mId;
-    
-    private Handler mMainThreadHandler;
+  private Button mLogin;
+  private EditText mName;
+  private EditText mId;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
-        
-        mMainThreadHandler = new Handler();
-        
-        initViews();
-        initListener();
-    }
+  private Handler mMainThreadHandler;
 
-    private void initViews() {
-        mName = (EditText) findViewById(R.id.input_name);
-        mId = (EditText) findViewById(R.id.input_id);
-        mLogin = (Button) findViewById(R.id.login);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.login);
 
-        mName.setText("郑再添");
-        mId.setText("A0001A");
-    }
+    mMainThreadHandler = new Handler();
 
-    private void initListener() {
+    initViews();
+    initListener();
+  }
 
-        mLogin.setOnClickListener(new View.OnClickListener() {
+  private void initViews() {
+    mName = (EditText) findViewById(R.id.input_name);
+    mId = (EditText) findViewById(R.id.input_id);
+    mLogin = (Button) findViewById(R.id.login);
 
-            @Override
-            public void onClick(View v) {
-                AccountApis.loginAsync(LoginActivity.this, mId.getText()
-                        .toString(), mName.getText().toString(),
-                        new LoginCallback() {
+    mName.setText("郑再添");
+    mId.setText("A0001A");
+  }
 
-                            @Override
-                            public void onLoginOK(String account, String name) {
-                                Config.setAccount(LoginActivity.this, account);
-                                Config.setName(LoginActivity.this, name);
+  private void initListener() {
 
-                                Intent scheduleIntent = new Intent(
-                                        LoginActivity.this,
-                                        ScheduleActivity.class);
-                                scheduleIntent.putExtra(Intents.EXTRA_LOGIN, true);
-                                startActivity(scheduleIntent);
-                                
-                                Intent finishIntent = new Intent();
-                                finishIntent.setAction(Intents.ACTION_FINISH);
-                                sendBroadcast(finishIntent);
-                                
-                                LoginActivity.this.finish();
+    mLogin.setOnClickListener(new View.OnClickListener() {
 
-                                Intent intent = new Intent();
-                                intent.setAction(Intents.ACTION_REGISTER_ALARMMANAGER);
-                                intent.setClass(LoginActivity.this, DataService.class);
-                                startService(intent);
-                            }
+      @Override
+      public void onClick(View v) {
+        AccountApis.loginAsync(LoginActivity.this, mId.getText()
+            .toString(), mName.getText().toString(),
+            new LoginCallback() {
 
-                            @Override
-                            public void onLoginFailed(String errorMsg) {
-                                mMainThreadHandler.post(new Runnable() {
-                                    
-                                    @Override
-                                    public void run() {
-                                        Toast.makeText(LoginActivity.this,
-                                                R.string.login_failed,
-                                                Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        });
-            }
-        });
-    }
+              @Override
+              public void onLoginOK(String account, String name) {
+                Config.setAccount(LoginActivity.this, account);
+                Config.setName(LoginActivity.this, name);
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
+                Intent scheduleIntent = new Intent(
+                    LoginActivity.this,
+                    ScheduleActivity.class);
+                scheduleIntent.putExtra(Intents.EXTRA_LOGIN, true);
+                startActivity(scheduleIntent);
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
+                Intent finishIntent = new Intent();
+                finishIntent.setAction(Intents.ACTION_FINISH);
+                sendBroadcast(finishIntent);
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.login, menu);
-        return true;
-    }
+                LoginActivity.this.finish();
+
+                Intent intent = new Intent();
+                intent.setAction(Intents.ACTION_REGISTER_ALARMMANAGER);
+                intent.setClass(LoginActivity.this, DataService.class);
+                startService(intent);
+              }
+
+              @Override
+              public void onLoginFailed(String errorMsg) {
+                mMainThreadHandler.post(new Runnable() {
+
+                  @Override
+                  public void run() {
+                    Toast.makeText(LoginActivity.this,
+                        R.string.login_failed,
+                        Toast.LENGTH_SHORT).show();
+                  }
+                });
+              }
+            });
+      }
+    });
+  }
+
+  @Override
+  protected void onStart() {
+    super.onStart();
+  }
+
+  @Override
+  protected void onStop() {
+    super.onStop();
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.login, menu);
+    return true;
+  }
 
 }

@@ -1,12 +1,9 @@
 /*
  * Copyright (C) 2008 ZXing authors
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +29,7 @@ import com.thebridgestudio.amwayconference.utils.SystemUtil;
  * This object wraps the Camera service object and expects to be the only one talking to it. The
  * implementation encapsulates the steps needed to take preview-sized images, which are used for
  * both preview and decoding.
- *
+ * 
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class CameraManager {
@@ -68,37 +65,37 @@ public final class CameraManager {
 
   /**
    * Opens the camera driver and initializes the hardware parameters.
-   *
+   * 
    * @param holder The surface object which the camera will draw preview frames into.
    * @throws IOException Indicates the camera driver failed to open.
    */
   public synchronized void openDriver(SurfaceHolder holder) throws IOException {
     Camera theCamera = camera;
-        if (theCamera == null) {
-            // theCamera = Camera.open();
-            // fix Nexus 7 bug
-            if(SystemUtil.aboveApi9()) {
-                for (int camIdx = 0; camIdx < Camera.getNumberOfCameras(); ++camIdx) {
-                    try {
-                        theCamera = Camera.open(camIdx);
-                    } catch (RuntimeException e) {
-                        Log.e(TAG, "Camera failed to open: "
-                                + e.getLocalizedMessage());
-                    }
-                    if(theCamera != null) {
-                        break;
-                    }
-                }
-            } else {
-                theCamera = Camera.open();
-            }
-
-            if (theCamera == null) {
-                throw new IOException();
-            }
-            camera = theCamera;
-            // camera.setDisplayOrientation(90);
+    if (theCamera == null) {
+      // theCamera = Camera.open();
+      // fix Nexus 7 bug
+      if (SystemUtil.aboveApi9()) {
+        for (int camIdx = 0; camIdx < Camera.getNumberOfCameras(); ++camIdx) {
+          try {
+            theCamera = Camera.open(camIdx);
+          } catch (RuntimeException e) {
+            Log.e(TAG, "Camera failed to open: "
+                + e.getLocalizedMessage());
+          }
+          if (theCamera != null) {
+            break;
+          }
         }
+      } else {
+        theCamera = Camera.open();
+      }
+
+      if (theCamera == null) {
+        throw new IOException();
+      }
+      camera = theCamera;
+      // camera.setDisplayOrientation(90);
+    }
     theCamera.setPreviewDisplay(holder);
 
     if (!initialized) {
@@ -159,7 +156,8 @@ public final class CameraManager {
   }
 
   /**
-   * Convenience method for {@link com.thebridgestudio.amwayconference.activities.android.CaptureActivity}
+   * Convenience method for
+   * {@link com.thebridgestudio.amwayconference.activities.android.CaptureActivity}
    */
   public synchronized void setTorch(boolean newSetting) {
     if (camera != null) {
@@ -177,7 +175,7 @@ public final class CameraManager {
    * A single preview frame will be returned to the handler supplied. The data will arrive as byte[]
    * in the message.obj field, with width and height encoded as message.arg1 and message.arg2,
    * respectively.
-   *
+   * 
    * @param handler The handler to send the message to.
    * @param message The what field of the message to be sent.
    */
@@ -193,7 +191,7 @@ public final class CameraManager {
    * Calculates the framing rect which the UI should draw to show the user where to place the
    * barcode. This target helps with alignment as well as forces the user to hold the device
    * far enough away to ensure the image will be in focus.
-   *
+   * 
    * @return The rectangle to draw on screen in window coordinates.
    */
   public synchronized Rect getFramingRect() {
@@ -255,7 +253,7 @@ public final class CameraManager {
   /**
    * Allows third party apps to specify the scanning rectangle dimensions, rather than determine
    * them automatically based on screen resolution.
-   *
+   * 
    * @param width The width in pixels to scan.
    * @param height The height in pixels to scan.
    */
@@ -282,7 +280,7 @@ public final class CameraManager {
   /**
    * A factory method to build the appropriate LuminanceSource object based on the format
    * of the preview buffers, as described by Camera.Parameters.
-   *
+   * 
    * @param data A preview frame.
    * @param width The width of the image.
    * @param height The height of the image.
@@ -295,15 +293,15 @@ public final class CameraManager {
     }
     byte[] rotatedData = new byte[data.length];
     for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++)
-            rotatedData[x * height + height - y - 1] = data[x + y * width];
+      for (int x = 0; x < width; x++)
+        rotatedData[x * height + height - y - 1] = data[x + y * width];
     }
     int tmp = width; // Here we are swapping, that's the difference to #11
     width = height;
     height = tmp;
     // Go ahead and assume it's YUV rather than die.
     return new PlanarYUVLuminanceSource(rotatedData, width, height, rect.left, rect.top,
-                                        rect.width(), rect.height(), false);
+        rect.width(), rect.height(), false);
   }
 
 }

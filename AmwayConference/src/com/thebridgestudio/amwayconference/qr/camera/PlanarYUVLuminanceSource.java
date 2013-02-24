@@ -1,12 +1,9 @@
 /*
  * Copyright 2009 ZXing authors
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,10 +21,10 @@ import android.graphics.Bitmap;
  * This object extends LuminanceSource around an array of YUV data returned from the camera driver,
  * with the option to crop to a rectangle within the full data. This can be used to exclude
  * superfluous pixels around the perimeter and speed up decoding.
- *
+ * 
  * It works for any pixel format where the Y channel is planar and appears first, including
  * YCbCr_420_SP and YCbCr_422_SP.
- *
+ * 
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class PlanarYUVLuminanceSource extends LuminanceSource {
@@ -39,13 +36,13 @@ public final class PlanarYUVLuminanceSource extends LuminanceSource {
   private final int top;
 
   public PlanarYUVLuminanceSource(byte[] yuvData,
-                                  int dataWidth,
-                                  int dataHeight,
-                                  int left,
-                                  int top,
-                                  int width,
-                                  int height,
-                                  boolean reverseHorizontal) {
+      int dataWidth,
+      int dataHeight,
+      int left,
+      int top,
+      int width,
+      int height,
+      boolean reverseHorizontal) {
     super(width, height);
 
     if (left + width > dataWidth || top + height > dataHeight) {
@@ -115,13 +112,13 @@ public final class PlanarYUVLuminanceSource extends LuminanceSource {
   @Override
   public LuminanceSource crop(int left, int top, int width, int height) {
     return new PlanarYUVLuminanceSource(yuvData,
-                                        dataWidth,
-                                        dataHeight,
-                                        this.left + left,
-                                        this.top + top,
-                                        width,
-                                        height,
-                                        false);
+        dataWidth,
+        dataHeight,
+        this.left + left,
+        this.top + top,
+        width,
+        height,
+        false);
   }
 
   public Bitmap renderCroppedGreyscaleBitmap() {

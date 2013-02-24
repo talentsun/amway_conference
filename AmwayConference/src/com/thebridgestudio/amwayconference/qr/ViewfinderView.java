@@ -1,12 +1,9 @@
 /*
  * Copyright (C) 2008 ZXing authors
- *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * http://www.apache.org/licenses/LICENSE-2.0
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -35,7 +32,7 @@ import java.util.List;
 /**
  * This view is overlaid on top of the camera preview. It adds the viewfinder rectangle and partial
  * transparency outside it, as well as the laser scanner animation and result points.
- *
+ * 
  * @author dswitkin@google.com (Daniel Switkin)
  */
 public final class ViewfinderView extends View {
@@ -73,7 +70,7 @@ public final class ViewfinderView extends View {
     scannerAlpha = 0;
     possibleResultPoints = new ArrayList<ResultPoint>(5);
     lastPossibleResultPoints = null;
-    
+
     setVisibility(View.INVISIBLE);
   }
 
@@ -119,7 +116,7 @@ public final class ViewfinderView extends View {
       scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
       int middle = frame.height() / 2 + frame.top;
       canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1, middle + 2, paint);
-      
+
       Rect previewFrame = cameraManager.getFramingRectInPreview();
       float scaleX = frame.width() / (float) previewFrame.width();
       float scaleY = frame.height() / (float) previewFrame.height();
@@ -138,8 +135,8 @@ public final class ViewfinderView extends View {
         synchronized (currentPossible) {
           for (ResultPoint point : currentPossible) {
             canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
-                              frameTop + (int) (point.getY() * scaleY),
-                              POINT_SIZE, paint);
+                frameTop + (int) (point.getY() * scaleY),
+                POINT_SIZE, paint);
           }
         }
       }
@@ -150,8 +147,8 @@ public final class ViewfinderView extends View {
           float radius = POINT_SIZE / 2.0f;
           for (ResultPoint point : currentLast) {
             canvas.drawCircle(frameLeft + (int) (point.getX() * scaleX),
-                              frameTop + (int) (point.getY() * scaleY),
-                              radius, paint);
+                frameTop + (int) (point.getY() * scaleY),
+                radius, paint);
           }
         }
       }
@@ -159,10 +156,10 @@ public final class ViewfinderView extends View {
       // Request another update at the animation interval, but only repaint the laser line,
       // not the entire viewfinder mask.
       postInvalidateDelayed(ANIMATION_DELAY,
-                            frame.left - POINT_SIZE,
-                            frame.top - POINT_SIZE,
-                            frame.right + POINT_SIZE,
-                            frame.bottom + POINT_SIZE);
+          frame.left - POINT_SIZE,
+          frame.top - POINT_SIZE,
+          frame.right + POINT_SIZE,
+          frame.bottom + POINT_SIZE);
     }
   }
 
@@ -177,7 +174,7 @@ public final class ViewfinderView extends View {
 
   /**
    * Draw a bitmap with the result points highlighted instead of the live scanning display.
-   *
+   * 
    * @param barcode An image of the decoded barcode.
    */
   public void drawResultBitmap(Bitmap barcode) {
