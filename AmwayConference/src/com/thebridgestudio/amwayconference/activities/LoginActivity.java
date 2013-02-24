@@ -64,13 +64,9 @@ public class LoginActivity extends Activity {
                                 Intent scheduleIntent = new Intent(
                                         LoginActivity.this,
                                         ScheduleActivity.class);
+                                scheduleIntent.putExtra(Intents.EXTRA_LOGIN, true);
                                 startActivity(scheduleIntent);
 
-                                Intent syncIntent = new Intent(
-                                        LoginActivity.this, DataService.class);
-                                syncIntent.setAction(Intents.ACTION_SYNC_ALL);
-                                startService(syncIntent);
-                                
                                 Intent intent = new Intent();
                                 intent.setAction(Intents.ACTION_REGISTER_ALARMMANAGER);
                                 intent.setClass(LoginActivity.this, DataService.class);

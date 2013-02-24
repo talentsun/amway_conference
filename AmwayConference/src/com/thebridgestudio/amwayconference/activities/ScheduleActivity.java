@@ -37,6 +37,7 @@ import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;
+import com.thebridgestudio.amwayconference.services.DataService;
 import com.thebridgestudio.amwayconference.views.LoadingView;
 import com.thebridgestudio.amwayconference.views.ObservableScrollView;
 import com.thebridgestudio.amwayconference.views.ObservableScrollView.ScrollViewListener;
@@ -361,6 +362,10 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         initScheduleDateView();
         initListView();
         initDataObserver();
+        
+        Intent syncIntent = new Intent(this, DataService.class);
+        syncIntent.setAction(Intents.ACTION_SYNC_ALL);
+        startService(syncIntent);
     }
 
     private void initListView() {
@@ -428,7 +433,9 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             
             showData();
         } else {
-            showNoData();
+            if (!getIntent().hasExtra(Intents.EXTRA_LOGIN)) {
+                showNoData();
+            }
         }
     }
 
