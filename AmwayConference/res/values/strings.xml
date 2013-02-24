@@ -42,12 +42,11 @@
     
     <!-- message -->
     <string name="no_message">暂无消息</string>
-    <string name="amway_new_message">安利会议：您有新消息</string>
-    <string name="new_message">您有%1$d条未读消息</string>
-    <string name="read_message">点击查看未读消息</string>
+    <string name="amway_new_message">您有%1$d条新消息</string>
     
     <!-- sidebar -->
     <string name="exit_login">退出登录</string>
+    <string name="sidebar_new_message">(%1$d)</string>
 
     <!-- schedule -->
     <string name="meeting_order">会议顺序号：</string>

@@ -8,11 +8,9 @@ import com.thebridgestudio.amwayconference.cloudapis.AccountApis.LoginCallback;
 import com.thebridgestudio.amwayconference.services.DataService;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -25,11 +23,16 @@ public class LoginActivity extends Activity {
     private Button mLogin;
     private EditText mName;
     private EditText mId;
+    
+    private Handler mMainThreadHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
+        
+        mMainThreadHandler = new Handler();
+        
         initViews();
         initListener();
     }
@@ -76,9 +79,15 @@ public class LoginActivity extends Activity {
 
                             @Override
                             public void onLoginFailed(String errorMsg) {
-                                Toast.makeText(LoginActivity.this,
-                                        R.string.login_failed,
-                                        Toast.LENGTH_SHORT).show();
+                                mMainThreadHandler.post(new Runnable() {
+                                    
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(LoginActivity.this,
+                                                R.string.login_failed,
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         });
             }

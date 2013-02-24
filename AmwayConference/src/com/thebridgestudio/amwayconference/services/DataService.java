@@ -29,6 +29,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
@@ -44,8 +45,11 @@ public class DataService extends IntentService {
     private Dao<Schedule, Long> mScheduleDao = null;
     private Dao<ScheduleDetail, Long> mScheduleDetailDao = null;
     
+    private Handler mMainThreadHandler;
+    
     public DataService() {
         super("message-service");
+        mMainThreadHandler = new Handler();
     }
 
     @Override
@@ -115,18 +119,18 @@ public class DataService extends IntentService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         
         try {
-            List<Message> messages = mMessageDao.queryBuilder().where().eq("read", false).query();
+            List<Message> messages = mMessageDao.queryBuilder().orderBy("date", false).where().eq("read", false).query();
             
             if (messages.size() > 0) {
                 NotificationCompat.Builder builder = new NotificationCompat.Builder(
                         this);
-                builder.setSmallIcon(R.drawable.ic_launcher);
-                builder.setContentTitle(String.format(
-                        getResources().getString(R.string.new_message),
+                builder.setTicker(String.format(
+                        getResources().getString(R.string.amway_new_message),
                         messages.size()));
-                builder.setContentText(getResources().getText(
-                        R.string.read_message));
-                builder.setTicker(getResources().getText(R.string.amway_new_message));
+                builder.setContentTitle(getResources().getText(R.string.app_name));
+                builder.setContentText(messages.get(0).getContent());
+                builder.setSmallIcon(R.drawable.ic_launcher);
+                builder.setContentInfo("" + messages.size());
                 builder.setAutoCancel(true);
                 
                 Intent messageIntent = new Intent(this, MessageActivity.class);
@@ -154,7 +158,13 @@ public class DataService extends IntentService {
 
             @Override
             public void onError(Throwable arg0) {
-                Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                mMainThreadHandler.post(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -200,7 +210,13 @@ public class DataService extends IntentService {
 
             Config.setLastSyncMessageTime(DataService.this, System.currentTimeMillis());
         } else {
-            Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+            mMainThreadHandler.post(new Runnable() {
+                
+                @Override
+                public void run() {
+                    Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     
@@ -214,7 +230,13 @@ public class DataService extends IntentService {
 
             @Override
             public void onError(Throwable arg0) {
-                Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                mMainThreadHandler.post(new Runnable() {
+                    
+                    @Override
+                    public void run() {
+                        Toast.makeText(getContextProvider().getContext(), R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
 
             @Override
@@ -336,8 +358,13 @@ public class DataService extends IntentService {
             
             Config.setLastSyncScheduleTime(DataService.this, System.currentTimeMillis());
         } else {
-            //FIXME when send hide message to this thread, it is already a dead thread
-            Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+            mMainThreadHandler.post(new Runnable() {
+                
+                @Override
+                public void run() {
+                    Toast.makeText(DataService.this, R.string.sync_data_failed, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
     

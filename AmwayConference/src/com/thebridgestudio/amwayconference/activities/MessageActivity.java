@@ -26,11 +26,9 @@ import android.widget.Toast;
 
 import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
 import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.thebridgestudio.amwayconference.R;
-import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.views.LoadingView;
 
@@ -41,8 +39,6 @@ public class MessageActivity extends BaseActivity implements
     private int mFirstVisible;
     
     private MessageAdapter mAdapter;
-    private DatabaseHelper mDatabaseHelper = null;
-    private Dao<Message, Long> mDao = null;
     private StickyListHeadersListView mListView = null;
     
     private LoadingView mLoadingView;
@@ -50,11 +46,6 @@ public class MessageActivity extends BaseActivity implements
     
     @Override
     protected void onDestroy() {
-        if (mDatabaseHelper != null) {
-            OpenHelperManager.releaseHelper();
-            mDatabaseHelper = null;
-        }
-        
         super.onDestroy();
     }
 
@@ -83,24 +74,17 @@ public class MessageActivity extends BaseActivity implements
             mFirstVisible = savedInstanceState.getInt(KEY_MESSAGE_LIST_POSITION);
         }
         mListView.setSelection(mFirstVisible);
+        mAdapter = new MessageAdapter(this);
+        mListView.setAdapter(mAdapter);
 
-        try {
-            mDao = getHelper().getDao(Message.class);
-            mAdapter = new MessageAdapter(this);
-            mListView.setAdapter(mAdapter);
-            
-            showLoading();
-            getSupportLoaderManager().initLoader(0, null, this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Log.e(TAG, "load dao failed");
-        }
+        showLoading();
+        getSupportLoaderManager().initLoader(0, null, this);
     }
 
     @Override
     protected void onStart() {
         try {
-            UpdateBuilder<Message, Long> updateBuilder = mDao.updateBuilder();
+            UpdateBuilder<Message, Long> updateBuilder = mMessageDao.updateBuilder();
             updateBuilder.updateColumnValue("read", true);
             updateBuilder.update();
         } catch (SQLException e) {
@@ -113,14 +97,6 @@ public class MessageActivity extends BaseActivity implements
         super.onStart();
     }
 
-    private DatabaseHelper getHelper() {
-        if (mDatabaseHelper == null) {
-            mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-        }
-        
-        return mDatabaseHelper;
-    }
-    
     public class MessageAdapter extends BaseAdapter implements StickyListHeadersAdapter {
         private LayoutInflater mInflater;
         private List<Message> mData;
@@ -285,7 +261,7 @@ public class MessageActivity extends BaseActivity implements
 
     @Override
     public Loader<List<Message>> onCreateLoader(int arg0, Bundle arg1) {
-        return new MessageLoader(this, mDao);
+        return new MessageLoader(this, mMessageDao);
     }
 
     @Override

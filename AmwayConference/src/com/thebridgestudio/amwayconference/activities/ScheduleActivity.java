@@ -28,16 +28,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
-import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.views.LoadingView;
@@ -180,10 +177,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     private static final String TAG = "ScheduleActivity";
     private boolean isFold = false;
     private ScheduleAdapter mAdapter;
-    private Dao<Schedule, Long> mDao;
-    private Dao<Message, Long> mMessageDao;
-    
-    private DatabaseHelper mDatabaseHelper;
+
     private int mHeaderFoldOffset = 0;
     private RelativeLayout mHeaderView;
     
@@ -195,8 +189,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     private TextView mNoDataView;
     private LinearLayout mEmptyView;
     private ScheduleDateView mScheduleDateView;
-    private NewMessageReceiver mNewMessageReceiver;
-    
+
     private void foldHeader() {
         LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
         layoutParams.topMargin = -(mHeaderFoldOffset);
@@ -212,22 +205,14 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         
         isFold = true;
     }
-    
-    private DatabaseHelper getHelper() {
-        if (mDatabaseHelper == null) {
-            mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-        }
-        
-        return mDatabaseHelper;
-    }
-    
+
     private List<Integer> getScheduleDates() {
         List<Integer> dates = new ArrayList<Integer>();
         Calendar calendar = Calendar.getInstance();
         
-        if (mDao != null) {
+        if (mScheduleDao != null) {
             try {
-                List<Schedule> schedules = mDao.queryBuilder().selectColumns("date").orderBy("date", true).query();
+                List<Schedule> schedules = mScheduleDao.queryBuilder().selectColumns("date").orderBy("date", true).query();
                 for (Schedule schedule : schedules) {
                     calendar.setTimeInMillis(schedule.getDate());
                     int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
@@ -344,26 +329,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
             }
         }
     };
-    
-    private void initNewMessageTag() {
-        try {
-            if (mMessageDao == null) {
-                mMessageDao = getHelper().getDao(Message.class);
-            }
 
-            List<Message> messages = mMessageDao.queryBuilder().where().eq("read", false).query();
-            Log.i(TAG, "new message size: " + messages.size());
-            if (messages.size() > 0) {
-                mNewMessageTag.setVisibility(View.VISIBLE);
-            } else {
-                mNewMessageTag.setVisibility(View.GONE);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Log.e(TAG, "load message info failed");
-        }
-    }
-    
     private void initDataObserver() {
         SharedPreferences config = Config.getConfigs(this);
         config.registerOnSharedPreferenceChangeListener(mConfigChangeListener);
@@ -386,26 +352,15 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         mNoDataView = (TextView) findViewById(R.id.no_data);
         mTagView = (ImageView) findViewById(R.id.tag);
         mNewMessageTag = (ImageView) findViewById(R.id.new_message_tag);
-        
-        try {
-            mDao = getHelper().getDao(Schedule.class);
-            mAdapter = new ScheduleAdapter(this);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            Log.e(TAG, "load dao failed");
-        }
-          
+
+        mAdapter = new ScheduleAdapter(this);
+
         initAccount();
         initScheduleDate();
         initSidebar();
         initScheduleDateView();
         initListView();
         initDataObserver();
-        
-        mNewMessageReceiver = new NewMessageReceiver();
-        IntentFilter newMessageIntentFilter = new IntentFilter();
-        newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
-        registerReceiver(mNewMessageReceiver, newMessageIntentFilter);
     }
 
     private void initListView() {
@@ -435,22 +390,12 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
     @Override
     public Loader<List<Schedule>> onCreateLoader(int arg0, Bundle arg1) {
-        return new ScheduleLoader(this, mDao);
+        return new ScheduleLoader(this, mScheduleDao);
     }
 
     @Override
     protected void onDestroy() {
-        if (mDatabaseHelper != null) {
-            OpenHelperManager.releaseHelper();
-            mDatabaseHelper = null;
-        }
-        
         releaseDataObserver();
-        
-        if (mNewMessageReceiver != null) {
-            unregisterReceiver(mNewMessageReceiver);
-        }
-        
         super.onDestroy();
     }
 
@@ -485,13 +430,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         } else {
             showNoData();
         }
-    }
-
-    @Override
-    protected void onStart() {
-        initNewMessageTag();
-
-        super.onStart();
     }
 
     @Override
@@ -536,13 +474,15 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
         
         isFold = false;
     }
-    
-    public class NewMessageReceiver extends BroadcastReceiver {
 
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            initNewMessageTag();
+    @Override
+    protected void onSyncMessage(boolean hasNewMessage) {
+        if (hasNewMessage) {
+            mNewMessageTag.setVisibility(View.VISIBLE);
+        } else {
+            mNewMessageTag.setVisibility(View.GONE);
         }
         
+        super.onSyncMessage(hasNewMessage);
     }
 }
