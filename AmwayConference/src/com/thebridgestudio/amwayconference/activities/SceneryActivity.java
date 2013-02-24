@@ -1,7 +1,6 @@
 package com.thebridgestudio.amwayconference.activities;
 
 import com.thebridgestudio.amwayconference.R;
-
 import android.os.Bundle;
 
 public class SceneryActivity extends WebViewActivity {
