@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
 import com.thebridgestudio.amwayconference.R;
+import com.thebridgestudio.amwayconference.cloudapis.AccountApis;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;
@@ -32,16 +34,16 @@ public class BaseActivity extends FragmentActivity implements
   protected DatabaseHelper mDatabaseHelper = null;
   protected Dao<Message, Long> mMessageDao = null;
   protected Dao<Schedule, Long> mScheduleDao = null;
-  
+
   private NewMessageReceiver mNewMessageReceiver;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    
+
     initMessageDao();
     initScheduleDao();
-    
+
     mNewMessageReceiver = new NewMessageReceiver();
     IntentFilter newMessageIntentFilter = new IntentFilter();
     newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
@@ -58,10 +60,10 @@ public class BaseActivity extends FragmentActivity implements
     if (mNewMessageReceiver != null) {
       unregisterReceiver(mNewMessageReceiver);
     }
-    
+
     super.onDestroy();
   }
-  
+
   protected void initMessageDao() {
     try {
       mMessageDao = getHelper().getDao(Message.class);
@@ -70,7 +72,7 @@ public class BaseActivity extends FragmentActivity implements
       Log.e(TAG, "load message dao failed");
     }
   }
-  
+
   protected void initScheduleDao() {
     try {
       mScheduleDao = getHelper().getDao(Schedule.class);
@@ -79,25 +81,26 @@ public class BaseActivity extends FragmentActivity implements
       Log.e(TAG, "load message dao failed");
     }
   }
-  
+
   private boolean initNewMessage() {
-      boolean hasNewMessage = false;
-      
-      try {
-        List<Message> messages = mMessageDao.queryBuilder().where().eq("read", false).query();
-        TextView newMessageText = (TextView) findViewById(R.id.new_message);
-        if (messages.size() > 0) {
-            newMessageText.setText(String.format(getResources().getString(R.string.sidebar_new_message), messages.size()));
-            newMessageText.setVisibility(View.VISIBLE);
-            
-            hasNewMessage = true;
-        } else {
-            newMessageText.setVisibility(View.GONE);
-        }
+    boolean hasNewMessage = false;
+
+    try {
+      List<Message> messages = mMessageDao.queryBuilder().where().eq("read", false).query();
+      TextView newMessageText = (TextView) findViewById(R.id.new_message);
+      if (messages.size() > 0) {
+        newMessageText.setText(String.format(
+            getResources().getString(R.string.sidebar_new_message), messages.size()));
+        newMessageText.setVisibility(View.VISIBLE);
+
+        hasNewMessage = true;
+      } else {
+        newMessageText.setVisibility(View.GONE);
+      }
     } catch (SQLException e) {
-        e.printStackTrace();
+      e.printStackTrace();
     }
-    
+
     return hasNewMessage;
   }
 
@@ -116,7 +119,7 @@ public class BaseActivity extends FragmentActivity implements
     super.onStart();
   }
 
-protected void initSidebar() {
+  protected void initSidebar() {
     mSidebar = (AnimationLayout) findViewById(R.id.animation_layout);
     mSidebar.setListener(this);
 
@@ -132,6 +135,28 @@ protected void initSidebar() {
     findViewById(R.id.entry_map).setOnClickListener(this);
     findViewById(R.id.entry_scenery).setOnClickListener(this);
 
+    findViewById(R.id.exit_login).setOnClickListener(new OnClickListener() {
+
+      @Override
+      public void onClick(View v) {
+        AccountApis.logout(BaseActivity.this, Config.getAccount(BaseActivity.this),
+            new AccountApis.LogoutCallback() {
+
+              @Override
+              public void onLogoutOK() {
+                Intent welcomeIntent = new Intent(getBaseContext(), WelcomeActivity.class);
+                startActivity(welcomeIntent);
+                finish();
+              }
+
+              @Override
+              public void onLogoutFailed() {
+                // TODO Auto-generated method stub
+
+              }
+            });
+      }
+    });
     mTag = (ImageView) findViewById(R.id.tag);
     mTag.setOnClickListener(new OnClickListener() {
 
@@ -142,24 +167,23 @@ protected void initSidebar() {
     });
 
   }
-  
+
   protected DatabaseHelper getHelper() {
-      if (mDatabaseHelper == null) {
-          mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
-      }
-      
-      return mDatabaseHelper;
+    if (mDatabaseHelper == null) {
+      mDatabaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+    }
+
+    return mDatabaseHelper;
   }
-  
+
   public class NewMessageReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        onSyncMessage(initNewMessage());
+      onSyncMessage(initNewMessage());
     }
   }
-  
-  protected void onSyncMessage(boolean hasNewMessage) {
-  }
+
+  protected void onSyncMessage(boolean hasNewMessage) {}
 
   @Override
   public void onSidebarOpened() {}
