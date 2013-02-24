@@ -6,10 +6,10 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.table.TableUtils;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.R;
-import com.thebridgestudio.amwayconference.cloudapis.SyncMessageResponse.Message;
-import com.thebridgestudio.amwayconference.cloudapis.SyncScheduleResponse.Schedule;
-import com.thebridgestudio.amwayconference.cloudapis.SyncScheduleResponse.ScheduleDetail;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
+import com.thebridgestudio.amwayconference.models.Message;
+import com.thebridgestudio.amwayconference.models.Schedule;
+import com.thebridgestudio.amwayconference.models.ScheduleDetail;
 
 import it.restrung.rest.client.ContextAwareAPIDelegate;
 import it.restrung.rest.client.RestClientFactory;

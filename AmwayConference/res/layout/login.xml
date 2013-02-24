@@ -4,77 +4,95 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:weightSum="10"
     tools:context=".activities.LoginActivity" >
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
+        android:layout_height="342dp"
         android:background="@drawable/banner_taipei_landscape_2"
         android:orientation="vertical"
         android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:paddingTop="12dp" >
 
         <ImageView
+            android:id="@+id/amy_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
             android:src="@drawable/amy_logo" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:id="@+id/amy_china"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
+            android:layout_below="@id/amy_logo"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="6dip"
             android:text="@string/amy_china"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textColor="#6a415e"
+            android:textSize="16sp" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:id="@+id/conference_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
+            android:layout_below="@id/amy_china"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="6dip"
             android:text="@string/conference_name"
-            android:textColor="@android:color/white"
-            android:textSize="24sp" />
-
-        <EditText
-            android:id="@+id/input_name"
-            android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:layout_margin="12dp"
-            android:background="@drawable/inputbar"
-            android:hint="@string/name"
-            android:paddingLeft="8dip"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="#6a415e"
+            android:textSize="20sp" />
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/conference_name"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="16dip"
+            android:text="@string/date_location"
+            android:textColor="#9a7e92"
+            android:textSize="16sp" />
 
         <EditText
             android:id="@+id/input_id"
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_height="54dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="18dp"
             android:background="@drawable/inputbar"
             android:hint="@string/input_id"
-            android:paddingLeft="8dip"
+            android:padding="12dp"
             android:textColor="@android:color/darker_gray" />
-    </LinearLayout>
+
+        <EditText
+            android:id="@+id/input_name"
+            android:layout_width="fill_parent"
+            android:layout_height="54dp"
+            android:layout_above="@id/input_id"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/inputbar"
+            android:hint="@string/name"
+            android:layout_marginBottom="8dp"
+            android:padding="12dp"
+            android:textColor="@android:color/darker_gray" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_height="match_parent"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:background="@drawable/background" >
 
         <Button
             android:id="@+id/login"
             android:layout_width="fill_parent"
-            android:layout_height="60dp"
+            android:layout_height="48dp"
             android:layout_centerInParent="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
             android:background="@drawable/button_red"
             android:text="@string/login"
             android:textColor="@android:color/white"
@@ -84,8 +102,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/login"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
             android:background="@drawable/button_red_shadow" />
     </RelativeLayout>
 
