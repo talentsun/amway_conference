@@ -17,6 +17,7 @@ import com.google.zxing.ResultPoint;
 import com.thebridgestudio.amwayconference.R;
 import com.thebridgestudio.amwayconference.qr.camera.CameraManager;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -78,6 +79,7 @@ public final class ViewfinderView extends View {
     this.cameraManager = cameraManager;
   }
 
+  @SuppressLint("DrawAllocation")
   @Override
   public void onDraw(Canvas canvas) {
     if (cameraManager == null) {

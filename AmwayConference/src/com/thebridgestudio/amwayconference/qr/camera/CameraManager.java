@@ -13,10 +13,12 @@
 
 package com.thebridgestudio.amwayconference.qr.camera;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Point;
 import android.graphics.Rect;
 import android.hardware.Camera;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -32,6 +34,7 @@ import com.thebridgestudio.amwayconference.utils.SystemUtil;
  * 
  * @author dswitkin@google.com (Daniel Switkin)
  */
+@TargetApi(Build.VERSION_CODES.GINGERBREAD)
 public final class CameraManager {
 
   private static final String TAG = CameraManager.class.getSimpleName();

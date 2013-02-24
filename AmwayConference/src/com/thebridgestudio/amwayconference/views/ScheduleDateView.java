@@ -5,8 +5,10 @@ import java.util.List;
 
 import com.thebridgestudio.amwayconference.R;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +23,7 @@ public class ScheduleDateView extends LinearLayout {
     initViews(context);
   }
 
+  @TargetApi(Build.VERSION_CODES.HONEYCOMB)
   public ScheduleDateView(Context context, AttributeSet attrs, int defStyle) {
     super(context, attrs, defStyle);
     initViews(context);
