@@ -87,6 +87,13 @@ public class AccountApis {
             Log.e(TAG, "clear data failed");
             e.printStackTrace();
         }
+        
+        Config.setAccount(context, null);
+        Config.setName(context, null);
+        Config.setLastSyncMessageTime(context, 0);
+        Config.setLastSyncScheduleTime(context, 0);
+        Config.setStartDate(context, null);
+        Config.setEndDate(context, null);
 
         OpenHelperManager.releaseHelper();
     }
