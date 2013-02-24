@@ -7,7 +7,8 @@
         android:id="@+id/preview_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@drawable/quickmark" />
 
     <com.thebridgestudio.amwayconference.qr.ViewfinderView
         android:id="@+id/viewfinder_view"
@@ -35,5 +36,13 @@
         android:background="@android:color/transparent"
         android:text="@string/scan_hint"
         android:textColor="@color/gray" />
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="8dp"
+        android:src="@drawable/back_white" />
 
 </FrameLayout>
