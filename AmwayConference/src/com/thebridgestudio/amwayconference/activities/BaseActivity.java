@@ -13,6 +13,8 @@ import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.views.AnimationLayout;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -40,6 +42,8 @@ public class BaseActivity extends FragmentActivity implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    MobclickAgent.onError(this);
+    UmengUpdateAgent.update(this);
 
     initMessageDao();
     initScheduleDao();
@@ -114,6 +118,13 @@ public class BaseActivity extends FragmentActivity implements
       mSidebar.closeSidebar();
     }
     overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+    MobclickAgent.onResume(this);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    MobclickAgent.onPause(this);
   }
 
   @Override
