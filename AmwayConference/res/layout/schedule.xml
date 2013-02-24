@@ -38,20 +38,31 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/amy_logo"
-                android:layout_marginTop="4dip"
+                android:layout_marginTop="6dip"
                 android:text="@string/amy_china"
-                android:textColor="@android:color/white"
+                android:textColor="#6a415e"
                 android:textSize="12sp" />
 
             <TextView
+                android:id="@+id/conference_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/amy_china"
                 android:layout_marginTop="6dip"
                 android:text="@string/conference_name"
-                android:textColor="@android:color/white"
+                android:textColor="#6a415e"
                 android:textSize="14sp" />
+            
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/conference_name"
+                android:layout_marginTop="16dip"
+                android:text="@string/date_location"
+                android:textColor="#9a7e92"
+                android:textSize="13sp"/>
 
             <TextView
                 android:id="@+id/meeting_order"
@@ -60,7 +71,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
                 android:textColor="@android:color/white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/meeting_order_text"
@@ -70,7 +81,7 @@
                 android:layout_toLeftOf="@id/meeting_order"
                 android:text="@string/meeting_order"
                 android:textColor="@android:color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:visibility="gone" />
 
             <TextView

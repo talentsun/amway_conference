@@ -55,4 +55,5 @@
     <string name="warmtips_format">&#8226;    %1$s</string>
     <string name="schedule_date_format">%1$s-%2$s</string>
     <string name="no_schedule">暂无日程</string>
+    <string name="date_location">2013 台北</string>
 </resources>
