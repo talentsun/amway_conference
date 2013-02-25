@@ -9,20 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 
-import com.j256.ormlite.android.apptools.OpenHelperManager;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.stmt.UpdateBuilder;
-import com.thebridgestudio.amwayconference.Config;
-import com.thebridgestudio.amwayconference.Intents;
-import com.brixd.amway_meeting.R;
-import com.thebridgestudio.amwayconference.activities.MessageActivity;
-import com.thebridgestudio.amwayconference.cloudapis.SyncMessageResponse;
-import com.thebridgestudio.amwayconference.cloudapis.SyncScheduleResponse;
-import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
-import com.thebridgestudio.amwayconference.models.Message;
-import com.thebridgestudio.amwayconference.models.Schedule;
-import com.thebridgestudio.amwayconference.models.ScheduleDetail;
-
 import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -35,6 +21,21 @@ import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
+
+import com.brixd.amway_meeting.R;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.UpdateBuilder;
+import com.thebridgestudio.amwayconference.Config;
+import com.thebridgestudio.amwayconference.Intents;
+import com.thebridgestudio.amwayconference.activities.MessageActivity;
+import com.thebridgestudio.amwayconference.cloudapis.SyncMessageResponse;
+import com.thebridgestudio.amwayconference.cloudapis.SyncScheduleResponse;
+import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
+import com.thebridgestudio.amwayconference.models.Message;
+import com.thebridgestudio.amwayconference.models.Schedule;
+import com.thebridgestudio.amwayconference.models.ScheduleDetail;
+import com.thebridgestudio.amwayconference.utils.ImageUtils;
 
 public class DataService extends IntentService {
   private static final String TAG = "MessageService";
@@ -104,13 +105,6 @@ public class DataService extends IntentService {
         registerAlarmManager();
       } else if (Intents.ACTION_UNREGISTER_ALARMMANAGER.equalsIgnoreCase(action)) {
         unregisterAlarmManager();
-      } else if (Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION.equalsIgnoreCase(action)) {
-        try {
-          syncMessage();
-          sendMessageNotification();
-        } catch (APIException e) {
-          e.printStackTrace();
-        }
       }
     }
   }
@@ -126,12 +120,14 @@ public class DataService extends IntentService {
       if (messages.size() > 0) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(
             this);
+        
         builder.setTicker(String.format(
-            getResources().getString(R.string.amway_new_message),
-            messages.size()));
+          getResources().getString(R.string.amway_new_message),
+          messages.size()));
+        builder.setLargeIcon(ImageUtils.drawableToBitmap(getResources().getDrawable(R.drawable.notification_amway_logo)));
         builder.setContentTitle(getResources().getText(R.string.app_name));
         builder.setContentText(messages.get(0).getContent());
-//        builder.setSmallIcon();
+        builder.setSmallIcon(R.drawable.notification_message);
         builder.setContentInfo("" + messages.size());
         builder.setAutoCancel(true);
 
@@ -215,6 +211,8 @@ public class DataService extends IntentService {
         intent.setAction(Intents.ACTION_NEW_MESSAGE);
         sendBroadcast(intent);
       }
+      
+      sendMessageNotification();
 
       Config.setLastSyncMessageTime(DataService.this, System.currentTimeMillis());
     } else {
@@ -420,7 +418,7 @@ public class DataService extends IntentService {
     unregisterAlarmManager();
 
     Intent intent = new Intent();
-    intent.setAction(Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION);
+    intent.setAction(Intents.ACTION_SYNC_MESSAGE);
     intent.setClass(this, DataService.class);
 
     PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
@@ -441,7 +439,7 @@ public class DataService extends IntentService {
 
   private void unregisterAlarmManager() {
     Intent intent = new Intent();
-    intent.setAction(Intents.ACTION_SYNC_MESSAGE_WITH_NOTIFICATION);
+    intent.setAction(Intents.ACTION_SYNC_MESSAGE);
     intent.setClass(this, DataService.class);
 
     PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
