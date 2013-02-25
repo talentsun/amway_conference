@@ -8,7 +8,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.utils.NetworkUtils;
 
 public class WebViewActivity extends BaseActivity {

@@ -19,7 +19,7 @@ import com.google.zxing.MultiFormatReader;
 import com.google.zxing.ReaderException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.activities.CaptureActivity;
 import com.thebridgestudio.amwayconference.qr.camera.PlanarYUVLuminanceSource;
 

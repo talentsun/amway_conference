@@ -2,6 +2,7 @@ package com.thebridgestudio.amwayconference;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.brixd.amway_meeting.R;
 
 public class Config {
   public static final String PREFS_NAME = "awmay_conference";

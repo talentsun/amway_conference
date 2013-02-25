@@ -3,7 +3,7 @@ package com.thebridgestudio.amwayconference.views;
 import java.util.Calendar;
 import java.util.List;
 
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 
 import android.annotation.TargetApi;
 import android.content.Context;

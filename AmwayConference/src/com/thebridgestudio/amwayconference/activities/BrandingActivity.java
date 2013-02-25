@@ -1,7 +1,7 @@
 package com.thebridgestudio.amwayconference.activities;
 
 import com.thebridgestudio.amwayconference.Config;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 
 import android.app.Activity;
 import android.content.Intent;

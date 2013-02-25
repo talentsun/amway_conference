@@ -1,5 +1,7 @@
 package com.thebridgestudio.amwayconference;
 
+import com.brixd.amway_meeting.R;
+
 public class Intents {
   public final static String ACTION_SYNC_MESSAGE =
       "com.thebridgestudio.amwayconference.intent.SYNC_MESSAGE";

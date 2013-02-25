@@ -14,7 +14,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.activities.MessageActivity;
 import com.thebridgestudio.amwayconference.cloudapis.SyncMessageResponse;
 import com.thebridgestudio.amwayconference.cloudapis.SyncScheduleResponse;

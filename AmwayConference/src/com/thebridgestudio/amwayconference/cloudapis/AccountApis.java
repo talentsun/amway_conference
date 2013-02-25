@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.table.TableUtils;
 import com.thebridgestudio.amwayconference.Config;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.daos.DatabaseHelper;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.models.Schedule;

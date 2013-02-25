@@ -25,7 +25,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.cloudapis.AccountApis;
 import com.thebridgestudio.amwayconference.cloudapis.AccountApis.LoginCallback;
 import com.thebridgestudio.amwayconference.qr.CaptureActivityHandler;

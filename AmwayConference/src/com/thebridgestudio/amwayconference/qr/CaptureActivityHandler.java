@@ -15,7 +15,7 @@ package com.thebridgestudio.amwayconference.qr;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.Result;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.activities.CaptureActivity;
 import com.thebridgestudio.amwayconference.qr.camera.CameraManager;
 

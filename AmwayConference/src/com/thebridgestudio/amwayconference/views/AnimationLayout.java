@@ -1,6 +1,6 @@
 package com.thebridgestudio.amwayconference.views;
 
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 
 import android.content.Context;
 import android.util.AttributeSet;

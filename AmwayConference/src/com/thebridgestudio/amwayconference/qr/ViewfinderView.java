@@ -14,7 +14,7 @@
 package com.thebridgestudio.amwayconference.qr;
 
 import com.google.zxing.ResultPoint;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.qr.camera.CameraManager;
 
 import android.annotation.SuppressLint;

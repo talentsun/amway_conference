@@ -32,7 +32,7 @@ import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
 import com.j256.ormlite.dao.Dao;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
-import com.thebridgestudio.amwayconference.R;
+import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.services.DataService;
 import com.thebridgestudio.amwayconference.views.LoadingView;

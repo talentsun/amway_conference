@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.thebridgestudio.amwayconference"
+    package="com.brixd.amway_meeting"
     android:versionCode="2"
     android:versionName="1.0.1" >
 
@@ -27,7 +27,7 @@
         android:label="@string/app_name"
         android:theme="@android:style/Theme.Black.NoTitleBar" >
         <activity
-            android:name=".activities.BrandingActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.BrandingActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
             <intent-filter>
@@ -37,42 +37,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.WelcomeActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.WelcomeActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.LoginActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.CaptureActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.CaptureActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.MessageActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.MessageActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.ScheduleActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.ScheduleActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.MapActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.MapActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.SceneryActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.SceneryActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
         <activity
-            android:name=".activities.SurveyActivity"
+            android:name="com.thebridgestudio.amwayconference.activities.SurveyActivity"
             android:label="@string/app_name"
             android:launchMode="singleInstance" >
         </activity>
@@ -88,7 +88,7 @@
             </intent-filter>
         </service>
 
-        <receiver android:name=".receivers.StartupReceiver" >
+        <receiver android:name="com.thebridgestudio.amwayconference.receivers.StartupReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" >
                 </action>
@@ -97,11 +97,11 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5129f6d35270156d3b000072" >
+            android:value="512b0e2c527015464800004f" >
         </meta-data>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="Umeng" >
+            android:value="taibei" >
         </meta-data>
 
         <service
