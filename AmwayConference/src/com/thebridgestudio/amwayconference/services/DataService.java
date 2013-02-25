@@ -131,7 +131,7 @@ public class DataService extends IntentService {
             messages.size()));
         builder.setContentTitle(getResources().getText(R.string.app_name));
         builder.setContentText(messages.get(0).getContent());
-        builder.setSmallIcon(R.drawable.ic_launcher);
+//        builder.setSmallIcon();
         builder.setContentInfo("" + messages.size());
         builder.setAutoCancel(true);
 
