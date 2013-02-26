@@ -14,7 +14,9 @@ import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
@@ -75,6 +77,15 @@ public class MessageActivity extends BaseActivity implements
     mListView.setSelection(mFirstVisible);
     mAdapter = new MessageAdapter(this);
     mListView.setAdapter(mAdapter);
+    
+    mListView.setOnTouchListener(new OnTouchListener() {
+      
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        onTouchEvent(event);
+        return false;
+      }
+    });
 
     showLoading();
     getSupportLoaderManager().initLoader(0, null, this);

@@ -20,6 +20,9 @@
     <string name="login_failed">登录失败</string>
     <string name="login">登录</string>
     <string name="no_network">好像没有网络哦\n请保持网络畅通</string>
+    <string name="confirm_logout">确认退出?</string>
+    <string name="cancel">取消</string>
+    <string name="confirm">确认</string>
 
     <!-- welcome -->
     <string name="amy_china">安利（中国）</string>

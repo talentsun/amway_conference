@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +53,9 @@ public class LoginActivity extends CustomActivity {
 
       @Override
       public void onClick(View v) {
+        if (TextUtils.isEmpty(mId.getText())) {
+          Toast.makeText(LoginActivity.this, R.string.input_id, Toast.LENGTH_SHORT).show();
+        }
         AccountApis.loginAsync(LoginActivity.this, mId.getText()
             .toString(), mName.getText().toString(),
             new LoginCallback() {

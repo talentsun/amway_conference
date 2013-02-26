@@ -16,12 +16,16 @@ import com.thebridgestudio.amwayconference.views.AnimationLayout;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.update.UmengUpdateAgent;
 
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
@@ -30,6 +34,7 @@ import android.widget.TextView;
 public class BaseActivity extends CustomActivity implements
     AnimationLayout.Listener, OnClickListener {
   private final static String TAG = "BaseActivity";
+  protected static final float SLIDE_DISTANCE = 80;
   protected AnimationLayout mSidebar;
   protected ImageView mTag;
   protected DatabaseHelper mDatabaseHelper = null;
@@ -37,6 +42,7 @@ public class BaseActivity extends CustomActivity implements
   protected Dao<Schedule, Long> mScheduleDao = null;
 
   private NewMessageReceiver mNewMessageReceiver;
+  private GestureDetector gestureDetector;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +57,37 @@ public class BaseActivity extends CustomActivity implements
     IntentFilter newMessageIntentFilter = new IntentFilter();
     newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
     registerReceiver(mNewMessageReceiver, newMessageIntentFilter);
+
+    gestureDetector = new GestureDetector(this,
+        new GestureDetector.SimpleOnGestureListener() {
+
+          @Override
+          public boolean onScroll(MotionEvent e1, MotionEvent e2,
+              float distanceX, float distanceY) {
+            if (e2.getX() - e1.getX() > SLIDE_DISTANCE) {
+              mSidebar.openSidebar();
+            } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE) {
+              mSidebar.closeSidebar();
+            }
+            return true;
+          }
+
+          @Override
+          public boolean onFling(MotionEvent e1, MotionEvent e2,
+              float velocityX, float velocityY) {
+            if (e2.getX() - e1.getX() > SLIDE_DISTANCE) {
+              mSidebar.openSidebar();
+            } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE) {
+              mSidebar.closeSidebar();
+            }
+            return true;
+          }
+
+          @Override
+          public boolean onDown(MotionEvent e) {
+            return false;
+          }
+        });
 
   }
 
@@ -115,7 +152,7 @@ public class BaseActivity extends CustomActivity implements
       mSidebar.clearAnimation();
       mSidebar.closeSidebar();
     }
-    
+
     MobclickAgent.onResume(this);
   }
 
@@ -151,22 +188,39 @@ public class BaseActivity extends CustomActivity implements
 
       @Override
       public void onClick(View v) {
-        AccountApis.logout(BaseActivity.this, Config.getAccount(BaseActivity.this),
-            new AccountApis.LogoutCallback() {
+        AlertDialog.Builder logoutAlertBuilder = new AlertDialog.Builder(BaseActivity.this);
+        AlertDialog logoutAlert =
+            logoutAlertBuilder.setMessage(R.string.confirm_logout)
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 
-              @Override
-              public void onLogoutOK() {
-                Intent welcomeIntent = new Intent(getBaseContext(), WelcomeActivity.class);
-                startActivity(welcomeIntent);
-                finish();
-              }
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
 
-              @Override
-              public void onLogoutFailed() {
-                // TODO Auto-generated method stub
+                  }
+                }).setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
 
-              }
-            });
+                  @Override
+                  public void onClick(DialogInterface dialog, int which) {
+                    AccountApis.logout(BaseActivity.this, Config.getAccount(BaseActivity.this),
+                        new AccountApis.LogoutCallback() {
+
+                          @Override
+                          public void onLogoutOK() {
+                            Intent welcomeIntent =
+                                new Intent(getBaseContext(), WelcomeActivity.class);
+                            startActivity(welcomeIntent);
+                            finish();
+                          }
+
+                          @Override
+                          public void onLogoutFailed() {
+                            // TODO Auto-generated method stub
+
+                          }
+                        });
+                  }
+                }).create();
+        logoutAlert.show();
       }
     });
     mTag = (ImageView) findViewById(R.id.tag);
@@ -266,4 +320,10 @@ public class BaseActivity extends CustomActivity implements
         break;
     }
   }
+
+  @Override
+  public boolean onTouchEvent(MotionEvent event) {
+    return gestureDetector.onTouchEvent(event);
+  }
+
 }

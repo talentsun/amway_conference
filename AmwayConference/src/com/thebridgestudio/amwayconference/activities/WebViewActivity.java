@@ -2,7 +2,9 @@ package com.thebridgestudio.amwayconference.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -60,6 +62,15 @@ public class WebViewActivity extends BaseActivity {
         super.onPageFinished(view, url);
       }
 
+    });
+    
+    webview.setOnTouchListener(new OnTouchListener() {
+      
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        onTouchEvent(event);
+        return false;
+      }
     });
   }
 
