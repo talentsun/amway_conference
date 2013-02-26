@@ -10,11 +10,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/banner_taipei_landscape"
+        android:gravity="right"
         android:orientation="vertical"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingTop="12dp"
-        android:gravity="right" >
+        android:paddingTop="12dp" >
 
         <ImageView
             android:layout_width="wrap_content"
@@ -22,6 +22,7 @@
             android:src="@drawable/amy_logo" />
 
         <TextView
+            style="@style/text_shadow_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dip"
@@ -30,14 +31,16 @@
             android:textSize="16sp" />
 
         <TextView
+            style="@style/text_shadow_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dip"
             android:text="@string/conference_name"
             android:textColor="@color/schedule_header_color_1"
             android:textSize="20sp" />
-        
+
         <TextView
+            style="@style/text_shadow_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dip"
@@ -55,7 +58,8 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp" >
 
-        <!-- <Button
+        <!--
+        <Button
             android:id="@+id/scan_entry"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
@@ -67,10 +71,12 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_red_shadow" /> -->
+            android:background="@drawable/button_red_shadow" />
+        -->
 
         <Button
             android:id="@+id/login"
+            style="@style/text_shadow_black"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
             android:background="@drawable/button_red"
@@ -82,6 +88,6 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/button_red_shadow" />
-
     </LinearLayout>
+
 </LinearLayout>

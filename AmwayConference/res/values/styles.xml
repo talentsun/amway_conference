@@ -17,6 +17,20 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="text_shadow_black">
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowColor">#88000000</item>
+    </style>
+
+    <style name="text_shadow_white">
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:shadowColor">#88FFFFFF</item>
+    </style>
+
     <style name="sidebar_item_frame">
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">0dp</item>
@@ -26,7 +40,7 @@
         <item name="android:layout_weight">1</item>
     </style>
 
-    <style name="sidebar_item">
+    <style name="sidebar_item" parent="text_shadow_black">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">fill_parent</item>
         <item name="android:textSize">18sp</item>

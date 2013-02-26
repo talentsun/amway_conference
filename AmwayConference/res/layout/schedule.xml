@@ -34,6 +34,7 @@
 
             <TextView
                 android:id="@+id/amy_china"
+                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -45,6 +46,7 @@
 
             <TextView
                 android:id="@+id/conference_name"
+                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -53,8 +55,9 @@
                 android:text="@string/conference_name"
                 android:textColor="@color/schedule_header_color_1"
                 android:textSize="14sp" />
-            
-            <TextView 
+
+            <TextView
+                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -62,10 +65,11 @@
                 android:layout_marginTop="8dip"
                 android:text="@string/date_location"
                 android:textColor="@color/schedule_header_color_2"
-                android:textSize="13sp"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/meeting_order"
+                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -95,6 +99,7 @@
 
             <TextView
                 android:id="@+id/year"
+                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/date"
@@ -107,6 +112,7 @@
 
             <TextView
                 android:id="@+id/date"
+                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -123,17 +129,17 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="8dp"
                 android:src="@drawable/tag_green" />
-            
+
             <ImageView
                 android:id="@+id/new_message_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="20dip"
                 android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dip"
                 android:layout_marginTop="2dip"
                 android:src="@drawable/new_message"
-                android:visibility="gone"/>
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -151,19 +157,20 @@
                 android:visibility="gone" >
             </com.thebridgestudio.amwayconference.views.ScheduleDateView>
 
-            <com.thebridgestudio.amwayconference.views.ObservableScrollView 
+            <com.thebridgestudio.amwayconference.views.ObservableScrollView
                 android:id="@+id/list_wrapper"
                 android:layout_width="240dip"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="45dip"
-                android:fillViewport="true">
-                <LinearLayout 
+                android:fillViewport="true" >
+
+                <LinearLayout
                     android:id="@+id/list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical" >
                 </LinearLayout>
             </com.thebridgestudio.amwayconference.views.ObservableScrollView>
 

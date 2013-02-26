@@ -19,16 +19,17 @@
             android:id="@+id/amy_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:src="@drawable/amy_logo" />
 
         <TextView
             android:id="@+id/amy_china"
+            style="@style/text_shadow_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/amy_logo"
             android:layout_alignParentRight="true"
+            android:layout_below="@id/amy_logo"
             android:layout_marginTop="6dip"
             android:text="@string/amy_china"
             android:textColor="@color/schedule_header_color_1"
@@ -36,20 +37,22 @@
 
         <TextView
             android:id="@+id/conference_name"
+            style="@style/text_shadow_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/amy_china"
             android:layout_alignParentRight="true"
+            android:layout_below="@id/amy_china"
             android:layout_marginTop="2dip"
             android:text="@string/conference_name"
             android:textColor="@color/schedule_header_color_1"
             android:textSize="20sp" />
-        
+
         <TextView
+            style="@style/text_shadow_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/conference_name"
             android:layout_alignParentRight="true"
+            android:layout_below="@id/conference_name"
             android:layout_marginTop="10dip"
             android:text="@string/date_location"
             android:textColor="@color/schedule_header_color_2"
@@ -59,8 +62,8 @@
             android:id="@+id/input_id"
             android:layout_width="fill_parent"
             android:layout_height="54dp"
-            android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
             android:layout_marginBottom="18dp"
             android:background="@drawable/inputbar"
             android:hint="@string/input_id"
@@ -74,24 +77,24 @@
             android:layout_height="54dp"
             android:layout_above="@id/input_id"
             android:layout_alignParentRight="true"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/inputbar"
             android:hint="@string/name"
-            android:layout_marginBottom="8dp"
             android:padding="12dp"
             android:singleLine="true"
             android:textColor="@android:color/darker_gray" />
-
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/background"
         android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:background="@drawable/background" >
+        android:paddingRight="12dp" >
 
         <Button
             android:id="@+id/login"
+            style="@style/text_shadow_black"
             android:layout_width="fill_parent"
             android:layout_height="48dp"
             android:layout_centerInParent="true"
