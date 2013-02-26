@@ -16,7 +16,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 
-public class WelcomeActivity extends Activity {
+public class WelcomeActivity extends CustomActivity {
   private static final String TAG = "WelcomeActivity";
 
   // Views

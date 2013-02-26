@@ -2,14 +2,12 @@ package com.thebridgestudio.amwayconference.activities;
 
 import com.thebridgestudio.amwayconference.Config;
 import com.brixd.amway_meeting.R;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-public class BrandingActivity extends Activity {
+public class BrandingActivity extends CustomActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

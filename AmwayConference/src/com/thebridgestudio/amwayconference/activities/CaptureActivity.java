@@ -34,7 +34,7 @@ import com.thebridgestudio.amwayconference.qr.ViewfinderView;
 import com.thebridgestudio.amwayconference.qr.camera.CameraManager;
 import com.thebridgestudio.amwayconference.services.DataService;
 
-public class CaptureActivity extends Activity implements SurfaceHolder.Callback {
+public class CaptureActivity extends CustomActivity implements SurfaceHolder.Callback {
 
   private CaptureActivityHandler handler;
   private ViewfinderView viewfinderView;

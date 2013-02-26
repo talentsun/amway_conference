@@ -28,7 +28,7 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class BaseActivity extends FragmentActivity implements
+public class BaseActivity extends CustomActivity implements
     AnimationLayout.Listener, OnClickListener {
   private final static String TAG = "BaseActivity";
   protected AnimationLayout mSidebar;
@@ -53,7 +53,6 @@ public class BaseActivity extends FragmentActivity implements
     newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
     registerReceiver(mNewMessageReceiver, newMessageIntentFilter);
 
-    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
   }
 
   @Override
@@ -117,7 +116,7 @@ public class BaseActivity extends FragmentActivity implements
       mSidebar.clearAnimation();
       mSidebar.closeSidebar();
     }
-    overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+    
     MobclickAgent.onResume(this);
   }
 

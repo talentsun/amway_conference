@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity {
+public class LoginActivity extends CustomActivity {
   private static final String TAG = "LoginActivity";
 
   private Button mLogin;
