@@ -8,7 +8,7 @@ public class SceneryActivity extends WebViewActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    tag.setImageResource(R.drawable.tag_green);
+    tag.setImageResource(R.drawable.tag_blueness);
     webview.loadUrl("file:///android_asset/scenery.html");
   }
 }

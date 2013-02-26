@@ -31,7 +31,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="6dip"
             android:text="@string/amy_china"
-            android:textColor="#6a415e"
+            android:textColor="@color/schedule_header_color_1"
             android:textSize="16sp" />
 
         <TextView
@@ -42,7 +42,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="2dip"
             android:text="@string/conference_name"
-            android:textColor="#6a415e"
+            android:textColor="@color/schedule_header_color_1"
             android:textSize="20sp" />
         
         <TextView
@@ -52,7 +52,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dip"
             android:text="@string/date_location"
-            android:textColor="#9a7e92"
+            android:textColor="@color/schedule_header_color_2"
             android:textSize="16sp" />
 
         <EditText

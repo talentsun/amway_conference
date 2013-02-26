@@ -122,4 +122,9 @@
     
     <color name="header_normal">#ff00ff00</color>
     <color name="header_pressed">#ffff00</color>
+    
+    <color name="warmtip_text_color">#333</color>
+    
+    <color name="schedule_header_color_1">#9a7e92</color>
+    <color name="schedule_header_color_2">#b49ead</color>
 </resources>

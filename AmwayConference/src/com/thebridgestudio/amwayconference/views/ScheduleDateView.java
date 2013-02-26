@@ -61,7 +61,7 @@ public class ScheduleDateView extends LinearLayout {
       Button button = new Button(getContext());
       button.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, getContext()
           .getResources().getDimensionPixelSize(R.dimen.schedule_date_height)));
-      button.setTextSize(14);
+      button.setTextSize(15);
 
       if (i != dates.size() - 1) {
         button.setBackgroundResource(R.drawable.schedule_date);
@@ -74,7 +74,7 @@ public class ScheduleDateView extends LinearLayout {
         button.setText(R.string.today);
         button.setSelected(true);
       } else {
-        button.setTextColor(Color.parseColor("#555555"));
+        button.setTextColor(Color.parseColor("#707070"));
         button.setText(String.valueOf(date));
         button.setSelected(false);
       }

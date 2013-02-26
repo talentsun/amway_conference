@@ -40,7 +40,7 @@
                 android:layout_below="@id/amy_logo"
                 android:layout_marginTop="4dip"
                 android:text="@string/amy_china"
-                android:textColor="#6a415e"
+                android:textColor="@color/schedule_header_color_1"
                 android:textSize="12sp" />
 
             <TextView
@@ -51,7 +51,7 @@
                 android:layout_below="@id/amy_china"
                 android:layout_marginTop="2dip"
                 android:text="@string/conference_name"
-                android:textColor="#6a415e"
+                android:textColor="@color/schedule_header_color_1"
                 android:textSize="14sp" />
             
             <TextView 
@@ -61,7 +61,7 @@
                 android:layout_below="@id/conference_name"
                 android:layout_marginTop="8dip"
                 android:text="@string/date_location"
-                android:textColor="#9a7e92"
+                android:textColor="@color/schedule_header_color_2"
                 android:textSize="13sp"/>
 
             <TextView

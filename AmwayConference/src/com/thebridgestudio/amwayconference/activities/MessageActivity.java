@@ -201,7 +201,7 @@ public class MessageActivity extends BaseActivity implements
       Message message = (Message) getItem(position);
       Calendar calendar = Calendar.getInstance();
       calendar.setTimeInMillis(message.getDate());
-      holder.dateText.setText(String.format("%s  %s",
+      holder.dateText.setText(String.format("%s    %s",
           new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()),
           mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 

@@ -16,10 +16,11 @@
         <TextView 
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:textColor="#999"
             android:text="@string/warmtips"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="8dip"/>
+            android:layout_marginLeft="8dip"
+            android:layout_marginBottom="2dip"/>
     </LinearLayout>
 </LinearLayout>

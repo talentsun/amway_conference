@@ -1,14 +1,13 @@
 package com.thebridgestudio.amwayconference.views;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -129,7 +128,8 @@ public class ScheduleView extends LinearLayout {
     ImageView imageView = new ImageView(getContext());
     LinearLayout.LayoutParams layoutParams1 =
         new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    layoutParams1.gravity = Gravity.CENTER_VERTICAL;
+    layoutParams1.gravity = Gravity.TOP;
+    layoutParams1.topMargin = getResources().getDimensionPixelSize(R.dimen.warmtip_point_margin_top);
     imageView.setLayoutParams(layoutParams1);
     imageView.setImageResource(R.drawable.point);
     tipWrapper.addView(imageView);
@@ -141,6 +141,8 @@ public class ScheduleView extends LinearLayout {
         getContext().getResources().getDimensionPixelSize(R.dimen.small_margin);
     textView.setLayoutParams(layoutParams2);
     textView.setText(tip);
+    textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.warmtip_text_size));
+    textView.setTextColor(getResources().getColor(R.color.warmtip_text_color));
     tipWrapper.addView(textView);
 
     return tipWrapper;

@@ -95,11 +95,16 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
       Schedule schedule = (Schedule) getItem(position);
       Calendar calendar = Calendar.getInstance();
       calendar.setTimeInMillis(schedule.getDate());
-      holder.dateText.setText(String.format("%s  %s",
+      holder.dateText.setText(String.format("%s    %s",
           new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()),
           mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 
       mDay2HeaderView.put(calendar.get(Calendar.DAY_OF_MONTH), convertView);
+      
+      LinearLayout.LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+      params.bottomMargin = getResources().getDimensionPixelSize(R.dimen.schedule_header_margin_bottom);
+      convertView.setLayoutParams(params);
+      
       return convertView;
     }
 
