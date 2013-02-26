@@ -65,7 +65,6 @@ public class MessageActivity extends BaseActivity implements
   private void initListView(Bundle savedInstanceState) {
     mListView = (StickyListHeadersListView) findViewById(R.id.list);
     mListView.setOnScrollListener(this);
-    mListView.setAreHeadersSticky(false);
 
     LinearLayout emptyView = (LinearLayout) findViewById(android.R.id.empty);
     mListView.setEmptyView(emptyView);
@@ -202,7 +201,7 @@ public class MessageActivity extends BaseActivity implements
       Message message = (Message) getItem(position);
       Calendar calendar = Calendar.getInstance();
       calendar.setTimeInMillis(message.getDate());
-      holder.dateText.setText(String.format("%s %s",
+      holder.dateText.setText(String.format("%s  %s",
           new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()),
           mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 

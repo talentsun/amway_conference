@@ -20,7 +20,7 @@ public class WelcomeActivity extends Activity {
   private static final String TAG = "WelcomeActivity";
 
   // Views
-  private Button mScanEntry;
+//  private Button mScanEntry;
   private Button mLogin;
 
   private FinishReceiver mFinishReceiver;
@@ -63,20 +63,20 @@ public class WelcomeActivity extends Activity {
   }
 
   private void initViews() {
-    mScanEntry = (Button) findViewById(R.id.scan_entry);
+//    mScanEntry = (Button) findViewById(R.id.scan_entry);
     mLogin = (Button) findViewById(R.id.login);
   }
 
   private void initListener() {
-    mScanEntry.setOnClickListener(new View.OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        Intent scanIntent = new Intent(getApplicationContext(),
-            CaptureActivity.class);
-        startActivityForResult(scanIntent, 0);
-      }
-    });
+//    mScanEntry.setOnClickListener(new View.OnClickListener() {
+//
+//      @Override
+//      public void onClick(View v) {
+//        Intent scanIntent = new Intent(getApplicationContext(),
+//            CaptureActivity.class);
+//        startActivityForResult(scanIntent, 0);
+//      }
+//    });
 
     mLogin.setOnClickListener(new View.OnClickListener() {
 

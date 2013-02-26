@@ -279,7 +279,13 @@ public class DataService extends IntentService {
                 Log.e(TAG, "create schedule #" + schedule.getId() + " failed");
               }
             } else {
-              Log.i(TAG, "ignore schedule #" + schedule.getId() + " because invalid");
+              try {
+                mScheduleDao.deleteById(schedule.getId());
+                Log.i(TAG, "delete schedule #" + schedule.getId() + " because invalid");
+              } catch (SQLException e) {
+                Log.e(TAG, "delete schedule #" + schedule.getId() + " failed");
+                e.printStackTrace();
+              }
             }
           }
         }
@@ -302,7 +308,14 @@ public class DataService extends IntentService {
                 Log.e(TAG, "sync schedule detail #" + detail.getId() + " failed");
               }
             } else {
-              Log.w(TAG, "ignore schedule detail #" + detail.getId() + " because invalid");
+              try {
+                mScheduleDetailDao.deleteById(detail.getId());
+                Log.w(TAG, "delete schedule detail #" + detail.getId() + " because invalid");
+              } catch (SQLException e) {
+                Log.e(TAG, "delete schedule detail #" + detail.getId() + " failed");
+                e.printStackTrace();
+              }
+              
             }
           }
         }
@@ -397,7 +410,7 @@ public class DataService extends IntentService {
             mScheduleDao.queryBuilder().selectColumns("date").orderBy("date", true).queryForFirst();
         if (startSchedule != null) {
           calendar.setTimeInMillis(startSchedule.getDate());
-          Config.setStartDate(this, new SimpleDateFormat("MM.dd").format(calendar.getTime()));
+          Config.setStartDate(this, new SimpleDateFormat("M.dd").format(calendar.getTime()));
         }
 
         Schedule endSchedule =
@@ -405,7 +418,7 @@ public class DataService extends IntentService {
                 .queryForFirst();
         if (endSchedule != null) {
           calendar.setTimeInMillis(endSchedule.getDate());
-          Config.setEndDate(this, new SimpleDateFormat("MM.dd").format(calendar.getTime()));
+          Config.setEndDate(this, new SimpleDateFormat("M.dd").format(calendar.getTime()));
         }
       } catch (SQLException e) {
         e.printStackTrace();
@@ -418,7 +431,7 @@ public class DataService extends IntentService {
     unregisterAlarmManager();
 
     Intent intent = new Intent();
-    intent.setAction(Intents.ACTION_SYNC_MESSAGE);
+    intent.setAction(Intents.ACTION_SYNC_ALL);
     intent.setClass(this, DataService.class);
 
     PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);
@@ -439,7 +452,7 @@ public class DataService extends IntentService {
 
   private void unregisterAlarmManager() {
     Intent intent = new Intent();
-    intent.setAction(Intents.ACTION_SYNC_MESSAGE);
+    intent.setAction(Intents.ACTION_SYNC_ALL);
     intent.setClass(this, DataService.class);
 
     PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, 0);

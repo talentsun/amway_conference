@@ -32,13 +32,13 @@
     
     <!-- date -->
     <string-array name="day_of_week">
+        <item>星期日</item>
         <item>星期一</item>
         <item>星期二</item>
         <item>星期三</item>
         <item>星期四</item>
         <item>星期五</item>
         <item>星期六</item>
-        <item>星期七</item>
     </string-array>
     
     <!-- message -->
@@ -56,5 +56,5 @@
     <string name="warmtips_format">&#8226;    %1$s</string>
     <string name="schedule_date_format">%1$s-%2$s</string>
     <string name="no_schedule">暂无日程</string>
-    <string name="date_location">2013 台北</string>
+    <string name="date_location">2013 台湾</string>
 </resources>

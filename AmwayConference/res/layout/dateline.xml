@@ -19,6 +19,7 @@
         android:paddingRight="16dip"
         android:paddingBottom="2dip"
         android:layout_gravity="center"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textColor="#848484" />
 
 </FrameLayout>

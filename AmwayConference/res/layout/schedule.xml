@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="18dip"
+                android:layout_marginTop="8dip"
                 android:src="@drawable/amy_logo_2" />
 
             <TextView
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/amy_logo"
-                android:layout_marginTop="6dip"
+                android:layout_marginTop="4dip"
                 android:text="@string/amy_china"
                 android:textColor="#6a415e"
                 android:textSize="12sp" />
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/amy_china"
-                android:layout_marginTop="6dip"
+                android:layout_marginTop="2dip"
                 android:text="@string/conference_name"
                 android:textColor="#6a415e"
                 android:textSize="14sp" />
@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_below="@id/conference_name"
-                android:layout_marginTop="16dip"
+                android:layout_marginTop="8dip"
                 android:text="@string/date_location"
                 android:textColor="#9a7e92"
                 android:textSize="13sp"/>
@@ -140,7 +140,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="12dip"
-            android:layout_marginTop="-30dip" >
+            android:layout_marginTop="-35dip" >
 
             <com.thebridgestudio.amwayconference.views.ScheduleDateView
                 android:id="@+id/schedule_date_view"
@@ -157,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginTop="30dip"
+                android:layout_marginTop="45dip"
                 android:fillViewport="true">
                 <LinearLayout 
                     android:id="@+id/list"

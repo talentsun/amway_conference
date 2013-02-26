@@ -95,7 +95,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
       Schedule schedule = (Schedule) getItem(position);
       Calendar calendar = Calendar.getInstance();
       calendar.setTimeInMillis(schedule.getDate());
-      holder.dateText.setText(String.format("%s %s",
+      holder.dateText.setText(String.format("%s  %s",
           new SimpleDateFormat("yyyy.MM.dd").format(calendar.getTime()),
           mDayOfWeeks[calendar.get(Calendar.DAY_OF_WEEK) - 1]));
 
