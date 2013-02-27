@@ -4,15 +4,7 @@ var homescroll,
 
 function loaded() {
 	homescroll = new iScroll('homescroll',{
-		onScrollEnd: function () {
-			var pagetop = $(".indexscroller").position().top
-			if( pagetop < -50 ){
-                $("#top").fadeIn();	
-			}
-			else{
-                $("#top").fadeOut();	
-			}
-		},
+		onScrollEnd: function () {},
 	});
 	myScroll = new iScroll('wrapper', {
 		snap: true,

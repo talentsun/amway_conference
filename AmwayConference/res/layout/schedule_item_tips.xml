@@ -14,6 +14,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/icon_warmtips"/>
         <TextView 
+            style="@style/text_shadow_white_dark_short"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
             android:textSize="14sp"

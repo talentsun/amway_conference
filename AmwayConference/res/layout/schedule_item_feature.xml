@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginLeft="8dip" >
-        <TextView 
+        <TextView
+            style="@style/text_shadow_white_dark_short" 
             android:id="@+id/schedule_detail_time"
             android:layout_width="match_parent"
             android:layout_height="24dip"
@@ -24,6 +25,7 @@
             android:gravity="center_vertical" />
     
         <TextView 
+            style="@style/text_shadow_white_dark_short"
             android:id="@+id/schedule_detail_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,6 +34,7 @@
             android:layout_marginTop="2dip"/>
 
         <TextView 
+            style="@style/text_shadow_white_dark_short"
             android:id="@+id/schedule_detail_feature"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

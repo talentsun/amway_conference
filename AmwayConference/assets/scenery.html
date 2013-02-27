@@ -8,12 +8,22 @@
 <title>景点</title>
 <link href="sceneryindex.css" rel="stylesheet" type="text/css" />
 <script src="js/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="js/iscroll.js"></script>
 </head>
 
 <body>
+<script>
+var myarticle;
+function loaded() {
+	myarticle = new iScroll('myarticle',{});
+}
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+<header>景点</header>
 <!--内容-->
 <article id="myarticle">
-<header>景点</header>
+<div class="scroller">
 <!--阿里山-->
 <section>
   <a href="scenery_alishan.html" class="imagebox" style="background-image:url(images/scenery_alishan.jpg)"><div class="title">阿里山</div><div class="inner"></div> </a>
@@ -94,6 +104,7 @@
   <a href="scenery_guofu.html" class="imagebox" style="background-image:url(images/scenery_guofu.jpg)"><div class="title">国父纪念馆</div><div class="inner"></div> </a>
   <div class="rightshadow"></div>
 </section>
+</div>
 </article>
 </body>
 <script type="text/javascript">

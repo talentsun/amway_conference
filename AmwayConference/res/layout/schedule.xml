@@ -34,7 +34,7 @@
 
             <TextView
                 android:id="@+id/amy_china"
-                style="@style/text_shadow_white"
+                style="@style/text_shadow_white_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -46,7 +46,7 @@
 
             <TextView
                 android:id="@+id/conference_name"
-                style="@style/text_shadow_white"
+                style="@style/text_shadow_white_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -57,7 +57,7 @@
                 android:textSize="14sp" />
 
             <TextView
-                style="@style/text_shadow_white"
+                style="@style/text_shadow_white_dark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -69,7 +69,6 @@
 
             <TextView
                 android:id="@+id/meeting_order"
-                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -99,7 +98,6 @@
 
             <TextView
                 android:id="@+id/year"
-                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/date"
@@ -112,7 +110,6 @@
 
             <TextView
                 android:id="@+id/date"
-                style="@style/text_shadow_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"

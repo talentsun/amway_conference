@@ -20,6 +20,7 @@
         android:layout_marginLeft="12dip"
         android:layout_marginBottom="4dip">
         <TextView 
+            style="@style/text_shadow_white_dark_short"
             android:id="@+id/message"
             android:textSize="15sp"
             android:textColor="@color/black"
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.2"/>
         <TextView 
+            style="@style/text_shadow_white_dark_short"
             android:id="@+id/time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

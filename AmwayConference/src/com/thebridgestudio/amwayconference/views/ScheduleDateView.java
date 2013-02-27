@@ -72,9 +72,11 @@ public class ScheduleDateView extends LinearLayout {
       if (date == currentDay) {
         button.setTextColor(Color.WHITE);
         button.setText(R.string.today);
+        button.setShadowLayer(1, 0, 1, Color.parseColor("#33000000"));
         button.setSelected(true);
       } else {
         button.setTextColor(Color.parseColor("#707070"));
+        button.setShadowLayer(1, 0, 1, Color.parseColor("#A0FFFFFF"));
         button.setText(String.valueOf(date));
         button.setSelected(false);
       }

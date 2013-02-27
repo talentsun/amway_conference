@@ -2,6 +2,7 @@ package com.thebridgestudio.amwayconference.views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -143,6 +144,7 @@ public class ScheduleView extends LinearLayout {
     textView.setText(tip);
     textView.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimensionPixelSize(R.dimen.warmtip_text_size));
     textView.setTextColor(getResources().getColor(R.color.warmtip_text_color));
+    textView.setShadowLayer(1, 0, 1, Color.parseColor("#FFFFFFFF"));
     tipWrapper.addView(textView);
 
     return tipWrapper;
