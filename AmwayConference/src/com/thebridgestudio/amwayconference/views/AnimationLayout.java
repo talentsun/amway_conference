@@ -224,7 +224,7 @@ public class AnimationLayout extends ViewGroup {
 
     public void onAnimationEnd(Animation animation) {
       iContent.clearAnimation();
-      iSidebar.setVisibility(View.INVISIBLE);
+      iSidebar.setVisibility(View.GONE);
       mOpened = !mOpened;
       requestLayout();
       if (mListener != null) {

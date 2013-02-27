@@ -271,9 +271,11 @@ public class BaseActivity extends CustomActivity implements
         if (this instanceof ScheduleActivity) {
           mSidebar.closeSidebar();
         } else {
+          mSidebar.closeSidebar();
           Intent scheduleIntent = new Intent();
           scheduleIntent.setClass(getBaseContext(), ScheduleActivity.class);
           startActivity(scheduleIntent);
+          mSidebar.closeSidebar();
           finish();
         }
         break;
@@ -282,6 +284,7 @@ public class BaseActivity extends CustomActivity implements
         if (this instanceof MessageActivity) {
           mSidebar.closeSidebar();
         } else {
+          mSidebar.closeSidebar();
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), MessageActivity.class);
           startActivity(messageIntent);
@@ -293,6 +296,7 @@ public class BaseActivity extends CustomActivity implements
         if (this instanceof SurveyActivity) {
           mSidebar.closeSidebar();
         } else {
+          mSidebar.closeSidebar();
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), SurveyActivity.class);
           startActivity(messageIntent);
@@ -304,6 +308,7 @@ public class BaseActivity extends CustomActivity implements
         if (this instanceof MapActivity) {
           mSidebar.closeSidebar();
         } else {
+          mSidebar.closeSidebar();
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), MapActivity.class);
           startActivity(messageIntent);
@@ -315,6 +320,7 @@ public class BaseActivity extends CustomActivity implements
         if (this instanceof SceneryActivity) {
           mSidebar.closeSidebar();
         } else {
+          mSidebar.closeSidebar();
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), SceneryActivity.class);
           startActivity(messageIntent);
