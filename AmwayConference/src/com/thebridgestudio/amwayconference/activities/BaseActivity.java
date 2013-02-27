@@ -1,7 +1,10 @@
 package com.thebridgestudio.amwayconference.activities;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
@@ -23,6 +26,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -43,6 +47,8 @@ public class BaseActivity extends CustomActivity implements
 
   private NewMessageReceiver mNewMessageReceiver;
   private GestureDetector gestureDetector;
+  private BlockingQueue<Runnable> finishQueue;
+  private Handler handler = new Handler();
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class BaseActivity extends CustomActivity implements
     IntentFilter newMessageIntentFilter = new IntentFilter();
     newMessageIntentFilter.addAction(Intents.ACTION_NEW_MESSAGE);
     registerReceiver(mNewMessageReceiver, newMessageIntentFilter);
+    finishQueue = new LinkedBlockingQueue<Runnable>();
 
     gestureDetector = new GestureDetector(this,
         new GestureDetector.SimpleOnGestureListener() {
@@ -252,10 +259,22 @@ public class BaseActivity extends CustomActivity implements
   protected void onSyncMessage(boolean hasNewMessage) {}
 
   @Override
-  public void onSidebarOpened() {}
+  public void onSidebarOpened() {
+
+  }
 
   @Override
-  public void onSidebarClosed() {}
+  public void onSidebarClosed() {
+    if (finishQueue != null && finishQueue.size() > 0) {
+      try {
+        while (!finishQueue.isEmpty()) {
+          handler.post(finishQueue.take());
+        }
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 
   @Override
   public boolean onContentTouchedWhenOpening() {
@@ -285,10 +304,18 @@ public class BaseActivity extends CustomActivity implements
           mSidebar.closeSidebar();
         } else {
           mSidebar.closeSidebar();
-          Intent messageIntent = new Intent();
-          messageIntent.setClass(getBaseContext(), MessageActivity.class);
-          startActivity(messageIntent);
-          finish();
+
+          finishQueue.add(new Runnable() {
+
+            @Override
+            public void run() {
+              Intent messageIntent = new Intent();
+              messageIntent.setClass(getBaseContext(), MessageActivity.class);
+              startActivity(messageIntent);
+              finish();
+            }
+          });
+
         }
         break;
       case R.id.survey_item:
@@ -297,10 +324,18 @@ public class BaseActivity extends CustomActivity implements
           mSidebar.closeSidebar();
         } else {
           mSidebar.closeSidebar();
-          Intent messageIntent = new Intent();
-          messageIntent.setClass(getBaseContext(), SurveyActivity.class);
-          startActivity(messageIntent);
-          finish();
+
+          finishQueue.add(new Runnable() {
+
+            @Override
+            public void run() {
+              Intent messageIntent = new Intent();
+              messageIntent.setClass(getBaseContext(), SurveyActivity.class);
+              startActivity(messageIntent);
+              finish();
+            }
+          });
+
         }
         break;
       case R.id.map_item:
@@ -321,10 +356,18 @@ public class BaseActivity extends CustomActivity implements
           mSidebar.closeSidebar();
         } else {
           mSidebar.closeSidebar();
-          Intent messageIntent = new Intent();
-          messageIntent.setClass(getBaseContext(), SceneryActivity.class);
-          startActivity(messageIntent);
-          finish();
+
+          finishQueue.add(new Runnable() {
+
+            @Override
+            public void run() {
+              Intent messageIntent = new Intent();
+              messageIntent.setClass(getBaseContext(), SceneryActivity.class);
+              startActivity(messageIntent);
+              finish();
+            }
+          });
+
         }
         break;
       default:
