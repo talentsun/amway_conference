@@ -19,7 +19,7 @@ public class Schedule {
   @DatabaseField
   private String time;
 
-  @ForeignCollectionField(eager = false)
+  @ForeignCollectionField(eager = false, orderColumnName="_id", orderAscending=true)
   private ForeignCollection<ScheduleDetail> scheduleDetails;
 
   @DatabaseField
