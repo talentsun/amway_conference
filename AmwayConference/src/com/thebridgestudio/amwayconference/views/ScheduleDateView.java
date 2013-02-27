@@ -10,6 +10,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,8 +40,7 @@ public class ScheduleDateView extends LinearLayout {
   }
 
   private void initViews(Context context) {
-    setLayoutParams(new LayoutParams(getContext().getResources().getDimensionPixelSize(
-        R.dimen.schedule_date_view_width), LayoutParams.WRAP_CONTENT));
+    setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
     setOrientation(LinearLayout.VERTICAL);
   }
 
@@ -59,8 +59,7 @@ public class ScheduleDateView extends LinearLayout {
       int date = dates.get(i);
 
       Button button = new Button(getContext());
-      button.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, getContext()
-          .getResources().getDimensionPixelSize(R.dimen.schedule_date_height)));
+      button.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
       button.setTextSize(15);
 
       if (i != dates.size() - 1) {

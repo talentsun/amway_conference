@@ -19,8 +19,6 @@ public class LoadingView extends ImageView {
     initView();
   }
 
-
-
   public LoadingView(Context context, AttributeSet attrs) {
     super(context, attrs);
     initView();

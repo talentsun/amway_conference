@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="normal_margin">16dip</dimen>
-    <dimen name="schedule_date_view_width">48dip</dimen>
-    <dimen name="schedule_date_height">60dip</dimen>
     <dimen name="small_margin">8dip</dimen>
     <dimen name="tip_margin_left">19dip</dimen>
     
@@ -17,4 +15,7 @@
     <dimen name="warmtip_point_margin_top">9dip</dimen>
     
     <dimen name="schedule_header_margin_bottom">22dip</dimen>
+    
+    <dimen name="login_banner_height">342dp</dimen>
+    <dimen name="login_input_height">54dp</dimen>
 </resources>

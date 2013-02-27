@@ -35,6 +35,14 @@
                 android:text="@string/entry_message"
                 android:textColor="#333"
                 android:textSize="20sp" />
+            
+            <com.thebridgestudio.amwayconference.views.LoadingView
+                    android:id="@+id/loading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:layout_marginRight="8dp" >
+                </com.thebridgestudio.amwayconference.views.LoadingView>
         </FrameLayout>
 
         <com.emilsjolander.components.stickylistheaders.StickyListHeadersListView
@@ -61,12 +69,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center" >
-
-                <com.thebridgestudio.amwayconference.views.LoadingView
-                    android:id="@+id/loading"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
-                </com.thebridgestudio.amwayconference.views.LoadingView>
 
                 <TextView
                     style="@style/text_shadow_white_dark"
