@@ -218,6 +218,32 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
     isFold = true;
   }
+  
+  private void adjustHeader(int y) {
+    int offset = 0;
+    if (y >= 2 * mHeaderFoldOffset) {
+      offset = mHeaderFoldOffset;
+    } else {
+      offset = y / 2;
+    }
+    
+    LayoutParams layoutParams = (LayoutParams) mHeaderView.getLayoutParams();
+    layoutParams.topMargin = -(offset);
+    mHeaderView.setLayoutParams(layoutParams);
+
+    RelativeLayout.LayoutParams tagLayoutParams =
+        (RelativeLayout.LayoutParams) mTagView.getLayoutParams();
+    tagLayoutParams.topMargin =
+        getResources().getDimensionPixelSize(R.dimen.small_margin) + offset;
+    mTagView.setLayoutParams(tagLayoutParams);
+
+    RelativeLayout.LayoutParams newMessageLayoutParams =
+        (RelativeLayout.LayoutParams) mNewMessageTag.getLayoutParams();
+    newMessageLayoutParams.topMargin =
+        getResources().getDimensionPixelSize(R.dimen.schedule_new_message_tag_top)
+            + offset;
+    mNewMessageTag.setLayoutParams(newMessageLayoutParams);
+  }
 
   private List<Integer> getScheduleDates() {
     List<Integer> dates = new ArrayList<Integer>();
@@ -401,16 +427,21 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
       @Override
       public void onScrollStateIdle(ObservableScrollView scrollView) {
-        if (scrollView.getOffsetY() <= 0) {
-          if (isFold) {
-            unfoldHeader();
-          }
-        } else {
-          if (!isFold) {
-            foldHeader();
-          }
-        }
+//        if (scrollView.getOffsetY() <= 0) {
+//          if (isFold) {
+//            unfoldHeader();
+//          }
+//        } else {
+//          if (!isFold) {
+//            foldHeader();
+//          }
+//        }
 
+      }
+
+      @Override
+      public void onScroll(int x, int y, int oldx, int oldy) {
+        adjustHeader(y);
       }
     });
     

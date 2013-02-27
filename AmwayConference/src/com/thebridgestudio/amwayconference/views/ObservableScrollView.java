@@ -17,6 +17,8 @@ public class ObservableScrollView extends ScrollView {
     public static final int SCROLL_STATE_IDLE = 0;
 
     void onScrollStateIdle(ObservableScrollView scrollView);
+    
+    void onScroll(int x, int y, int oldx, int oldy);
   }
 
   public ObservableScrollView(Context context, AttributeSet attrs,
@@ -41,6 +43,9 @@ public class ObservableScrollView extends ScrollView {
   @Override
   protected void onScrollChanged(int l, int t, int oldl, int oldt) {
     mOffsetY = t;
+    if (mScrollViewListener != null) {
+      mScrollViewListener.onScroll(l, t, oldl, oldt);
+    }
     super.onScrollChanged(l, t, oldl, oldt);
   }
 
