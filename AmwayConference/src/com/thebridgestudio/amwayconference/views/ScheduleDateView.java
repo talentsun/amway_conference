@@ -41,8 +41,9 @@ public class ScheduleDateView extends LinearLayout {
   }
 
   private void initViews(Context context) {
-    setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+    setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.MATCH_PARENT));
     setOrientation(LinearLayout.VERTICAL);
+    setGravity(Gravity.CENTER_HORIZONTAL);
   }
 
   public void setDates(List<Integer> dates) {
@@ -61,7 +62,7 @@ public class ScheduleDateView extends LinearLayout {
 
       Button button = new Button(getContext());
       button.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-      button.setTextSize(15);
+      button.setTextSize(getResources().getInteger(R.integer.schedule_text_size));
       button.setGravity(Gravity.CENTER);
 
       if (i != dates.size() - 1) {
@@ -75,11 +76,13 @@ public class ScheduleDateView extends LinearLayout {
         button.setText(R.string.today);
         button.setShadowLayer(1, 0, 1, Color.parseColor("#33000000"));
         button.setSelected(true);
+        button.measure(0, 0);
       } else {
         button.setTextColor(Color.parseColor("#707070"));
         button.setShadowLayer(1, 0, 1, Color.parseColor("#A0FFFFFF"));
         button.setText(String.valueOf(date));
         button.setSelected(false);
+        button.measure(0, 0);
       }
 
       final int buttonDate = date;

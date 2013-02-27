@@ -413,6 +413,7 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
 
       }
     });
+    
 
     initListViewData(false);
   }

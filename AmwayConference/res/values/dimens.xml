@@ -1,21 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="normal_margin">16dip</dimen>
-    <dimen name="small_margin">8dip</dimen>
-    <dimen name="tip_margin_left">19dip</dimen>
+    <dimen name="login_banner_height">292dp</dimen>
+    <dimen name="login_input_height">48dp</dimen>
     
-    <dimen name="schedule_item_margin">24dip</dimen>
-    <dimen name="schedule_detail_margin">16dip</dimen>
-    <dimen name="schedule_title_height">18dip</dimen>
-    <dimen name="schedule_dateline_height">20dip</dimen>
-    <dimen name="schedule_header_fold_offset">120dip</dimen>
-    <dimen name="schedule_new_message_tag_top">2dip</dimen>
-    
-    <dimen name="warmtip_text_size">15sp</dimen>
-    <dimen name="warmtip_point_margin_top">9dip</dimen>
-    
-    <dimen name="schedule_header_margin_bottom">22dip</dimen>
-    
-    <dimen name="login_banner_height">342dp</dimen>
-    <dimen name="login_input_height">54dp</dimen>
+    <dimen name="schedule_date_view_marginTop">-32dp</dimen>
+    <dimen name="schedule_list_marginTop">42dp</dimen>
 </resources>
