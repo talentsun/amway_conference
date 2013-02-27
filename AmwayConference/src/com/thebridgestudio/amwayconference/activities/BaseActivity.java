@@ -274,6 +274,7 @@ public class BaseActivity extends CustomActivity implements
           Intent scheduleIntent = new Intent();
           scheduleIntent.setClass(getBaseContext(), ScheduleActivity.class);
           startActivity(scheduleIntent);
+          finish();
         }
         break;
       case R.id.message_item:
@@ -284,6 +285,7 @@ public class BaseActivity extends CustomActivity implements
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), MessageActivity.class);
           startActivity(messageIntent);
+          finish();
         }
         break;
       case R.id.survey_item:
@@ -294,6 +296,7 @@ public class BaseActivity extends CustomActivity implements
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), SurveyActivity.class);
           startActivity(messageIntent);
+          finish();
         }
         break;
       case R.id.map_item:
@@ -304,6 +307,7 @@ public class BaseActivity extends CustomActivity implements
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), MapActivity.class);
           startActivity(messageIntent);
+          finish();
         }
         break;
       case R.id.scenery_item:
@@ -314,6 +318,7 @@ public class BaseActivity extends CustomActivity implements
           Intent messageIntent = new Intent();
           messageIntent.setClass(getBaseContext(), SceneryActivity.class);
           startActivity(messageIntent);
+          finish();
         }
         break;
       default:
