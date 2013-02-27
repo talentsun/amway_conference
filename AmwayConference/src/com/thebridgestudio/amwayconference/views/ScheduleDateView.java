@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -61,6 +62,7 @@ public class ScheduleDateView extends LinearLayout {
       Button button = new Button(getContext());
       button.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
       button.setTextSize(15);
+      button.setGravity(Gravity.CENTER);
 
       if (i != dates.size() - 1) {
         button.setBackgroundResource(R.drawable.schedule_date);
