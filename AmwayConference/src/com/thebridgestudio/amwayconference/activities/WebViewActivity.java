@@ -1,6 +1,8 @@
 package com.thebridgestudio.amwayconference.activities;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -48,9 +50,17 @@ public class WebViewActivity extends BaseActivity {
       @Override
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
         if (!TextUtils.isEmpty(url)
-            && (url.contains("terms_maps.html") || url.contains("local_url") || url
-                .contains("maps.gstatic.com/m/streetview") || url.contains("tel:") ||
+            && (url.contains("terms_maps.html") || url.contains("local_url") ||
                 url.contains("toscountry") || url.contains("cbk0.googleapis.com"))) {
+          return true;
+        }
+        
+        if (!TextUtils.isEmpty(url) && url.contains("tel:")) {
+          Intent intent = new Intent();
+          intent.setAction(Intent.ACTION_CALL);
+          intent.setData(Uri.parse(url));
+          startActivity(intent);
+          
           return true;
         }
         
@@ -59,6 +69,14 @@ public class WebViewActivity extends BaseActivity {
 
       @Override
       public void onPageStarted(WebView view, String url, Bitmap favicon) {
+        if (!TextUtils.isEmpty(url)
+            && (url.contains("map1") || url.contains("map2") || url.contains("map3") || url
+                .contains("map4"))) {
+          disableFling();
+        } else {
+          enableFling();
+        }
+        
         updateTag(url);
         loading.setVisibility(View.VISIBLE);
         super.onPageStarted(view, url, favicon);

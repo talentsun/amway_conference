@@ -49,6 +49,8 @@ public class BaseActivity extends CustomActivity implements
   private GestureDetector gestureDetector;
   private BlockingQueue<Runnable> finishQueue;
   private Handler handler = new Handler();
+  
+  private boolean mFlingEnabled = true;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +73,10 @@ public class BaseActivity extends CustomActivity implements
           @Override
           public boolean onScroll(MotionEvent e1, MotionEvent e2,
               float distanceX, float distanceY) {
+            if (!mFlingEnabled) {
+              return true;
+            }
+            
             if (e2.getX() - e1.getX() > SLIDE_DISTANCE) {
               mSidebar.openSidebar();
             } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE) {
@@ -82,6 +88,10 @@ public class BaseActivity extends CustomActivity implements
           @Override
           public boolean onFling(MotionEvent e1, MotionEvent e2,
               float velocityX, float velocityY) {
+            if (!mFlingEnabled) {
+              return true;
+            }
+            
             if (e2.getX() - e1.getX() > SLIDE_DISTANCE) {
               mSidebar.openSidebar();
             } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE) {
@@ -96,6 +106,14 @@ public class BaseActivity extends CustomActivity implements
           }
         });
 
+  }
+  
+  protected void disableFling() {
+    mFlingEnabled = false;
+  }
+  
+  protected void enableFling() {
+    mFlingEnabled = true;
   }
 
   @Override
