@@ -2,6 +2,8 @@ package com.thebridgestudio.amwayconference.activities;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
@@ -43,9 +45,15 @@ public class WebViewActivity extends BaseActivity {
     webview.getSettings().setJavaScriptEnabled(true);
     webview.setDrawingCacheEnabled(true);
     webview.setWebViewClient(new WebViewClient() {
-
       @Override
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        if (!TextUtils.isEmpty(url)
+            && (url.contains("terms_maps.html") || url.contains("local_url") || url
+                .contains("maps.gstatic.com/m/streetview") || url.contains("tel:") ||
+                url.contains("toscountry") || url.contains("cbk0.googleapis.com"))) {
+          return true;
+        }
+        
         return super.shouldOverrideUrlLoading(view, url);
       }
 
