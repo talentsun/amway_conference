@@ -6,7 +6,6 @@ import android.view.MotionEvent;
 import android.widget.ScrollView;
 
 public class ObservableScrollView extends ScrollView {
-  private int mOffsetY;
   private ScrollViewListener mScrollViewListener;
 
   public ObservableScrollView(Context context) {
@@ -16,8 +15,6 @@ public class ObservableScrollView extends ScrollView {
   public interface ScrollViewListener {
     public static final int SCROLL_STATE_IDLE = 0;
 
-    void onScrollStateIdle(ObservableScrollView scrollView);
-    
     void onScroll(int x, int y, int oldx, int oldy);
   }
 
@@ -34,15 +31,8 @@ public class ObservableScrollView extends ScrollView {
     mScrollViewListener = scrollViewListener;
   }
 
-  public int getOffsetY() {
-    return mOffsetY;
-  }
-
-
-
   @Override
   protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-    mOffsetY = t;
     if (mScrollViewListener != null) {
       mScrollViewListener.onScroll(l, t, oldl, oldt);
     }
@@ -51,12 +41,6 @@ public class ObservableScrollView extends ScrollView {
 
   @Override
   public boolean onTouchEvent(MotionEvent ev) {
-    if (ev.getAction() == MotionEvent.ACTION_UP) {
-      if (mScrollViewListener != null) {
-        mScrollViewListener.onScrollStateIdle(this);
-      }
-    }
-
     return super.onTouchEvent(ev);
   }
 }

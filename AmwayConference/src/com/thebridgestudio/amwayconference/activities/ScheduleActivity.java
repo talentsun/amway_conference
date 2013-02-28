@@ -18,7 +18,6 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,11 +28,11 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.brixd.amway_meeting.R;
 import com.emilsjolander.components.stickylistheaders.StickyListHeadersAdapter;
 import com.j256.ormlite.dao.Dao;
 import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.Intents;
-import com.brixd.amway_meeting.R;
 import com.thebridgestudio.amwayconference.models.Schedule;
 import com.thebridgestudio.amwayconference.services.DataService;
 import com.thebridgestudio.amwayconference.views.LoadingView;
@@ -417,31 +416,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     Intent syncIntent = new Intent(this, DataService.class);
     syncIntent.setAction(Intents.ACTION_SYNC_ALL);
     startService(syncIntent);
-    
-    mListView.setOnClickListener(new View.OnClickListener() {
-      
-      @Override
-      public void onClick(View v) {
-        Log.i(TAG, "schedule list click");
-      }
-    });
-    
-    mHeaderView.setOnClickListener(new View.OnClickListener() {
-      
-      @Override
-      public void onClick(View v) {
-        Log.i(TAG, "header click");
-      }
-    });
-    
-    RelativeLayout bodyLayout = (RelativeLayout) findViewById(R.id.body);
-    bodyLayout.setOnClickListener(new View.OnClickListener() {
-      
-      @Override
-      public void onClick(View v) {
-        Log.i(TAG, "body click");
-      }
-    });
   }
 
   private void initListView() {
@@ -450,21 +424,6 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     mEmptyView = (LinearLayout) findViewById(android.R.id.empty);
 
     mScrollView.setScrollViewListener(new ScrollViewListener() {
-
-      @Override
-      public void onScrollStateIdle(ObservableScrollView scrollView) {
-//        if (scrollView.getOffsetY() <= 0) {
-//          if (isFold) {
-//            unfoldHeader();
-//          }
-//        } else {
-//          if (!isFold) {
-//            foldHeader();
-//          }
-//        }
-
-      }
-
       @Override
       public void onScroll(int x, int y, int oldx, int oldy) {
         adjustHeader(y);

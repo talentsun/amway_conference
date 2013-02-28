@@ -12,6 +12,7 @@
         android:id="@id/animation_layout_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
         android:background="@drawable/background"
         android:orientation="vertical" >
 
@@ -140,11 +141,9 @@
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/body"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="12dip"
-            android:clickable="false"
             android:layout_marginTop="@dimen/schedule_date_view_marginTop" >
 
             <com.thebridgestudio.amwayconference.views.ScheduleDateView

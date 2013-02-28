@@ -74,34 +74,40 @@ public class BaseActivity extends CustomActivity implements
           public boolean onScroll(MotionEvent e1, MotionEvent e2,
               float distanceX, float distanceY) {
             if (!mFlingEnabled) {
-              return true;
+              return false;
             }
             
             if (e2.getX() - e1.getX() > SLIDE_DISTANCE_X
                 && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.openSidebar();
+              return true;
             } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE_X 
                 && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.closeSidebar();
+              return true;
             }
-            return true;
+            
+            return false;
           }
 
           @Override
           public boolean onFling(MotionEvent e1, MotionEvent e2,
               float velocityX, float velocityY) {
             if (!mFlingEnabled) {
-              return true;
+              return false;
             }
             
             if (e2.getX() - e1.getX() > SLIDE_DISTANCE_X
                 && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.openSidebar();
+              return true;
             } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE_X
                 && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.closeSidebar();
+              return true;
             }
-            return true;
+            
+            return false;
           }
 
           @Override
@@ -398,8 +404,13 @@ public class BaseActivity extends CustomActivity implements
   }
 
   @Override
-  public boolean onTouchEvent(MotionEvent event) {
-    return gestureDetector.onTouchEvent(event);
+  public boolean dispatchTouchEvent(MotionEvent ev) {
+    boolean consumed = gestureDetector.onTouchEvent(ev);
+    if (!consumed) {
+      return super.dispatchTouchEvent(ev);
+    } else {
+      return true;
+    }
   }
 
 }
