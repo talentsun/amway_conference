@@ -1,7 +1,6 @@
 package com.thebridgestudio.amwayconference.activities;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -38,7 +37,8 @@ import android.widget.TextView;
 public class BaseActivity extends CustomActivity implements
     AnimationLayout.Listener, OnClickListener {
   private final static String TAG = "BaseActivity";
-  protected static final float SLIDE_DISTANCE = 100;
+  protected static final float SLIDE_DISTANCE_X = 80;
+  protected static final float SLIDE_DISTANCE_Y = 40;
   protected AnimationLayout mSidebar;
   protected ImageView mTag;
   protected DatabaseHelper mDatabaseHelper = null;
@@ -77,9 +77,11 @@ public class BaseActivity extends CustomActivity implements
               return true;
             }
             
-            if (e2.getX() - e1.getX() > SLIDE_DISTANCE) {
+            if (e2.getX() - e1.getX() > SLIDE_DISTANCE_X
+                && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.openSidebar();
-            } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE) {
+            } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE_X 
+                && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.closeSidebar();
             }
             return true;
@@ -92,9 +94,11 @@ public class BaseActivity extends CustomActivity implements
               return true;
             }
             
-            if (e2.getX() - e1.getX() > SLIDE_DISTANCE) {
+            if (e2.getX() - e1.getX() > SLIDE_DISTANCE_X
+                && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.openSidebar();
-            } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE) {
+            } else if (e1.getX() - e2.getX() > SLIDE_DISTANCE_X
+                && Math.abs(e2.getY() - e1.getY()) < SLIDE_DISTANCE_Y) {
               mSidebar.closeSidebar();
             }
             return true;

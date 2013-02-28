@@ -18,6 +18,7 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -417,11 +418,28 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     syncIntent.setAction(Intents.ACTION_SYNC_ALL);
     startService(syncIntent);
     
+    mListView.setOnClickListener(new View.OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+        Log.i(TAG, "schedule list click");
+      }
+    });
+    
+    mHeaderView.setOnClickListener(new View.OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+        Log.i(TAG, "header click");
+      }
+    });
+    
     RelativeLayout bodyLayout = (RelativeLayout) findViewById(R.id.body);
     bodyLayout.setOnClickListener(new View.OnClickListener() {
       
       @Override
       public void onClick(View v) {
+        Log.i(TAG, "body click");
       }
     });
   }
