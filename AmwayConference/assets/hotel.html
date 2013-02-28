@@ -13,30 +13,13 @@
 var listscroll1,
     listscroll2,
     listscroll3,
-    listscroll4,
-    map1scroll,
-    map2scroll,
-    map3scroll,
-    map4scroll;
+    listscroll4;
 
 function loaded() {
 	listscroll1 = new iScroll('listscroll1');
 	listscroll2 = new iScroll('listscroll2');
 	listscroll3 = new iScroll('listscroll3');
 	listscroll4 = new iScroll('listscroll4');
-	
-	map1scroll = new iScroll('map1scroll', {
-		hScrollbar: false, vScrollbar: false,
-	 });
-	map2scroll = new iScroll('map2scroll', {
-		hScrollbar: false, vScrollbar: false,
-	 });
-	map3scroll = new iScroll('map3scroll', {
-		hScrollbar: false, vScrollbar: false,
-	 });
-	map4scroll = new iScroll('map4scroll', {
-		hScrollbar: false, vScrollbar: false,
-	 });
 }
 
 document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
@@ -48,10 +31,10 @@ document.addEventListener('DOMContentLoaded', loaded, false);
 <!--顶部切换页签-->
 <ul class="tabul">
   <span></span>
-  <li class="active" id="hotel">酒店</li>
-  <li class="normal" id="eating">餐厅</li>
-  <li class="normal" id="shopping">购物</li>
-  <li class="normal" id="other">其它</li>
+  <li style="width:18%" class="normal" id="hotel">酒店</li>
+  <li style="width:26%" class="normal" id="eating">餐饮推荐</li>
+  <li style="width:18%" class="normal" id="shopping">购物</li>
+  <li style="width:18%" class="normal" id="other">其它</li>
   <span></span>
 </ul>
 <!--下边的内容-->
@@ -59,115 +42,60 @@ document.addEventListener('DOMContentLoaded', loaded, false);
 <div class="pagecontainer">
 <!--酒店-->
   <div id="page1" class="page">
-    <!--可以拖动的地图-->
-    <div id="map1scroll" class="mapwrapper">
-      <div id="map1" class="mapscroller map1">
-          <div id="map1point" class="pointdiv"></div>
-          <div id="map1address" class="pointdiv">
-            <div id="addresslist1_1" class="address"><span>名称：中山楼<br>地址：台北市阳明山阳明路2段15号<br>电话：(02)2861-0565</span></div>
-            <div id="addresslist1_2" class="address"><span>名称：圆山饭店<br>地址：台北市中山区中山北路四段一号<br>电话：+886-2-2886-8888</span></div>
-            <div id="addresslist1_3" class="address"><span>名称：W酒店<br>地址：信义区忠孝东路5段10号</span></div>
-            <div id="addresslist1_4" class="address"><span>名称：君悦大饭店<br>地址：信义区松寿路2号<br>电话：+886-02-2720-1234</span></div>
-            <div id="addresslist1_5" class="address"><span>名称：喜来登酒店<br>地址：中正区忠孝东路1段12号<br>电话：+886-02-2321-5511</span></div>
-            <div id="addresslist1_6" class="address"><span>名称：晶华酒店<br>地址：中山区中山北路2段41号<br>电话：+886-02-2523-8000</span></div>
-            <div id="addresslist1_7" class="address"><span>名称：君品酒店<br>地址：大同区承德路1段3号<br>电话：+886-02-2181-9999</span></div>
-            <div id="addresslist1_8" class="address"><span>名称：威斯汀六福皇宫饭店<br>地址：南京东路3段133号<br>电话：+886-02-8770-6565</span></div>
-            <div id="addresslist1_9" class="address"><span>名称：西华饭店<br>地址：民生东路三段111号<br>电话：+886-02-2178-1188</span></div>
-          </div>
-      </div>
-    </div>
     <div id="listscroll1" class="wrapper">
     <div class="scroller">
         <ul class="thelist">
-            <li id="list1_1"><span>1</span>中山楼</li>
-            <li id="list1_2"><span>2</span>圆山饭店</li>
-            <li id="list1_3"><span>3</span>W酒店</li>
-            <li id="list1_4"><span>4</span>君悦大饭店</li>
-            <li id="list1_5"><span>5</span>喜来登酒店</li>
-            <li id="list1_6"><span>6</span>晶华酒店</li>
-            <li id="list1_7"><span>7</span>君品酒店</li>
-            <li id="list1_8"><span>8</span>威斯汀六福皇宫饭店</li>
-            <li id="list1_9"><span>9</span>西华饭店</li>
+            <li id="list1_1"><a href="map1_1.html">寒舍艾美酒店<p>地址：台北市信义区松仁路38号</p><p>电话：02-6622-8000</p></a></li>
+            <li id="list1_2"><a href="map1_2.html">W酒店<p>地址：台北市信义区忠孝东路五段10号</p><p>电话：02-7703-8888</p></a></li>
+            <li id="list1_3"><a href="map1_3.html">君悦大饭店<p>地址：台北市信义区松寿路2号</p><p>电话：02-2720-1234</p></a></li>
+            <li id="list1_4"><a href="map1_4.html">喜来登酒店<p>地址：台北市中正区忠孝东路一段12号B1楼</p><p>电话：02-2321-1818</p></a></li>
+            <li id="list1_5"><a href="map1_5.html">晶华酒店<p>地址：台北市中山区中山北路2段41号</p><p>电话：02-2321-5511</p></a></li>
+            <li id="list1_6"><a href="map1_6.html">君品酒店<p>地址：台北市大同区承德路一段3号</p><p>电话：02-2181-9999</p></a></li>
+            <li id="list1_7"><a href="map1_7.html">威斯汀六福皇宫饭店<p>地址：台北市中山区南京东路三段133号</p><p>电话：02-8770-6565</p></a></li>
+            <li id="list1_8"><a href="map1_8.html">西华饭店<p>地址：民生东路三段111号</p><p>电话：02-2178-1188</p></a></li>
         </ul>
     </div>
     </div>
   </div>
 <!--餐厅-->
   <div id="page2" class="page">
-    <div id="map2scroll" class="mapwrapper">
-      <div id="map2" class="mapscroller map2">
-          <div id="map2point" class="pointdiv"></div>
-          <div id="map2address" class="pointdiv">
-            <div id="addresslist2_1" class="address"><span>名称：永和豆浆<br>地址：103台湾台北市大同区南京西路308号</span></div>
-            <div id="addresslist2_2" class="address"><span>名称：永和豆浆<br>地址：台北市信义区信义路六段65号</span></div>
-            <div id="addresslist2_3" class="address"><span>名称：清粥小菜<br>地址：台北大安区复兴南路二段142-1号<br>电话：02-27092849</span></div>
-            <div id="addresslist2_4" class="address"><span>名称：金色三麦德式餐厅<br>地址：台北市信义区松高路11号B1楼<br>电话：02-8789-5911</span></div>
-            <div id="addresslist2_5" class="address"><span>名称：桐花客家料理<br>地址：台北市中山区民生东路三段7号<br>电话：02-2518-2766</span></div>
-            <div id="addresslist2_6" class="address"><span>名称：红豆食府<br>地址：台北市松山区民生东路三段129号B1楼<br>电话：02-8770-6969</span></div>
-            <div id="addresslist2_7" class="address"><span>名称：茹丝葵牛肉<br>地址：台北市松山区民生东路三段35号<br>电话：02-2545-8888</span></div>
-          </div>
-      </div>
-    </div>
     <div id="listscroll2" class="wrapper">
     <div class="scroller">
         <ul class="thelist">
-            <li id="list2_1"><span>1</span>永和豆浆</li>
-            <li id="list2_2"><span>2</span>永和豆浆</li>
-            <li id="list2_3"><span>3</span>清粥小菜</li>
-            <li id="list2_4"><span>4</span>金色三麦德式餐厅</li>
-            <li id="list2_5"><span>5</span>桐花客家料理</li>
-            <li id="list2_6"><span>6</span>红豆食府</li>
-            <li id="list2_7"><span>7</span>茹丝葵牛肉</li>
+            <li id="list2_1"><a href="map2_1.html">宁夏夜市<p>地址：台北民生西路至南京西路段</p></a></li>
+            <li id="list2_2"><a href="map2_2.html">士林夜市<p>地址：台北士林区文林路(近安平街)</p></a></li>
+            <li id="list2_3"><a href="map2_3.html">饶河街夜市<p>地址：台湾台北市松山区饶河街</p></a></li>
+            <li id="list2_4"><a href="map2_4.html">辽宁街夜市<p>地址：长安东路与朱仑街间</p></a></li>
+            <li id="list2_5"><a href="map2_5.html">金色三麦德式餐厅<p>地址：台北市信义区松高路11号B1楼</p><p>电话：02-8789-5911</p></a></li>
+            <li id="list2_6"><a href="map2_6.html">桐花客家料理<p>地址：台北市中山区民生东路三段7号</p><p>电话：02-2518-2766</p></a></li>
+            <li id="list2_7"><a href="map2_7.html">红豆食府<p>地址：台北市松山区民生东路三段129号B1楼</p><p>电话：02-8770-6969</p></a></li>
+            <li id="list2_8"><a href="map2_8.html">茹丝葵牛肉<p>地址：台北市松山区民生东路三段135号</p><p>电话：02-2545-8888</p></a></li>
         </ul>
     </div>
     </div>
   </div>
 <!--购物-->
   <div id="page3" class="page">
-    <!--可以拖动的地图-->
-    <div id="map3scroll" class="mapwrapper">
-      <div id="map3" class="mapscroller map3">
-          <div id="map3point" class="pointdiv"></div>
-          <div id="map3address" class="pointdiv">
-            <div id="addresslist3_1" class="address"><span>名称：宁夏夜市<br>地址：台北民生西路至南京西路段</span></div>
-            <div id="addresslist3_2" class="address"><span>名称：士林夜市<br>地址：台北士林区文林路(近安平街)</span></div>
-            <div id="addresslist3_3" class="address"><span>名称：昇恒昌<br>地址：台北民权东路三段72号(近复兴北路)<br>电话：00886-25028899-9</span></div>
-            <div id="addresslist3_4" class="address"><span>名称：饶河街夜市<br>地址：台湾台北市松山区饶河街</span></div>
-            <div id="addresslist3_5" class="address"><span>名称：辽宁街夜市<br>地址：长安东路与朱仑街间</div>
-          </div>
-      </div>
-    </div>
     <div id="listscroll3" class="wrapper">
     <div class="scroller">
         <ul class="thelist">
-            <li id="list3_1"><span>1</span>宁夏夜市</li>
-            <li id="list3_2"><span>2</span>士林夜市</li>
-            <li id="list3_3"><span>3</span>昇恒昌</li>
-            <li id="list3_4"><span>4</span>饶河街夜市</li>
-            <li id="list3_5"><span>5</span>辽宁街夜市</li>
+            <li id="list3_1"><a href="map3_1.html">昇恒昌<p>地址：台北民权东路三段72号(近复兴北路)</p><p>电话：02-2502-8899-9</p></a></li>
+            <li id="list3_2"><a href="map3_2.html">新光三越<p>地址：台北市中山区南京西路15号</p><p>电话：02-2564-1111</p></a></li>
+            <li id="list3_3"><a href="map3_3.html">诚品书店<p>地址：台北市士林区忠诚路二段188号</p><p>电话：02-2873-0966</p></a></li>
         </ul>
     </div>
     </div>
   </div>
 <!--其它-->
   <div id="page4" class="page">
-    <!--可以拖动的地图-->
-    <div id="map4scroll" class="mapwrapper">
-      <div id="map4" class="mapscroller map4">
-          <div id="map4point" class="pointdiv"></div>
-          <div id="map4address" class="pointdiv">
-            <div id="addresslist4_1" class="address"><span>名称：国父纪念馆<br>地址：台北信义区仁爱路四段505号<br>电话：00886-27588008</span></div>
-            <div id="addresslist4_2" class="address"><span>名称：台北火车站<br>地址：台北市中正区黎明里忠孝西路一段49号</span></div>
-            <div id="addresslist4_3" class="address"><span>名称：安利集散中心<br>地址：大佳河滨公园</span></div>
-          </div>
-      </div>
-    </div>
     <div id="listscroll4" class="wrapper">
     <div class="scroller">
         <ul class="thelist">
-            <li id="list4_1"><span>1</span>国父纪念馆</li>
-            <li id="list4_2"><span>2</span>台北火车站</li>
-            <li id="list4_3"><span>3</span>安利集散中心</li>
+            <li id="list4_1"><a href="map4_1.html">中山楼<p>地址：台北市阳明山阳明路2段15号</p><p>电话：02-2861-0565</p></a></li>
+            <li id="list4_2"><a href="map4_2.html">圆山饭店<p>地址：台北市中山区中山北路四段一号</p><p>电话：02-2886-8888</p></a></li>
+            <li id="list4_3"><a href="map4_3.html">国父纪念馆<p>地址：台北信义区仁爱路四段505号</p><p>电话：02-2758-8008</p></a></li>
+            <li id="list4_4"><a href="map4_4.html">台北火车站<p>地址：台北市中正区黎明里忠孝西路一段49号</p></a></li>
+            <li id="list4_5"><a href="map4_5.html">安利集散中心<p>地址：大家河滨公园</p></a></li>
         </ul>
     </div>
     </div>
@@ -177,22 +105,29 @@ document.addEventListener('DOMContentLoaded', loaded, false);
 <script>
 $(document).ready(function() {
 	
-	setTimeout(function(){
-	  $(".mapscroller").css("transform","translate(0px, -45%) scale(1)");
-	  $(".mapscroller").css("-webkit-transform","translate3d(0px, -45%, 0px) scale(1)");
-    },200 );
-	
 	$(".thelist").children("li").addClass("normal");
-	$(".thelist").each(function() {
-        /*$(this).children("li").first().addClass("hover");*/
-		
-	    var listid = $(this).parent().parent().parent().index();
-		var listlength = $(this).children().length;
-		//添加显示的点
-		for (var i = 0, l = listlength; i < l; i++) {
-			$("#map" + Number(listid+1) +"point").append("<span class=point id=inmaplist" + Number(listid+1) + "_" + Number(i+1) + ">"+ Number(i+1) + "</span>")
-		}
-    }); 
+	
+	var topage = localStorage.getItem('page');
+	if(topage==1){
+	  $(".pagecontainer").css("left", "0px");
+	  $("#hotel").removeClass("normal").addClass("active");
+	}
+	else if(topage==2){
+	  $(".pagecontainer").css("left", "-100%");
+	  $("#eating").removeClass("normal").addClass("active");
+	}
+	else if(topage==3){
+	  $(".pagecontainer").css("left", "-200%");
+	  $("#shopping").removeClass("normal").addClass("active");
+	}
+	else if(topage==4){
+	  $(".pagecontainer").css("left", "-300%");
+	  $("#other").removeClass("normal").addClass("active");
+	}
+	else {
+	  $(".pagecontainer").css("left", "0px");
+	  $("#hotel").removeClass("normal").addClass("active");
+	};
 });
 $(".tabul").children("li").bind('click', function() {
 	$(this).removeClass("normal").addClass("active");
@@ -200,34 +135,24 @@ $(".tabul").children("li").bind('click', function() {
 });
 $("#hotel").bind('click', function() {
 	$(".pagecontainer").animate({"left": "0px"}, 300);
+	localStorage.setItem("page",1);
 });
 $("#eating").bind('click', function() {
 	$(".pagecontainer").animate({"left": "-100%"}, 300);
+	localStorage.setItem("page",2);
 });
 $("#shopping").bind('click', function() {
 	$(".pagecontainer").animate({"left": "-200%"}, 300);
+	localStorage.setItem("page",3);
 });
 $("#other").bind('click', function() {
 	$(".pagecontainer").animate({"left": "-300%"}, 300);
+	localStorage.setItem("page",4);
 });
+
 $(".thelist").children("li").bind('click', function(){
 	$(this).addClass("hover");
 	$(this).siblings().removeClass("hover");
-	
-    var listid = $(this).attr("id");
-    $("#inmap" + listid).removeClass("point").addClass("point_current");
-    $("#inmap" + listid).siblings().removeClass("point_current").addClass("point");
-	
-    $("#address" + listid).show();
-    $("#address" + listid).siblings().hide();
-	
-	var top = $("#inmap" + listid).position().top;
-	var left = $("#inmap" + listid).position().left;
-	var scrolltop = -top + 190;
-	var scrollleft = -left + 160;
-	$("#inmap" + listid).parent().parent().css("transform", "translate("+ scrollleft +"px, "+ scrolltop +"px) scale(1)");
-	$("#inmap" + listid).parent().parent().css("-webkit-transform", "translate3d("+ scrollleft +"px, "+ scrolltop +"px, 0px) scale(1)");
-	
 });
 </script>
 </body>
