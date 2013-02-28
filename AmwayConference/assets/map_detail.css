@@ -36,7 +36,7 @@ header {
 iframe {
 	width:100%;
 }
-@media (min-width: 320px){
+@media (min-width: 290px){
 header {
 	position:absolute; left:50%; height:50px; width:100%; margin-left:-50%; z-index:1000;
 	text-align:center;font-size:22px; color:#333333; line-height:50px; display:block; background-image: url(images/tab50_bg.png);

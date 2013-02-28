@@ -35,7 +35,7 @@ a {
 .thelist .hover {
 	background-color:#DEDCD6;border-top: 1px solid #D5D4CF;border-bottom: 1px solid #CCCBC1;
 }
-@media (min-width: 320px){
+@media (min-width: 290px){
 .tabul {
 	height:50px;
 	padding:0px; margin:0px;width:100%;position:absolute; display:block;z-index:2000; top:0px; left:0px;

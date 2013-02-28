@@ -184,12 +184,9 @@ public class DataService extends IntentService {
         try {
           if (msg.getValid()) {
             if (mMessageDao.idExists(msg.getId())) {
-              UpdateBuilder<Message, Long> updateBuilder = mMessageDao.updateBuilder();
-              updateBuilder.updateColumnValue("content", msg.getContent());
-              updateBuilder.updateColumnValue("date", msg.getDate());
-              updateBuilder.where().idEq(msg.getId());
-              updateBuilder.update();
-
+              mMessageDao.deleteById(msg.getId());
+              mMessageDao.create(new Message(msg.getId(), msg.getContent(), true, msg.getDate()));
+              
               Log.i(TAG, "update message #" + msg.getId());
             } else {
               mMessageDao.create(new Message(msg.getId(), msg.getContent(), false, msg.getDate()));

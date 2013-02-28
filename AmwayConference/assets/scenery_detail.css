@@ -33,7 +33,7 @@ title {
 header {
 	position:absolute; left:50%;width:100%; margin-left:-50%; z-index:1000;
 }
-@media (min-width: 320px){
+@media (min-width: 290px){
 #top, title{
 	height:50px;
 }
