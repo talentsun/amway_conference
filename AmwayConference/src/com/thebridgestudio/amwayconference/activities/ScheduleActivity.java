@@ -416,6 +416,14 @@ public class ScheduleActivity extends BaseActivity implements LoaderCallbacks<Li
     Intent syncIntent = new Intent(this, DataService.class);
     syncIntent.setAction(Intents.ACTION_SYNC_ALL);
     startService(syncIntent);
+    
+    RelativeLayout bodyLayout = (RelativeLayout) findViewById(R.id.body);
+    bodyLayout.setOnClickListener(new View.OnClickListener() {
+      
+      @Override
+      public void onClick(View v) {
+      }
+    });
   }
 
   private void initListView() {
