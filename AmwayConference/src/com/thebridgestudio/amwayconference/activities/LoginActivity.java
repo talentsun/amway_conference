@@ -42,9 +42,6 @@ public class LoginActivity extends CustomActivity {
     mName = (EditText) findViewById(R.id.input_name);
     mId = (EditText) findViewById(R.id.input_id);
     mLogin = (Button) findViewById(R.id.login);
-
-    mName.setText("郑再添");
-    mId.setText("A0001A");
   }
 
   private void initListener() {
