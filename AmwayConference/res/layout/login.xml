@@ -4,21 +4,28 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@drawable/background"
     tools:context=".activities.LoginActivity" >
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="@dimen/login_banner_height"
-        android:background="@drawable/banner_taipei_landscape_2"
-        android:orientation="vertical"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:paddingTop="12dp" >
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
 
+        <LinearLayout
+            android:id="@+id/header_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/banner_taipei_landscape_2">
+        </LinearLayout>
+        
         <ImageView
             android:id="@+id/amy_logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:src="@drawable/amy_logo" />
@@ -29,6 +36,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
             android:layout_below="@id/amy_logo"
             android:layout_marginTop="6dip"
             android:text="@string/amy_china"
@@ -41,6 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
             android:layout_below="@id/amy_china"
             android:layout_marginTop="2dip"
             android:text="@string/conference_name"
@@ -52,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="12dp"
             android:layout_below="@id/conference_name"
             android:layout_marginTop="10dip"
             android:text="@string/date_location"
@@ -61,10 +71,11 @@
         <EditText
             android:id="@+id/input_id"
             android:layout_width="fill_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_height="@dimen/login_input_height"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
             android:layout_marginBottom="18dp"
+            android:layout_alignBottom="@id/header_bg"
             android:background="@drawable/inputbar"
             android:hint="@string/input_id"
             android:padding="12dp"
@@ -74,40 +85,41 @@
         <EditText
             android:id="@+id/input_name"
             android:layout_width="fill_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_height="@dimen/login_input_height"
             android:layout_above="@id/input_id"
-            android:layout_alignParentRight="true"
             android:layout_marginBottom="8dp"
             android:background="@drawable/inputbar"
             android:hint="@string/name"
             android:padding="12dp"
             android:singleLine="true"
             android:textColor="@android:color/darker_gray" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp" >
-
-        <Button
-            android:id="@+id/login"
-            style="@style/text_shadow_black"
+        
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="48dp"
-            android:layout_centerInParent="true"
-            android:background="@drawable/button_red"
-            android:text="@string/login"
-            android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/header_bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp" >
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/login"
-            android:background="@drawable/button_red_shadow" />
+            <Button
+                android:id="@+id/login"
+                style="@style/text_shadow_black"
+                android:layout_width="fill_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/button_red"
+                android:text="@string/login"
+                android:textColor="@android:color/white"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_red_shadow" />
+        </LinearLayout>
     </RelativeLayout>
 
 </LinearLayout>

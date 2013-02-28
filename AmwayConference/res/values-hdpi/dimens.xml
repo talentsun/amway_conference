@@ -16,7 +16,6 @@
     
     <dimen name="schedule_header_margin_bottom">22dip</dimen>
     
-    <dimen name="login_banner_height">342dp</dimen>
     <dimen name="login_input_height">54dp</dimen>
     
     <dimen name="schedule_date_view_marginTop">-35dp</dimen>

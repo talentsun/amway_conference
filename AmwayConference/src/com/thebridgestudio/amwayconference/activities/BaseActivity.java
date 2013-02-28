@@ -38,7 +38,7 @@ import android.widget.TextView;
 public class BaseActivity extends CustomActivity implements
     AnimationLayout.Listener, OnClickListener {
   private final static String TAG = "BaseActivity";
-  protected static final float SLIDE_DISTANCE = 50;
+  protected static final float SLIDE_DISTANCE = 100;
   protected AnimationLayout mSidebar;
   protected ImageView mTag;
   protected DatabaseHelper mDatabaseHelper = null;
