@@ -38,6 +38,17 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="8dip" />
+        
+        <ImageView
+            android:id="@+id/new_message_tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dip"
+            android:layout_marginTop="2dip"
+            android:src="@drawable/new_message"
+            android:visibility="gone" />
 
         <com.thebridgestudio.amwayconference.views.LoadingView
             android:id="@+id/loading"

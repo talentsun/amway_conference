@@ -22,7 +22,9 @@ public class WebViewActivity extends BaseActivity {
   protected ImageView tag;
   protected ImageView loading;
   protected TextView noNetwork;
-
+  private ImageView mNewMessageTag;
+  private int mNewMessageTagState = View.GONE;
+  
   @Override
   protected void onResume() {
     super.onResume();
@@ -43,6 +45,7 @@ public class WebViewActivity extends BaseActivity {
     tag = (ImageView) findViewById(R.id.tag);
     loading = (ImageView) findViewById(R.id.loading);
     noNetwork = (TextView) findViewById(R.id.no_network);
+    mNewMessageTag = (ImageView) findViewById(R.id.new_message_tag);
 
     webview.getSettings().setJavaScriptEnabled(true);
     webview.setDrawingCacheEnabled(true);
@@ -113,9 +116,23 @@ public class WebViewActivity extends BaseActivity {
     if (url.contains("scenery.html")
         || url.contains("hotel.html") || url.contains("http://a.brixd.com/amwaysurvey/index.html")) {
       tag.setVisibility(View.VISIBLE);
+      mNewMessageTag.setVisibility(mNewMessageTagState);
     } else {
       tag.setVisibility(View.GONE);
+      mNewMessageTag.setVisibility(View.GONE);
     }
   }
 
+  @Override
+  protected void onSyncMessage(boolean hasNewMessage) {
+    if (hasNewMessage) {
+      mNewMessageTag.setVisibility(View.VISIBLE);
+      mNewMessageTagState = View.VISIBLE;
+    } else {
+      mNewMessageTag.setVisibility(View.GONE);
+      mNewMessageTagState = View.GONE;
+    }
+
+    super.onSyncMessage(hasNewMessage);
+  }
 }
