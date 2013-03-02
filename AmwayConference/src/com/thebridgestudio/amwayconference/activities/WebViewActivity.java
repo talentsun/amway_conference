@@ -3,12 +3,15 @@ package com.thebridgestudio.amwayconference.activities;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ImageView;
@@ -22,7 +25,9 @@ public class WebViewActivity extends BaseActivity {
   protected ImageView tag;
   protected ImageView loading;
   protected TextView noNetwork;
+  
   private ImageView mNewMessageTag;
+  private ImageView mWebviewCache;
   private int mNewMessageTagState = View.GONE;
   
   @Override
@@ -46,6 +51,7 @@ public class WebViewActivity extends BaseActivity {
     loading = (ImageView) findViewById(R.id.loading);
     noNetwork = (TextView) findViewById(R.id.no_network);
     mNewMessageTag = (ImageView) findViewById(R.id.new_message_tag);
+    mWebviewCache = (ImageView) findViewById(R.id.webview_cache);
 
     webview.getSettings().setJavaScriptEnabled(true);
     webview.setDrawingCacheEnabled(true);
@@ -134,5 +140,26 @@ public class WebViewActivity extends BaseActivity {
     }
 
     super.onSyncMessage(hasNewMessage);
+  }
+
+  @Override
+  public void onSidebarCloseBegin() {
+    webview.destroyDrawingCache();
+    mWebviewCache.setImageBitmap(webview.getDrawingCache());
+    mWebviewCache.setVisibility(View.VISIBLE);
+    
+    super.onSidebarCloseBegin();
+  }
+
+  @Override
+  public void onSidebarClosed() {
+    mWebviewCache.postDelayed(new Runnable() {
+      
+      @Override
+      public void run() {
+        mWebviewCache.setVisibility(View.GONE);
+      }
+    }, 50);
+    super.onSidebarClosed();
   }
 }

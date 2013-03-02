@@ -150,6 +150,10 @@ public class AnimationLayout extends ViewGroup {
     }
 
     if (mOpened) {
+      if (mListener != null) {
+        mListener.onSidebarCloseBegin();
+      }
+      
       /* opened, make close animation */
       if (mPlaceLeft) {
         mAnimation = new TranslateAnimation(0, -mSidebarWidth, 0, 0);
@@ -239,5 +243,7 @@ public class AnimationLayout extends ViewGroup {
     public void onSidebarClosed();
 
     public boolean onContentTouchedWhenOpening();
+    
+    public void onSidebarCloseBegin();
   }
 }

@@ -413,4 +413,8 @@ public class BaseActivity extends CustomActivity implements
     }
   }
 
+  @Override
+  public void onSidebarCloseBegin() {
+  }
+
 }
