@@ -157,9 +157,10 @@
 
             <com.thebridgestudio.amwayconference.views.ObservableScrollView
                 android:id="@+id/list_wrapper"
-                android:layout_width="240dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_toRightOf="@id/schedule_date_view"
+                android:layout_marginLeft="30dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="@dimen/schedule_list_marginTop"
                 android:fillViewport="true" >

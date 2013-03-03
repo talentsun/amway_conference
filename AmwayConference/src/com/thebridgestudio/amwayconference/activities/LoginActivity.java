@@ -11,7 +11,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
 import android.content.Intent;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -93,6 +96,22 @@ public class LoginActivity extends CustomActivity {
                 });
               }
             });
+      }
+    });
+    
+    mId.setOnKeyListener(new View.OnKeyListener() {
+      
+      @Override
+      public boolean onKey(View v, int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+          switch (keyCode) {
+            case KeyEvent.KEYCODE_ENTER:
+            case KeyEvent.KEYCODE_DPAD_CENTER:
+              mLogin.performClick();
+              return true;
+          }
+        }
+        return false;
       }
     });
   }

@@ -80,7 +80,8 @@
             android:hint="@string/input_id"
             android:padding="12dp"
             android:singleLine="true"
-            android:textColor="@android:color/darker_gray" />
+            android:textColor="@android:color/darker_gray"
+            android:imeOptions="actionDone" />
 
         <EditText
             android:id="@+id/input_name"
