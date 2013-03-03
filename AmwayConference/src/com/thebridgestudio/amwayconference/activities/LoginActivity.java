@@ -56,6 +56,8 @@ public class LoginActivity extends CustomActivity {
         if (TextUtils.isEmpty(mId.getText())) {
           Toast.makeText(LoginActivity.this, R.string.input_id, Toast.LENGTH_SHORT).show();
         }
+        
+        mLogin.setEnabled(false);
         AccountApis.loginAsync(LoginActivity.this, mId.getText()
             .toString(), mName.getText().toString(),
             new LoginCallback() {
@@ -64,6 +66,8 @@ public class LoginActivity extends CustomActivity {
               public void onLoginOK(String account, String name) {
                 Config.setAccount(LoginActivity.this, account);
                 Config.setName(LoginActivity.this, name);
+                
+                mLogin.setEnabled(true);
 
                 Intent scheduleIntent = new Intent(
                     LoginActivity.this,
@@ -89,6 +93,7 @@ public class LoginActivity extends CustomActivity {
 
                   @Override
                   public void run() {
+                    mLogin.setEnabled(true);
                     Toast.makeText(LoginActivity.this,
                         R.string.login_failed,
                         Toast.LENGTH_SHORT).show();
