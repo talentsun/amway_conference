@@ -1,25 +1,22 @@
 package com.thebridgestudio.amwayconference.activities;
 
-import com.thebridgestudio.amwayconference.Config;
-import com.thebridgestudio.amwayconference.Intents;
-import com.brixd.amway_meeting.R;
-import com.thebridgestudio.amwayconference.cloudapis.AccountApis;
-import com.thebridgestudio.amwayconference.cloudapis.AccountApis.LoginCallback;
-import com.thebridgestudio.amwayconference.services.DataService;
-
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.app.Activity;
-import android.content.Intent;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.brixd.amway_meeting.R;
+import com.thebridgestudio.amwayconference.Config;
+import com.thebridgestudio.amwayconference.Intents;
+import com.thebridgestudio.amwayconference.cloudapis.AccountApis;
+import com.thebridgestudio.amwayconference.cloudapis.AccountApis.LoginCallback;
+import com.thebridgestudio.amwayconference.services.DataService;
 
 public class LoginActivity extends CustomActivity {
   private static final String TAG = "LoginActivity";

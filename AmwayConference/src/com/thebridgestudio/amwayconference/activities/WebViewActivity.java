@@ -80,7 +80,7 @@ public class WebViewActivity extends BaseActivity {
       public void onPageStarted(WebView view, String url, Bitmap favicon) {
         if (!TextUtils.isEmpty(url)
             && (url.contains("map1") || url.contains("map2") || url.contains("map3") || url
-                .contains("map4") || url.contains("scenery_"))) {
+                .contains("map4") || url.contains("scenery_") || url.contains("maps.gstatic.com"))) {
           disableFling();
         } else {
           enableFling();
