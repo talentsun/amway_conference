@@ -55,6 +55,7 @@ public class WebViewActivity extends BaseActivity {
 
     webview.getSettings().setJavaScriptEnabled(true);
     webview.setDrawingCacheEnabled(true);
+    webview.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
     webview.setWebViewClient(new WebViewClient() {
       @Override
       public boolean shouldOverrideUrlLoading(WebView view, String url) {
