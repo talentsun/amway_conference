@@ -7,7 +7,9 @@ import java.util.Calendar;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.Loader;
@@ -31,6 +33,7 @@ import com.emilsjolander.components.stickylistheaders.StickyListHeadersListView;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.UpdateBuilder;
 import com.brixd.amway_meeting.R;
+import com.thebridgestudio.amwayconference.Config;
 import com.thebridgestudio.amwayconference.models.Message;
 import com.thebridgestudio.amwayconference.views.LoadingView;
 
@@ -46,8 +49,37 @@ public class MessageActivity extends BaseActivity implements
   private LoadingView mLoadingView;
   private TextView mNoDataView;
 
+  private Handler mMainThreadHandler;
+  private SharedPreferences.OnSharedPreferenceChangeListener mConfigChangedListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+    
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+      final String changedKey = key;
+      mMainThreadHandler.post(new Runnable() {
+        
+        @Override
+        public void run() {
+          if (changedKey == Config.KEY_LAST_SYNC_MESSAGE_TIME) {
+            initMessageData(true);
+          }
+        }
+      });
+    }
+  };
+  
+  private void initDataObserver() {
+    SharedPreferences config = Config.getConfigs(this);
+    config.registerOnSharedPreferenceChangeListener(mConfigChangedListener);
+  }
+
+  private void releaseDataObserver() {
+    SharedPreferences config = Config.getConfigs(this);
+    config.unregisterOnSharedPreferenceChangeListener(mConfigChangedListener);
+  }
+  
   @Override
   protected void onDestroy() {
+    releaseDataObserver();
     super.onDestroy();
   }
 
@@ -59,9 +91,12 @@ public class MessageActivity extends BaseActivity implements
 
     mLoadingView = (LoadingView) findViewById(R.id.loading);
     mNoDataView = (TextView) findViewById(R.id.no_data);
+    
+    mMainThreadHandler = new Handler();
 
     initListView(savedInstanceState);
     initSidebar();
+    initDataObserver();
   }
 
   private void initListView(Bundle savedInstanceState) {
@@ -87,8 +122,16 @@ public class MessageActivity extends BaseActivity implements
       }
     });
 
+    initMessageData(false);
+  }
+
+  private void initMessageData(boolean restart) {
     showLoading();
-    getSupportLoaderManager().initLoader(0, null, this);
+    if (restart) {
+      getSupportLoaderManager().restartLoader(0, null, this);
+    } else {
+      getSupportLoaderManager().initLoader(0, null, this);
+    }
   }
 
   @Override
