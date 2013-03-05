@@ -187,3 +187,46 @@ section .rightshadow {
 	background-image:url(images/shadow_r.png);background-repeat:no-repeat; background-size:100% auto;
 }
 }
+
+@media (min-width: 790px){
+/*页面顶部标题*/
+header{
+	height:100px; position:absolute;
+	width:100%;display:block;background-image: url(images/tab100_bg.png); 
+	font-size:40px; color:#333333; text-align:center; line-height:100px; z-index:1000;
+}
+article {
+	top:100px; 
+}
+.scroller {
+	position:absolute; left:50%;
+	width:780px; margin-left:-390px;
+	padding:20px 0px 20px 0px; 
+	z-index:3;
+}
+section {
+	width:360px; height:240px; float:left; margin-left:10px; margin-right:10px;
+}
+section .imagebox {
+	width:360px; height:220px; display:block;
+	border:1px solid #B2B2B2;
+	background-repeat:no-repeat; background-size:100% auto;
+}
+section .title {
+	position:absolute; margin-top:170px;
+	width:360px; height:50px; background-color:#FFF;
+	font-size:28px; color:#333333; text-align:center; line-height:50px;
+}
+section .inner {
+	width:358px; height:218px; 
+	border:1px solid #FFF; opacity: .5;
+}
+section .leftshadow {
+	width:360px; height:20px;
+	background-image:url(images/shadow_l.png);background-repeat:no-repeat; background-size:100% auto;
+}
+section .rightshadow {
+	width:360px; height:20px;
+	background-image:url(images/shadow_r.png);background-repeat:no-repeat; background-size:100% auto;
+}
+}

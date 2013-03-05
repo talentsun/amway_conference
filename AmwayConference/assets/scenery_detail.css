@@ -262,6 +262,63 @@ ol{ margin:0px 0px 40px 0px; font-size:24px; line-height:40px; color:#333333; te
 	background-image:url(images/close.png); background-repeat:no-repeat; background-size:contain; background-position:center center; z-index:901;
 }
 }
+@media (min-width: 790px){
+#top, title, header{
+	height:100px;
+}
+header {
+	text-align:center;font-size:40px; color:#333333; line-height:100px;background-image: url(images/tab100_bg.png); 
+}
+.back{
+	height:60px;width:60px; display: block; float:left; position:absolute; top:20px; left:20px;
+	background-image:url(images/back.png);background-repeat:no-repeat;background-size:contain;
+	z-index:1001;
+}
+.indexwrapper {
+	position:absolute; z-index:2;
+	top:100px; bottom:0px; left:0px; right:0px; width:100%;
+	overflow:auto;
+}
+.indexscroller {
+	position:absolute; left:50%;
+	width:760px; margin-left:-380px; padding-top:0px; 
+	padding:0; 
+	z-index:3;
+}
+.pictures{
+	width:740px; height:390px; display:block; padding:10px;
+	margin-left:auto; margin-right:auto; margin-top:20px; position:relative;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:10px;-moz-border-radius:10px;-o-border-radius:10px;border-radius:10px;
+	z-index:10;
+}
+.picturesbtm1{
+	width:740px; height:10px; display:block; margin-top:-5px;
+	margin-left:auto; margin-right:auto;
+	border:1px solid #CCC; background-color:#FFF;
+	-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+	z-index:4;
+}
+.pictures a{
+	width:740px; height:390px; display:block;
+	background-repeat:no-repeat; background-size:100% 100%; z-index:5;
+	-webkit-border-radius:5px;-moz-border-radius:5px;-o-border-radius:5px;border-radius:5px;
+}
+.smltitle {font-size:32px; line-height:60px; color:#333333; text-align:left;}
+p{font-size:24px; line-height:40px; color:#333333; text-align:left;text-indent:2em;}
+ol{ margin:0px 0px 40px 0px; font-size:24px; line-height:40px; color:#333333; text-align:left;}
+
+/*图片浏览*/
+.pictitle{
+	height:100px;width:100%; position:absolute; top:0px; left:0px;
+	font-size:40px; color:#FFF; text-align:center; line-height:100px; border-bottom:1px solid #444; z-index:900;
+	background-color:#333;
+}
+.goindex{
+	height:100px;width:100px; float:right;border-left:1px solid #444; position:absolute; top:0px; right:0px;
+	background-image:url(images/close.png); background-repeat:no-repeat; background-size:contain; background-position:center center; z-index:901;
+}
+}
 #wrapper {
 	width:100%;height:100%;
 	position:absolute; top:0px; left:0px;/* On older OS versions "position" and "z-index" must be defined, */
